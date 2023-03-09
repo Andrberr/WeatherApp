@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         vm.weatherLiveData.observe(this){
-            findViewById<TextView>(R.id.textView).text = it.textDescription
+            findViewById<TextView>(R.id.textView).text = it.daysForecasts[1].date
         }
         vm.getFlights()
     }

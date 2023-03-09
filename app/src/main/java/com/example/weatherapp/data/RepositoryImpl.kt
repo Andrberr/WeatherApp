@@ -16,7 +16,7 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getFlightsList(): WeatherInfo {
         return withContext(Dispatchers.IO) {
             val response =
-                (service.getWeatherResponse("9c898f67b7b94bd39fe203747230703","London" )
+                (service.getWeatherResponse("London",2)
                     .execute().body()
                     ?: throw Exception())
             mapper(response)

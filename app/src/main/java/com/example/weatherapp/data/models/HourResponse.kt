@@ -2,7 +2,8 @@ package com.example.weatherapp.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class WeatherInfoResponse(
+data class HourResponse(
+    @SerializedName("time") val time: String? = null,
     @SerializedName("temp_c") val tempC: Float? = null,
     @SerializedName("temp_f") val tempF: Float? = null,
     @SerializedName("is_day") val isDay: Int? = null,
