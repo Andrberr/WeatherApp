@@ -16,4 +16,5 @@ data class DayResponse(
     @SerializedName("uv") val ultravioletInd: Float? = null,
     @SerializedName("daily_chance_of_rain") val rainChance: Float? = null,
     @SerializedName("daily_chance_of_snow") val snowChance: Float? = null,
+    @SerializedName("condition") val weatherCondition: WeatherConditionResponse? = null,
 )

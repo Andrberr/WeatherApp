@@ -119,6 +119,8 @@ class WeatherMapper @Inject constructor() {
             moonset = astro?.moonset ?: "",
             moonPhase = astro?.moonPhase ?: "",
             moonIllumination = astro?.moonIllumination ?: 0f,
+            textDescription = day?.weatherCondition?.textDescription ?: "",
+            icon = day?.weatherCondition?.icon ?: "",
             hourWeathers = hours?.map { mapToHourModel(it) } ?: listOf()
         )
     }

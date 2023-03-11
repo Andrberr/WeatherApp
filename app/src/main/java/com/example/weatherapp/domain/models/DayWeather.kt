@@ -21,5 +21,7 @@ data class DayWeather(
     val moonset: String,
     val moonPhase: String,
     val moonIllumination: Float,
+    val textDescription: String,
+    val icon: String,
     val hourWeathers: List<HourModel>
 )

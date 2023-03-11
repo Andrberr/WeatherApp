@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
+import com.example.weatherapp.ui.WeatherAdapter
 import com.example.weatherapp.ui.WeatherViewModel
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ class CurrentWeatherFragment : Fragment() {
     private val vm: WeatherViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (context as WeatherApp).appComponent.inject(this)
+        (activity?.applicationContext as WeatherApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
 
@@ -36,12 +38,20 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        vm.weatherLiveData.observe(viewLifecycleOwner){
+        val adapter = WeatherAdapter()
+        binding.sevDayLayout.findViewById<RecyclerView>(R.id.sevDayForecastRecycler).apply {
+            this.adapter = adapter
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        vm.weatherLiveData.observe(viewLifecycleOwner) {
             binding.cityView.text = it.location.city
             binding.tempCView.text = it.currentWeather.tempC.toString()
-            binding.tempCView.text = it.currentWeather.tempF.toString()
+            binding.tempFView.text = it.currentWeather.tempF.toString()
+            adapter.setWeather(it.daysForecasts)
         }
-        vm.getFlights()
+        vm.getWeatherInfo()
     }
 
     override fun onDestroyView() {

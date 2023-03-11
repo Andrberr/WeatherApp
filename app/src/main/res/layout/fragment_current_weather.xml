@@ -41,7 +41,7 @@
             android:id="@+id/tempCView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="150sp"
+            android:textSize="100sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cityView" />
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/degree_c"
-            android:textSize="70sp"
+            android:textSize="50sp"
             app:layout_constraintStart_toEndOf="@id/tempCView"
             app:layout_constraintTop_toBottomOf="@+id/cityView" />
 
@@ -72,6 +72,35 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/tempFView"
             app:layout_constraintTop_toBottomOf="@+id/tempCView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sevDayLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tempFView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/background_constraint"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sevDayForecastRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/weekForecastButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/sevDayForecastRecycler"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_btn"
+                android:text="@string/sev_day_forecast"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
