@@ -1,22 +1,23 @@
-package com.example.weatherapp.ui
+package com.example.weatherapp.ui.future_weather_custom
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.weatherapp.databinding.SevDayForecastLayoutBinding
 import com.example.weatherapp.domain.models.DayWeather
 import com.bumptech.glide.request.target.Target;
+import com.example.weatherapp.R
+import com.example.weatherapp.databinding.FutureForecastLayoutBinding
 
 
-class WeatherViewHolder(
-    private val binding: SevDayForecastLayoutBinding
+class FutureForecastViewHolder(
+    private val binding: FutureForecastLayoutBinding
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(weather: DayWeather){
+        binding.dayView.text = "\t${weather.date}"
         Glide.with(itemView.context)
             .load("https:${weather.icon}")
             .override(Target.SIZE_ORIGINAL)
             .into(binding.weatherImage)
-        binding.dayView.text = "\t${weather.date}"
-        binding.weatherView.text = "\t${weather.textDescription}"
-        binding.tempView.text = "\t${weather.avgTempC}°C/${weather.avgTempF}°F"
+        binding.tempView.text = "\t${weather.avgTempC}°C"
+        binding.customLine.setLineHeight(weather.avgTempC)
     }
 }
