@@ -13,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.MainActivity
 import com.example.weatherapp.R
-import com.example.weatherapp.WeatherApp
-import com.example.weatherapp.data.di.WeatherComponent
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.domain.models.DayWeather
-import com.example.weatherapp.ui.future_weather_main.FutureWeatherAdapter
+import com.example.weatherapp.ui.current_weather.CurrentWeatherAdapter
 import javax.inject.Inject
 
 class CurrentWeatherFragment : Fragment() {
@@ -46,9 +44,8 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var forecasts: List<DayWeather>
-        val adapter = FutureWeatherAdapter()
-        binding.sevDayLayout.findViewById<RecyclerView>(R.id.sevDayForecastRecycler).apply {
+        val adapter = CurrentWeatherAdapter()
+        binding.sevDayLayout.findViewById<RecyclerView>(R.id.threeDayForecastRecycler).apply {
             this.adapter = adapter
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -58,8 +55,7 @@ class CurrentWeatherFragment : Fragment() {
             binding.cityView.text = it.location.city
             binding.tempCView.text = it.currentWeather.tempC.toString()
             binding.tempFView.text = it.currentWeather.tempF.toString()
-            forecasts = it.daysForecasts
-            adapter.setWeather(forecasts)
+            adapter.setWeather(it.daysForecasts.subList(0,3))
         }
         vm.getWeatherInfo()
 

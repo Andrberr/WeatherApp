@@ -84,7 +84,7 @@
             >
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/sevDayForecastRecycler"
+                android:id="@+id/threeDayForecastRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -94,12 +94,11 @@
                 android:id="@+id/weekForecastButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/sevDayForecastRecycler"
+                app:layout_constraintTop_toBottomOf="@id/threeDayForecastRecycler"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/bg_btn"
-                android:text="@string/sev_day_forecast"/>
-
+                android:text="@string/fourteen_day_forecast"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -97,31 +97,38 @@ class WeatherMapper @Inject constructor() {
         }
     }
 
-    private fun mapForecastResponseToDayWeather(response: ForecastDayResponse) = with(response) {
-        DayWeather(
-            date = date ?: " ",
-            maxTempC = day?.maxTempC ?: 0f,
-            maxTempF = day?.maxTempF ?: 0f,
-            minTempC = day?.minTempC ?: 0f,
-            minTempF = day?.minTempF ?: 0f,
-            avgTempC = day?.avgTempC ?: 0f,
-            avgTempF = day?.avgTempF ?: 0f,
-            maxWindSpeed = day?.maxWindSpeed ?: 0f,
-            totalPrecipitation = day?.totalPrecipitation ?: 0f,
-            avgVisibility = day?.avgVisibility ?: 0f,
-            avgHumidity = day?.avgHumidity ?: 0f,
-            ultravioletInd = day?.ultravioletInd ?: 0f,
-            rainChance = day?.rainChance ?: 0f,
-            snowChance = day?.snowChance ?: 0f,
-            sunrise = astro?.sunrise ?: "",
-            sunset = astro?.sunset ?: "",
-            moonrise = astro?.moonrise ?: "",
-            moonset = astro?.moonset ?: "",
-            moonPhase = astro?.moonPhase ?: "",
-            moonIllumination = astro?.moonIllumination ?: 0f,
-            textDescription = day?.weatherCondition?.textDescription ?: "",
-            icon = day?.weatherCondition?.icon ?: "",
-            hourWeathers = hours?.map { mapToHourModel(it) } ?: listOf()
-        )
+    private fun mapForecastResponseToDayWeather(response: ForecastDayResponse): DayWeather {
+        var commonDate = response.date ?: ""
+        commonDate = with(commonDate) {
+            substring(8, 10) + "." + substring(5, 7) + "." + substring(0, 4)
+        }
+
+        return with(response) {
+            DayWeather(
+                date = commonDate,
+                maxTempC = day?.maxTempC ?: 0f,
+                maxTempF = day?.maxTempF ?: 0f,
+                minTempC = day?.minTempC ?: 0f,
+                minTempF = day?.minTempF ?: 0f,
+                avgTempC = day?.avgTempC ?: 0f,
+                avgTempF = day?.avgTempF ?: 0f,
+                maxWindSpeed = day?.maxWindSpeed ?: 0f,
+                totalPrecipitation = day?.totalPrecipitation ?: 0f,
+                avgVisibility = day?.avgVisibility ?: 0f,
+                avgHumidity = day?.avgHumidity ?: 0f,
+                ultravioletInd = day?.ultravioletInd ?: 0f,
+                rainChance = day?.rainChance ?: 0f,
+                snowChance = day?.snowChance ?: 0f,
+                sunrise = astro?.sunrise ?: "",
+                sunset = astro?.sunset ?: "",
+                moonrise = astro?.moonrise ?: "",
+                moonset = astro?.moonset ?: "",
+                moonPhase = astro?.moonPhase ?: "",
+                moonIllumination = astro?.moonIllumination ?: 0f,
+                textDescription = day?.weatherCondition?.textDescription ?: "",
+                icon = day?.weatherCondition?.icon ?: "",
+                hourWeathers = hours?.map { mapToHourModel(it) } ?: listOf()
+            )
+        }
     }
 }

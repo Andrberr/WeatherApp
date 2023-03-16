@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.MainActivity
 import com.example.weatherapp.R
 import com.example.weatherapp.WeatherApp
@@ -15,6 +16,7 @@ import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
 import com.example.weatherapp.domain.models.DayWeather
+import com.example.weatherapp.ui.future_weather.FutureWeatherAdapter
 import javax.inject.Inject
 
 class FutureWeatherFragment : Fragment() {
@@ -42,9 +44,22 @@ class FutureWeatherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        vm.weatherLiveData.observe(viewLifecycleOwner) {
-           binding.textView.text = it.location.country
+        var minTemp = 0f
+        val adapter = FutureWeatherAdapter()
+        binding.forecastRecycler.apply {
+            this.adapter = adapter
+            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+
+        vm.weatherLiveData.observe(viewLifecycleOwner) {
+            adapter.setWeather(it.daysForecasts, minTemp)
+        }
+        vm.getWeatherInfo()
+
+        vm.minTempLiveData.observe(viewLifecycleOwner) {
+            minTemp = it ?: 0f
+        }
+        vm.getMinTemperature()
     }
 
     override fun onDestroyView() {

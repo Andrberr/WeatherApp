@@ -13,10 +13,10 @@ class RepositoryImpl @Inject constructor(
     private val mapper: WeatherMapper
 ) : Repository {
 
-    override suspend fun getFlightsList(): WeatherInfo {
+    override suspend fun getWeatherInfo(): WeatherInfo {
         return withContext(Dispatchers.IO) {
             val response =
-                (service.getWeatherResponse("Minsk", 3)
+                (service.getWeatherResponse("Minsk", 14)
                     .execute().body()
                     ?: throw Exception())
             mapper(response)
