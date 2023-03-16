@@ -7,30 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.di.FragmentScope
 import com.example.weatherapp.domain.Repository
 import com.example.weatherapp.domain.models.WeatherInfo
-import com.example.weatherapp.domain.use_cases.MinTemperatureUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @FragmentScope
 class WeatherViewModel @Inject constructor(
     private val repository: Repository,
-    private val minTempUseCase: MinTemperatureUseCase
 ) : ViewModel() {
     private val _weatherLiveData = MutableLiveData<WeatherInfo>()
     val weatherLiveData: LiveData<WeatherInfo> get() = _weatherLiveData
 
-    private val _minTempLiveData = MutableLiveData<Float?>()
-    val minTempLiveData: LiveData<Float?> get() = _minTempLiveData
-
     fun getWeatherInfo() {
         viewModelScope.launch {
             _weatherLiveData.value = repository.getWeatherInfo()
-        }
-    }
-
-    fun getMinTemperature(){
-        viewModelScope.launch {
-            _minTempLiveData.value = minTempUseCase()
         }
     }
 }

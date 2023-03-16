@@ -44,7 +44,6 @@ class FutureWeatherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var minTemp = 0f
         val adapter = FutureWeatherAdapter()
         binding.forecastRecycler.apply {
             this.adapter = adapter
@@ -52,14 +51,9 @@ class FutureWeatherFragment : Fragment() {
         }
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
-            adapter.setWeather(it.daysForecasts, minTemp)
+            adapter.setWeather(it.daysForecasts)
         }
         vm.getWeatherInfo()
-
-        vm.minTempLiveData.observe(viewLifecycleOwner) {
-            minTemp = it ?: 0f
-        }
-        vm.getMinTemperature()
     }
 
     override fun onDestroyView() {

@@ -10,8 +10,6 @@ class FutureWeatherAdapter : RecyclerView.Adapter<FutureWeatherViewHolder>() {
 
     private val forecasts = mutableListOf<DayWeather>()
 
-    private var minTemp: Float = 0f
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FutureWeatherViewHolder {
         val binding =
             FutureWeatherLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,13 +19,12 @@ class FutureWeatherAdapter : RecyclerView.Adapter<FutureWeatherViewHolder>() {
     override fun getItemCount(): Int = forecasts.size
 
     override fun onBindViewHolder(holder: FutureWeatherViewHolder, position: Int) {
-        holder.bind(forecasts[position], minTemp)
+        holder.bind(forecasts[position])
     }
 
-    fun setWeather(list: List<DayWeather>, minTemp: Float) {
+    fun setWeather(list: List<DayWeather>) {
         forecasts.clear()
         forecasts.addAll(list)
-        this.minTemp = minTemp
         notifyDataSetChanged()
     }
 }

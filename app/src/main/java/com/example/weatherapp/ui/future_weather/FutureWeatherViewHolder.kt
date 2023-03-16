@@ -9,12 +9,12 @@ import com.example.weatherapp.databinding.FutureWeatherLayoutBinding
 class FutureWeatherViewHolder(
     private val binding: FutureWeatherLayoutBinding
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(weather: DayWeather, maxTemp: Float) {
+    fun bind(weather: DayWeather) {
         binding.dayView.text = "\t${weather.date}"
         Glide.with(itemView.context)
             .load("https:${weather.icon}")
             .override(Target.SIZE_ORIGINAL)
             .into(binding.weatherImage)
-        binding.customLine.setParams(weather.avgTempC, maxTemp)
+        binding.customLine.setParams(weather.avgTempC)
     }
 }
