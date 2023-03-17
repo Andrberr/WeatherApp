@@ -45,7 +45,7 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapter = CurrentWeatherAdapter()
-        binding.sevDayLayout.findViewById<RecyclerView>(R.id.threeDayForecastRecycler).apply {
+        binding.threeDayLayout.findViewById<RecyclerView>(R.id.threeDayForecastRecycler).apply {
             this.adapter = adapter
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -56,10 +56,14 @@ class CurrentWeatherFragment : Fragment() {
             binding.tempCView.text = it.currentWeather.tempC.toString()
             binding.tempFView.text = it.currentWeather.tempF.toString()
             adapter.setWeather(it.daysForecasts.subList(0,3))
+
+            binding.windDirView.text = it.currentWeather.windDirection
+            binding.windSpeedView.text = it.currentWeather.windSpeed.toString()
+
         }
         vm.getWeatherInfo()
 
-        binding.sevDayLayout.findViewById<Button>(R.id.weekForecastButton).setOnClickListener {
+        binding.threeDayLayout.findViewById<Button>(R.id.weekForecastButton).setOnClickListener {
             val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment()
             findNavController().navigate(action)
         }
