@@ -4,7 +4,7 @@ import com.example.weatherapp.data.models.*
 import com.example.weatherapp.domain.models.*
 import javax.inject.Inject
 
-class WeatherMapper @Inject constructor() {
+class ResponseToDefaultMapper @Inject constructor() {
     operator fun invoke(response: WeatherResponse) = with(response) {
         WeatherInfo(
             location = if (location != null) mapToLocationModel(location) else LocationModel(

@@ -1,12 +1,10 @@
 package com.example.weatherapp.data.database.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "day_weather_table")
 data class DayWeatherEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val dayId: Int = 0,
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "maxTempC") val maxTempC: Float,
     @ColumnInfo(name = "maxTempF") val maxTempF: Float,
@@ -29,5 +27,5 @@ data class DayWeatherEntity(
     @ColumnInfo(name = "moonIllumination") val moonIllumination: Float,
     @ColumnInfo(name = "textDescription") val textDescription: String,
     @ColumnInfo(name = "icon") val icon: String,
-    @ColumnInfo(name = "hourWeathers") val hourWeathers: List<HourModel>
+    @ColumnInfo(name="hourModels") val hourModels: String
 )

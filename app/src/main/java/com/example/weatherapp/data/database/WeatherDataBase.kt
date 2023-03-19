@@ -6,6 +6,7 @@ import com.example.weatherapp.data.database.dao.DayWeatherDao
 import com.example.weatherapp.data.database.dao.LocationModelDao
 import com.example.weatherapp.data.database.dao.WeatherModelDao
 import com.example.weatherapp.data.database.entities.DayWeatherEntity
+import com.example.weatherapp.data.database.entities.HourModelSer
 import com.example.weatherapp.data.database.entities.LocationModelEntity
 import com.example.weatherapp.data.database.entities.WeatherModelEntity
 

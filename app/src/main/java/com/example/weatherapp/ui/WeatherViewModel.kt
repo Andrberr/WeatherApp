@@ -19,7 +19,7 @@ class WeatherViewModel @Inject constructor(
 
     fun getWeatherInfo() {
         viewModelScope.launch {
-            _weatherLiveData.value = repository.getWeatherInfo()
+            _weatherLiveData.value = repository.getWeatherInfo(false)
         }
     }
 }

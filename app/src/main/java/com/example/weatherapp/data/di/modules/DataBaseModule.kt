@@ -15,7 +15,7 @@ class DataBaseModule {
     @Provides
     @Singleton
     fun provideDataBase(context: Context) =
-        Room.databaseBuilder(context, WeatherDataBase::class.java, "weather_database")
+        Room.databaseBuilder(context, WeatherDataBase::class.java, "weather_database").build()
 
     @Provides
     @Singleton
