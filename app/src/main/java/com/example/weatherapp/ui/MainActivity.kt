@@ -1,9 +1,11 @@
-package com.example.weatherapp
+package com.example.weatherapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.findNavController
+import com.example.weatherapp.R
+import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.data.di.WeatherComponent
 import com.example.weatherapp.databinding.ActivityMainBinding
 

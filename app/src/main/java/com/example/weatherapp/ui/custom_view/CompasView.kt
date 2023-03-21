@@ -64,7 +64,5 @@ class CompasView @JvmOverloads constructor(
             (height / 2).toFloat() + 10f,
             textPaint
         )
-
-
     }
 }

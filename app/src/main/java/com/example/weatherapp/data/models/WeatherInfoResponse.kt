@@ -10,7 +10,7 @@ data class WeatherInfoResponse(
     @SerializedName("wind_kph") val windSpeed: Float? = null,
     @SerializedName("wind_degree") val windDegree: Float? = null,
     @SerializedName("wind_dir") val windDirection: String? = null,
-    @SerializedName("pressure_in") val pressure: Float? = null,
+    @SerializedName("pressure_mb") val pressure: Float? = null,
     @SerializedName("precip_mm") val precipitationAmountHour: Float? = null,
     @SerializedName("humidity") val humidityPercent: Float? = null,
     @SerializedName("cloud") val cloudPercent: Float? = null,

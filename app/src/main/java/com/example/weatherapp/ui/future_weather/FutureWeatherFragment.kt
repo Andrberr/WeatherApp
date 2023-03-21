@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui
+package com.example.weatherapp.ui.future_weather
 
 import android.content.Context
 import android.os.Bundle
@@ -7,16 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.MainActivity
-import com.example.weatherapp.R
-import com.example.weatherapp.WeatherApp
+import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
-import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
-import com.example.weatherapp.domain.models.DayWeather
-import com.example.weatherapp.ui.future_weather.FutureWeatherAdapter
+import com.example.weatherapp.ui.WeatherViewModel
 import javax.inject.Inject
 
 class FutureWeatherFragment : Fragment() {

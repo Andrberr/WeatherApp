@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui.current_weather
+package com.example.weatherapp.ui.current_weather.general_weather
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

@@ -1,8 +1,8 @@
 package com.example.weatherapp.data.di
 
-import com.example.weatherapp.MainActivity
-import com.example.weatherapp.ui.CurrentWeatherFragment
-import com.example.weatherapp.ui.FutureWeatherFragment
+import com.example.weatherapp.ui.MainActivity
+import com.example.weatherapp.ui.current_weather.CurrentWeatherFragment
+import com.example.weatherapp.ui.future_weather.FutureWeatherFragment
 import dagger.Subcomponent
 
 @FragmentScope

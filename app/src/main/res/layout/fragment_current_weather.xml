@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.CurrentWeatherFragment">
+    tools:context=".ui.current_weather.CurrentWeatherFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -99,13 +99,23 @@
                 app:layout_constraintTop_toBottomOf="@id/threeDayForecastRecycler" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/delimeter_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintHeight_percent="0.02"
+            app:layout_constraintTop_toBottomOf="@id/threeDayLayout" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/windLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/background_constraint"
+            app:layout_constraintEnd_toStartOf="@id/moreWeatherInfoLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/threeDayLayout">
+            app:layout_constraintTop_toBottomOf="@id/delimeter_view"
+            app:layout_constraintWidth_percent="0.45">
 
             <TextView
                 android:id="@+id/windDirView"
@@ -131,21 +141,40 @@
                 android:id="@+id/compasView"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                app:layout_constraintStart_toEndOf="@id/windSpeedView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toEndOf="@id/windSpeedView"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/moreWeatherInfoLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_constraint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/windLayout"
+            app:layout_constraintTop_toBottomOf="@id/delimeter_view"
+            app:layout_constraintWidth_percent="0.45">
 
-<!--            val pressure: Float,-->
-<!--            val precipitationAmountHour: Float,-->
-<!--            val humidityPercent: Float,-->
-<!--            val cloudPercent: Float,-->
-<!--            val feelingC: Float,-->
-<!--            val feelingF: Float,-->
-<!--            val visibilityKm: Float,-->
-<!--            val gustWindSpeed: Float-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moreInfoRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--            val pressure: Float,-->
+        <!--            val precipitationAmountHour: Float,-->
+        <!--            val humidityPercent: Float,-->
+        <!--            val cloudPercent: Float,-->
+        <!--            val feelingC: Float,-->
+        <!--            val feelingF: Float,-->
+        <!--            val visibilityKm: Float,-->
+        <!--            val gustWindSpeed: Float-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
