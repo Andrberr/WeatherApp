@@ -18,7 +18,7 @@
         android:id="@+id/fieldValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"

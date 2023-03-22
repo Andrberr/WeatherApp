@@ -67,14 +67,14 @@ class CurrentWeatherFragment : Fragment() {
                 binding.windSpeedView.text = windSpeed.toString()
                 val moreWeatherList =
                     listOf(
-                        MoreWeatherElem("Real feel(°C)", "$feelingC"),
-                        MoreWeatherElem("Real feel(°F)", "$feelingF"),
-                        MoreWeatherElem("Humidity", "$humidityPercent%"),
-                        MoreWeatherElem("Cloud cover", "$cloudPercent%"),
-                        MoreWeatherElem("Pressure", "$pressure" + "mbar"),
-                        MoreWeatherElem("Precipitation", "$precipitationAmountHour" + "mm/h"),
-                        MoreWeatherElem("Visibility", "$visibilityKm" + "km/h"),
-                        MoreWeatherElem("Wind gust", "$gustWindSpeed" + "km/h")
+                        MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
+                        MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
+                        MoreWeatherElem("Humidity", "${getModifiableFloat(humidityPercent)}%"),
+                        MoreWeatherElem("Cloud cover", "${getModifiableFloat(cloudPercent)}%"),
+                        MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
+                        MoreWeatherElem("Precipitation", getModifiableFloat(precipitationAmountHour) + "mm/h"),
+                        MoreWeatherElem("Visibility", getModifiableFloat(visibilityKm) + "km/h"),
+                        MoreWeatherElem("Wind gust", getModifiableFloat(gustWindSpeed) + "km/h")
                     )
                 moreWeatherAdapter.setMoreWeather(moreWeatherList)
             }
@@ -86,6 +86,12 @@ class CurrentWeatherFragment : Fragment() {
                 CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment()
             findNavController().navigate(action)
         }
+    }
+
+    private fun getModifiableFloat(value: Float): String{
+        val str = value.toString().split(".")
+        if (str[1].toFloat() != 0f) return value.toString()
+        return str[0]
     }
 
     override fun onDestroyView() {

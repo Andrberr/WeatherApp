@@ -11,6 +11,7 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+
     @Provides
     @Singleton
     fun getRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
@@ -19,9 +20,18 @@ class NetworkModule {
         .client(client)
         .build()
 
+//    @Provides
+//    @Singleton
+//    fun getRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
+//        .baseUrl("https://countriesnow.space/api/v0.1/")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .client(client)
+//        .build()
+
     @Provides
     @Singleton
-    fun getWeatherService(retrofit: Retrofit): WeatherService = retrofit.create(WeatherService::class.java)
+    fun getService(retrofit: Retrofit): WeatherService = retrofit.create(WeatherService::class.java)
+
 
     @Provides
     @Singleton

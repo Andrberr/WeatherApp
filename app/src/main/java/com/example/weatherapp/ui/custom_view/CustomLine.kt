@@ -45,7 +45,7 @@ class CustomLine @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lineHeight = abs(curTemp) * height / 80f
+        lineHeight = abs(curTemp) * height / 60f
         x1 = width / 3f
         x2 = 2f * width / 3f
 

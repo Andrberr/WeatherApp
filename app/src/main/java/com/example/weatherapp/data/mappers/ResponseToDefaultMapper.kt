@@ -1,6 +1,6 @@
 package com.example.weatherapp.data.mappers
 
-import com.example.weatherapp.data.models.*
+import com.example.weatherapp.data.models.weather_models.*
 import com.example.weatherapp.domain.models.*
 import javax.inject.Inject
 

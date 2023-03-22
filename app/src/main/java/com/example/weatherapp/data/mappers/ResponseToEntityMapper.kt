@@ -1,7 +1,10 @@
 package com.example.weatherapp.data.mappers
 
 import com.example.weatherapp.data.database.entities.*
-import com.example.weatherapp.data.models.*
+import com.example.weatherapp.data.models.weather_models.ForecastDayResponse
+import com.example.weatherapp.data.models.weather_models.HourResponse
+import com.example.weatherapp.data.models.weather_models.LocationResponse
+import com.example.weatherapp.data.models.weather_models.WeatherInfoResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject

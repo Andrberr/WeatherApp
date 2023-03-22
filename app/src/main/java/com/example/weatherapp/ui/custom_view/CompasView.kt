@@ -26,6 +26,8 @@ class CompasView @JvmOverloads constructor(
     }
 
     fun setParams(degree: Float) {
+        var degr = degree
+        if (degree > 180f) degr = 360f - degree
 
     }
 
