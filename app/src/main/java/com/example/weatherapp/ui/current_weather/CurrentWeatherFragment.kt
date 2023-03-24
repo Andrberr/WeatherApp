@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
@@ -27,9 +28,11 @@ class CurrentWeatherFragment : Fragment() {
     lateinit var factory: ViewModelFactory
     private val vm: WeatherViewModel by viewModels { factory }
 
+    private val args: CurrentWeatherFragmentArgs by navArgs()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).weatherComponent.inject(this)
+        (activity as MainActivity).generalComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -79,11 +82,11 @@ class CurrentWeatherFragment : Fragment() {
                 moreWeatherAdapter.setMoreWeather(moreWeatherList)
             }
         }
-        vm.getWeatherInfo()
+        vm.getWeatherInfo(args.city)
 
         binding.weekForecastButton.setOnClickListener {
             val action =
-                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment()
+                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment(args.city)
             findNavController().navigate(action)
         }
     }

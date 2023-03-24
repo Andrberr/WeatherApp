@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.database.dao
+package com.example.weatherapp.data.database.dao.weather_dao
 
 import androidx.room.*
 import com.example.weatherapp.data.database.entities.LocationModelEntity
@@ -11,6 +11,6 @@ interface LocationModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(location: LocationModelEntity)
 
-    @Delete
-    fun delete(location: LocationModelEntity)
+    @Query("DELETE FROM location_info_table")
+    fun delete()
 }

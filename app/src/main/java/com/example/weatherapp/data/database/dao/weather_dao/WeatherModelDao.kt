@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.database.dao
+package com.example.weatherapp.data.database.dao.weather_dao
 
 import androidx.room.*
 import com.example.weatherapp.data.database.entities.WeatherModelEntity
@@ -11,6 +11,6 @@ interface WeatherModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(weather: WeatherModelEntity)
 
-    @Delete
-    fun delete(weather: WeatherModelEntity)
+    @Query("DELETE FROM current_weather_table")
+    fun delete()
 }

@@ -14,5 +14,5 @@ interface ApplicationComponent {
         fun create(@BindsInstance context: Context): ApplicationComponent
     }
 
-    fun weatherComponent(): WeatherComponent.Factory
+    fun weatherComponent(): GeneralComponent.Factory
 }

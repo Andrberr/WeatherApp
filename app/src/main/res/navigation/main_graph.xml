@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/currentWeatherFragment">
+    app:startDestination="@id/searchFragment">
 
     <fragment
         android:id="@+id/currentWeatherFragment"
         android:name="com.example.weatherapp.ui.current_weather.CurrentWeatherFragment"
         android:label="fragment_current_weather"
         tools:layout="@layout/fragment_current_weather" >
+
+        <argument
+            android:name="city"
+            app:argType="string"
+            android:defaultValue=""/>
+
         <action
             android:id="@+id/action_currentWeatherFragment_to_futureWeatherFragment"
             app:destination="@id/futureWeatherFragment" />
@@ -19,10 +25,14 @@
         android:name="com.example.weatherapp.ui.future_weather.FutureWeatherFragment"
         android:label="fragment_future_weather"
         tools:layout="@layout/fragment_future_weather" >
+        <argument
+            android:name="city"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.weatherapp.ui.SearchFragment"
+        android:name="com.example.weatherapp.ui.cities.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action

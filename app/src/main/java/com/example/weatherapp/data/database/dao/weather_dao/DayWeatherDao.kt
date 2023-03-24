@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.database.dao
+package com.example.weatherapp.data.database.dao.weather_dao
 
 import androidx.room.*
 import com.example.weatherapp.data.database.entities.DayWeatherEntity
@@ -11,6 +11,6 @@ interface DayWeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(weather: List<DayWeatherEntity>)
 
-    @Delete
-    fun deleteAll(weather: List<DayWeatherEntity>)
+    @Query("DELETE FROM day_weather_table")
+    fun deleteAll()
 }

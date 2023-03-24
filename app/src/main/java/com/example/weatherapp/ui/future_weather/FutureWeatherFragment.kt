@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
 import com.example.weatherapp.ui.WeatherViewModel
+import com.example.weatherapp.ui.current_weather.CurrentWeatherFragmentArgs
 import javax.inject.Inject
 
 class FutureWeatherFragment : Fragment() {
@@ -25,9 +27,11 @@ class FutureWeatherFragment : Fragment() {
     lateinit var factory: ViewModelFactory
     private val vm: WeatherViewModel by viewModels { factory }
 
+    private val args: FutureWeatherFragmentArgs by navArgs()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).weatherComponent.inject(this)
+        (activity as MainActivity).generalComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -49,7 +53,7 @@ class FutureWeatherFragment : Fragment() {
             println(it.daysForecasts.size)
             adapter.setWeather(it.daysForecasts)
         }
-        vm.getWeatherInfo()
+        vm.getWeatherInfo(args.city)
     }
 
     override fun onDestroyView() {
