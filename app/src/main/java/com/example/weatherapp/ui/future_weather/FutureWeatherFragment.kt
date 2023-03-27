@@ -6,14 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedDispatcher
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
-import com.example.weatherapp.ui.WeatherViewModel
-import com.example.weatherapp.ui.current_weather.CurrentWeatherFragmentArgs
+import com.example.weatherapp.ui.GeneralViewModel
 import javax.inject.Inject
 
 class FutureWeatherFragment : Fragment() {
@@ -21,13 +22,11 @@ class FutureWeatherFragment : Fragment() {
     private var _binding: FragmentFutureWeatherBinding? = null
     private val binding get() = _binding!!
 
-    //private val args: FutureWeatherFragmentArgs by navArgs()
+    private val args: FutureWeatherFragmentArgs by navArgs()
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val vm: WeatherViewModel by viewModels { factory }
-
-    private val args: FutureWeatherFragmentArgs by navArgs()
+    private val vm: GeneralViewModel by viewModels { factory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,7 +52,11 @@ class FutureWeatherFragment : Fragment() {
             println(it.daysForecasts.size)
             adapter.setWeather(it.daysForecasts)
         }
-        vm.getWeatherInfo(args.city)
+
+        binding.backButton.setOnClickListener {
+            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment(args.city)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

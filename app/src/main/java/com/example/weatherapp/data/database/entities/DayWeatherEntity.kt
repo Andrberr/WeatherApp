@@ -5,6 +5,7 @@ import androidx.room.*
 @Entity(tableName = "day_weather_table")
 data class DayWeatherEntity(
     @PrimaryKey(autoGenerate = true) val dayId: Int = 0,
+    @ColumnInfo(name = "city") val city: String,
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "maxTempC") val maxTempC: Float,
     @ColumnInfo(name = "maxTempF") val maxTempF: Float,

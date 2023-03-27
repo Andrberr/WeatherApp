@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_currentWeatherFragment_to_futureWeatherFragment"
             app:destination="@id/futureWeatherFragment" />
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_addedCitiesFragment"
+            app:destination="@id/addedCitiesFragment" />
     </fragment>
     <fragment
         android:id="@+id/futureWeatherFragment"
@@ -29,6 +35,9 @@
             android:name="city"
             app:argType="string"
             android:defaultValue=""/>
+        <action
+            android:id="@+id/action_futureWeatherFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -37,6 +46,21 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addedCitiesFragment"
+        android:name="com.example.weatherapp.ui.added_cities.AddedCitiesFragment"
+        android:label="fragment_added_cities"
+        tools:layout="@layout/fragment_added_cities" >
+
+        <argument
+            android:name="city"
+            app:argType="string"
+            android:defaultValue=""/>
+
+        <action
+            android:id="@+id/action_addedCitiesFragment_to_currentWeatherFragment"
             app:destination="@id/currentWeatherFragment" />
     </fragment>
 </navigation>

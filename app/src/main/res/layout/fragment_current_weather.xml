@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.current_weather.CurrentWeatherFragment">
@@ -11,11 +12,11 @@
         android:layout_height="match_parent">
 
         <ImageButton
-            android:id="@+id/addCityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_add"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/citiesWeatherButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/points"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -24,17 +25,16 @@
             android:layout_height="wrap_content"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/settingsButton"
-            app:layout_constraintStart_toEndOf="@+id/addCityButton"
+            app:layout_constraintEnd_toStartOf="@+id/citiesWeatherButton"
+            app:layout_constraintStart_toEndOf="@+id/addButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/settingsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@android:drawable/radiobutton_off_background"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/addButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/add"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

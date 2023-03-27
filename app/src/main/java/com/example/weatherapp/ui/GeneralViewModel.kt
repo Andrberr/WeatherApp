@@ -7,11 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.di.FragmentScope
 import com.example.weatherapp.domain.Repository
 import com.example.weatherapp.domain.models.WeatherInfo
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @FragmentScope
-class WeatherViewModel @Inject constructor(
+class GeneralViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
     private val _weatherLiveData = MutableLiveData<WeatherInfo>()
@@ -20,15 +21,34 @@ class WeatherViewModel @Inject constructor(
     private val _citiesLiveData = MutableLiveData<List<String>>()
     val citiesLiveData: LiveData<List<String>> get() = _citiesLiveData
 
-    fun getWeatherInfo(city: String) {
+    private lateinit var city: String
+
+    private val handler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
+            _weatherLiveData.value = repository.getWeatherInfo(false, city)
+        }
+    }
+
+    fun getWeatherInfo(city: String) {
+        this.city = city
+        viewModelScope.launch(handler) {
             _weatherLiveData.value = repository.getWeatherInfo(true, city)
         }
     }
 
-    fun getCities(){
+    fun getCities() {
         viewModelScope.launch {
             _citiesLiveData.value = repository.getCities(true)
         }
+    }
+
+    fun searchForCities(list: List<String>, findStr: String): List<String> {
+        val resultList = mutableListOf<String>()
+        for (elem in list) {
+            if (elem.startsWith(findStr)) {
+                resultList.add(elem)
+            }
+        }
+        return resultList
     }
 }

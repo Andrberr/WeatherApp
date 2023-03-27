@@ -8,6 +8,9 @@ interface DayWeatherDao {
     @Query("SELECT * FROM day_weather_table")
     fun getAll(): List<DayWeatherEntity>
 
+//    @Query("SELECT * FROM day_weather_table WHERE city = :needCity")
+//    fun getCityWeather(needCity: String): List<DayWeatherEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(weather: List<DayWeatherEntity>)
 

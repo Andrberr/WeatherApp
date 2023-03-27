@@ -8,8 +8,16 @@ class CitiesMapper @Inject constructor() {
 
     fun responseToEntity(response: CityResponse): CitiesEntity {
         val str = response.city.lowercase()
-        //if (str.contains(' ')) str = str.substring(0, str.indexOf(' ') + 1)
         return CitiesEntity(city = str[0].uppercase() + str.substring(1, str.length))
+    }
+
+    fun sort(responseList: List<CitiesEntity>): List<CitiesEntity> {
+        if (responseList.size <= 1) return responseList
+        val pivot = responseList[responseList.size / 2].city
+        val equal = responseList.filter { it.city == pivot }
+        val less = responseList.filter { it.city < pivot }
+        val greater = responseList.filter { it.city > pivot }
+        return sort(less) + equal + sort(greater)
     }
 
     fun entityToDefault(entity: CitiesEntity): String = entity.city

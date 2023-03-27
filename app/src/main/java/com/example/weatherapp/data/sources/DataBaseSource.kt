@@ -44,5 +44,5 @@ class DataBaseSource @Inject constructor(
     suspend fun insertCities(cities: List<CitiesEntity>) =
         withContext(Dispatchers.IO) { citiesDao.insert(cities) }
 
-    suspend fun deleteAll() = withContext(Dispatchers.IO) { citiesDao.deleteAll() }
+    suspend fun deleteAllCities() = withContext(Dispatchers.IO) { citiesDao.deleteAll() }
 }

@@ -69,7 +69,7 @@ class ResponseToEntityMapper @Inject constructor() {
         }
     }
 
-    fun mapToDayWeatherEntity(response: ForecastDayResponse): DayWeatherEntity {
+    fun mapToDayWeatherEntity(response: ForecastDayResponse, city: String): DayWeatherEntity {
         var commonDate = response.date ?: ""
         commonDate = with(commonDate) {
             substring(8, 10) + "." + substring(5, 7) + "." + substring(0, 4)
@@ -82,6 +82,7 @@ class ResponseToEntityMapper @Inject constructor() {
 
         return with(response) {
             DayWeatherEntity(
+                city = city,
                 date = commonDate,
                 maxTempC = day?.maxTempC ?: 0f,
                 maxTempF = day?.maxTempF ?: 0f,

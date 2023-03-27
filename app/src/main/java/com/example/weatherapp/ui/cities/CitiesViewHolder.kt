@@ -6,8 +6,7 @@ import com.example.weatherapp.databinding.CityLayoutBinding
 class CitiesViewHolder(
     private val binding: CityLayoutBinding,
     private val itemClick: (String) -> Unit
-) :
-    RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(city: String) {
         binding.textView.text = city
         itemView.setOnClickListener {

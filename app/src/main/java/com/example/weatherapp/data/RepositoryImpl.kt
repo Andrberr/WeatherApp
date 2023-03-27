@@ -36,11 +36,20 @@ class RepositoryImpl @Inject constructor(
                         deleteLocationModel()
                     }
                 }
-                if (response.location != null) dataBaseSource.insertLocationModel(
-                    responseToEntityMapper.mapToLocationModelEntity(
-                        response.location
+                if (response.location != null) {
+                    dataBaseSource.insertLocationModel(
+                        responseToEntityMapper.mapToLocationModelEntity(
+                            response.location
+                        )
                     )
-                )
+
+                    if (response.location.city != null) {
+                        val list = response.daysForecasts?.forecasts?.map {
+                            responseToEntityMapper.mapToDayWeatherEntity(it, response.location.city)
+                        }
+                        if (list != null) dataBaseSource.insertDaysWeather(list)
+                    }
+                }
                 if (response.currentWeather != null) {
                     dataBaseSource.insertWeatherModel(
                         responseToEntityMapper.mapToWeatherModelEntity(
@@ -48,10 +57,6 @@ class RepositoryImpl @Inject constructor(
                         )
                     )
                 }
-                val list = response.daysForecasts?.forecasts?.map {
-                    responseToEntityMapper.mapToDayWeatherEntity(it)
-                }
-                if (list != null) dataBaseSource.insertDaysWeather(list)
 
                 responseToDefaultMapper(response)
             } else {
@@ -69,12 +74,11 @@ class RepositoryImpl @Inject constructor(
                     (citiesService.getCitiesResponse()
                         .execute().body()
                         ?: throw Exception())
-                val cities = response.citiesList.map { citiesMapper.responseToEntity(it) }
-                dataBaseSource.insertCities(cities)
-                cities.map { citiesMapper.entityToDefault(it) }
-            } else {
-                dataBaseSource.getCities().map { citiesMapper.entityToDefault(it) }
+                val cities =
+                    citiesMapper.sort(response.citiesList.map { citiesMapper.responseToEntity(it) })
+                dataBaseSource.insertCities(cities.subList(1, cities.size))
             }
+            dataBaseSource.getCities().map { citiesMapper.entityToDefault(it) }
         }
     }
 }

@@ -6,20 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.ui.MainActivity
-import com.example.weatherapp.ui.WeatherViewModel
+import com.example.weatherapp.ui.GeneralViewModel
 import javax.inject.Inject
 
 class SearchFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val viewModel: WeatherViewModel by viewModels { factory }
+    private val generalViewModel: GeneralViewModel by viewModels { factory }
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -40,7 +41,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val itemClick: (String) -> Unit = {
-          val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(it)
+            val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(it)
             findNavController().navigate(action)
         }
 
@@ -51,15 +52,22 @@ class SearchFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-//        val editText = binding.findCityText
-//        editText.addTextChangedListener { text ->
-//            if (text.toString() != "") viewModel.getNewsList(text.toString())
-//        }
+        val citiesList = mutableListOf<String>()
 
-        viewModel.citiesLiveData.observe(viewLifecycleOwner) {
+        val editText = binding.findCityText
+        editText.addTextChangedListener { text ->
+            val cities = if (text.toString() != "")
+                generalViewModel.searchForCities(citiesList, text.toString())
+            else citiesList
+            citiesAdapter.setCities(cities)
+        }
+
+        generalViewModel.citiesLiveData.observe(viewLifecycleOwner) {
+            citiesList.clear()
+            citiesList.addAll(it)
             citiesAdapter.setCities(it)
         }
-        viewModel.getCities()
+        generalViewModel.getCities()
     }
 
     override fun onDestroyView() {
