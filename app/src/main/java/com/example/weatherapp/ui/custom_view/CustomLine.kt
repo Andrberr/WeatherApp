@@ -45,36 +45,52 @@ class CustomLine @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lineHeight = abs(curTemp) * height / 60f
-        x1 = width / 3f
-        x2 = 2f * width / 3f
+        if (curTemp != 0f) {
+            lineHeight = abs(curTemp) * height / 70f
+            x1 = width / 3f
+            x2 = 2f * width / 3f
 
-        if (curTemp > 0) {
-            y1 = height / 2f - lineHeight
-            y2 = height / 2f
-            textY = y1 - 5f
-        } else if (curTemp < 0) {
-            y1 = height / 2f
-            y2 = height / 2f + lineHeight
-            textY = y2 + 55f
+            if (curTemp > 0) {
+                y1 = height / 2f - lineHeight
+                y2 = height / 2f
+                textY = y1 - 5f
+            } else if (curTemp < 0) {
+                y1 = height / 2f
+                y2 = height / 2f + lineHeight
+                textY = y2 + 55f
+            }
+
+            if (curTemp >= 35f) textY = height / 2f + 30f
+            else if (curTemp <= -35f) textY = height / 2f - 30f
+
+            canvas.drawRect(
+                x1,
+                y1,
+                x2,
+                y2,
+                rectPaint
+            )
+            canvas.drawText(
+                "$curTemp°C",
+                (width / 3).toFloat(),
+                textY,
+                textPaint
+            )
+        } else{
+            canvas.drawText(
+                "$curTemp°C",
+                (width/3).toFloat(),
+                height / 2f - 30f,
+                textPaint
+            )
         }
 
-        if (curTemp >= 35f) textY = height / 2f + 30f
-        else if (curTemp <= -35f) textY = height / 2f - 30f
-
-        canvas.drawRect(
-            x1,
-            y1,
-            x2,
-            y2,
-            rectPaint
+        canvas.drawLine(
+            0f,
+            height / 2.toFloat(),
+            width.toFloat(),
+            height / 2.toFloat(),
+            linePaint
         )
-        canvas.drawText(
-            "$curTemp°C",
-            (width / 3).toFloat(),
-            textY,
-            textPaint
-        )
-        canvas.drawLine(0f, height / 2.toFloat(), width.toFloat(), height / 2.toFloat(), linePaint)
     }
 }

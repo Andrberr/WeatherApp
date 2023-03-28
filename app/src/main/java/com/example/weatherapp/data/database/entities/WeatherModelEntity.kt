@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "current_weather_table")
 data class WeatherModelEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo(name = "city") val city: String,
     @ColumnInfo(name = "tempC") val tempC: Float,
     @ColumnInfo(name = "tempF") val tempF: Float,
     @ColumnInfo(name = "isDay") val isDay: Int,

@@ -49,7 +49,6 @@ class FutureWeatherFragment : Fragment() {
         }
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
-            println(it.daysForecasts.size)
             adapter.setWeather(it.daysForecasts)
         }
 

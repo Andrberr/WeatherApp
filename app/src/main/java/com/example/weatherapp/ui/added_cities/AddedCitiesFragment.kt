@@ -6,10 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
+import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
+import javax.inject.Inject
 
 class AddedCitiesFragment : Fragment() {
 
@@ -17,6 +22,10 @@ class AddedCitiesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: AddedCitiesFragmentArgs by navArgs()
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val viewModel: GeneralViewModel by viewModels { factory }
 
     private var chosenCity: String = ""
 
@@ -35,11 +44,29 @@ class AddedCitiesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         chosenCity = args.city
+//        binding.backButton.setOnClickListener {
+//            val action = AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(chosenCity)
+//            findNavController().navigate(action)
+//        }
 
-        binding.backButton.setOnClickListener {
-            val action = AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(chosenCity)
+        val itemClick: (String) -> Unit = {
+            val action =
+                AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(
+                    it
+                )
             findNavController().navigate(action)
         }
+
+        val adapter = AddedCitiesAdapter(itemClick)
+        binding.recycler.apply {
+            this.adapter = adapter
+            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        viewModel.addedCitiesLiveData.observe(viewLifecycleOwner){
+            adapter.setCities(it)
+        }
+        viewModel.getAddedCities()
     }
 
     override fun onDestroyView() {

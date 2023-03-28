@@ -3,6 +3,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="degree_c">°C</string>
     <string name="degree_f">°F</string>
+    <string name="grad">°\n</string>
     <string name="fourteen_day_forecast">14-day forecast</string>
     <string name="text_forecast">14-day forecast\n</string>
     <string name="search">Search</string>

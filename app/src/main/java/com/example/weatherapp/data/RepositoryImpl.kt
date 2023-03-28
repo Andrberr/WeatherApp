@@ -8,6 +8,7 @@ import com.example.weatherapp.data.network.CitiesService
 import com.example.weatherapp.data.network.WeatherService
 import com.example.weatherapp.data.sources.DataBaseSource
 import com.example.weatherapp.domain.Repository
+import com.example.weatherapp.domain.models.AddedCityInfo
 import com.example.weatherapp.domain.models.WeatherInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -30,10 +31,10 @@ class RepositoryImpl @Inject constructor(
                         .execute().body()
                         ?: throw Exception())
                 with(dataBaseSource) {
-                    if (getDaysWeather().isNotEmpty()) {
-                        deleteDaysWeather()
-                        deleteWeatherModel()
-                        deleteLocationModel()
+                    if (getDaysWeather(city).isNotEmpty()) {
+                        deleteCityLocation(city)
+                        deleteCurrentCityWeather(city)
+                        deleteDayCityWeather(city)
                     }
                 }
                 if (response.location != null) {
@@ -48,20 +49,21 @@ class RepositoryImpl @Inject constructor(
                             responseToEntityMapper.mapToDayWeatherEntity(it, response.location.city)
                         }
                         if (list != null) dataBaseSource.insertDaysWeather(list)
+
+                        if (response.currentWeather != null) {
+                            dataBaseSource.insertWeatherModel(
+                                responseToEntityMapper.mapToWeatherModelEntity(
+                                    response.currentWeather, response.location.city
+                                )
+                            )
+                        }
                     }
-                }
-                if (response.currentWeather != null) {
-                    dataBaseSource.insertWeatherModel(
-                        responseToEntityMapper.mapToWeatherModelEntity(
-                            response.currentWeather
-                        )
-                    )
                 }
 
                 responseToDefaultMapper(response)
             } else {
                 with(dataBaseSource) {
-                    entityToDefaultMapper(getLocationModel(), getWeatherModel(), getDaysWeather())
+                    entityToDefaultMapper(getLocationModel(city), getWeatherModel(city), getDaysWeather(city))
                 }
             }
         }
@@ -79,6 +81,17 @@ class RepositoryImpl @Inject constructor(
                 dataBaseSource.insertCities(cities.subList(1, cities.size))
             }
             dataBaseSource.getCities().map { citiesMapper.entityToDefault(it) }
+        }
+    }
+
+    override suspend fun getAddedCitiesInfo(): List<AddedCityInfo> {
+        return withContext(Dispatchers.IO){
+            val uniqueCities = dataBaseSource.getUniqueCities()
+            val list = mutableListOf<AddedCityInfo>()
+            uniqueCities.forEach {
+                list.add(AddedCityInfo(city = it, temperature = dataBaseSource.getTemperatureForCity(it)))
+            }
+            list
         }
     }
 }

@@ -86,7 +86,7 @@ class CurrentWeatherFragment : Fragment() {
                 moreWeatherAdapter.setMoreWeather(moreWeatherList)
             }
         }
-        vm.getWeatherInfo(args.city)
+        vm.getWeatherInfo("Minsk")
 
         binding.weekForecastButton.setOnClickListener {
             val action =

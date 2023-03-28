@@ -23,9 +23,10 @@ class ResponseToEntityMapper @Inject constructor() {
             )
         }
 
-    fun mapToWeatherModelEntity(weatherResponse: WeatherInfoResponse) =
+    fun mapToWeatherModelEntity(weatherResponse: WeatherInfoResponse, city: String) =
         with(weatherResponse) {
             WeatherModelEntity(
+                city = city,
                 tempC = tempC ?: 0f,
                 tempF = tempF ?: 0f,
                 isDay = isDay ?: 0,

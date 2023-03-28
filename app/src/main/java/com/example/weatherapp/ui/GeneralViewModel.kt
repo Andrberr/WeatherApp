@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.di.FragmentScope
 import com.example.weatherapp.domain.Repository
+import com.example.weatherapp.domain.models.AddedCityInfo
 import com.example.weatherapp.domain.models.WeatherInfo
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -20,6 +21,9 @@ class GeneralViewModel @Inject constructor(
 
     private val _citiesLiveData = MutableLiveData<List<String>>()
     val citiesLiveData: LiveData<List<String>> get() = _citiesLiveData
+
+    private val _addedCitiesLiveData = MutableLiveData<List<AddedCityInfo>>()
+    val addedCitiesLiveData: LiveData<List<AddedCityInfo>> get() = _addedCitiesLiveData
 
     private lateinit var city: String
 
@@ -50,5 +54,11 @@ class GeneralViewModel @Inject constructor(
             }
         }
         return resultList
+    }
+
+    fun getAddedCities(){
+        viewModelScope.launch {
+            _addedCitiesLiveData.value = repository.getAddedCitiesInfo()
+        }
     }
 }
