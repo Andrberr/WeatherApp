@@ -3,18 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/loadingFragment">
 
     <fragment
         android:id="@+id/currentWeatherFragment"
         android:name="com.example.weatherapp.ui.current_weather.CurrentWeatherFragment"
         android:label="fragment_current_weather"
         tools:layout="@layout/fragment_current_weather" >
-
-        <argument
-            android:name="city"
-            app:argType="string"
-            android:defaultValue=""/>
 
         <action
             android:id="@+id/action_currentWeatherFragment_to_futureWeatherFragment"
@@ -31,10 +26,7 @@
         android:name="com.example.weatherapp.ui.future_weather.FutureWeatherFragment"
         android:label="fragment_future_weather"
         tools:layout="@layout/fragment_future_weather" >
-        <argument
-            android:name="city"
-            app:argType="string"
-            android:defaultValue=""/>
+
         <action
             android:id="@+id/action_futureWeatherFragment_to_currentWeatherFragment"
             app:destination="@id/currentWeatherFragment" />
@@ -45,8 +37,8 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_currentWeatherFragment"
-            app:destination="@id/currentWeatherFragment" />
+            android:id="@+id/action_searchFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment" />
     </fragment>
     <fragment
         android:id="@+id/addedCitiesFragment"
@@ -54,13 +46,33 @@
         android:label="fragment_added_cities"
         tools:layout="@layout/fragment_added_cities" >
 
+        <action
+            android:id="@+id/action_addedCitiesFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.weatherapp.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" >
+        <action
+            android:id="@+id/action_loadingFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_loadingFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+
         <argument
             android:name="city"
             app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            />
 
-        <action
-            android:id="@+id/action_addedCitiesFragment_to_currentWeatherFragment"
-            app:destination="@id/currentWeatherFragment" />
+        <argument
+            android:name="flag"
+            app:argType="boolean"
+            android:defaultValue="false"
+            />
+
     </fragment>
 </navigation>

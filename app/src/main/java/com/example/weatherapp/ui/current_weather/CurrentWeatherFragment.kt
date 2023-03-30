@@ -29,8 +29,6 @@ class CurrentWeatherFragment : Fragment() {
     lateinit var factory: ViewModelFactory
     private val vm: GeneralViewModel by viewModels { factory }
 
-    private val args: CurrentWeatherFragmentArgs by navArgs()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as MainActivity).generalComponent.inject(this)
@@ -46,6 +44,7 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         val generalWeatherAdapter = CurrentWeatherAdapter()
         binding.threeDayForecastRecycler.apply {
             this.adapter = generalWeatherAdapter
@@ -61,6 +60,7 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
+
             binding.cityView.text = it.location.city
             generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
 
@@ -86,11 +86,15 @@ class CurrentWeatherFragment : Fragment() {
                 moreWeatherAdapter.setMoreWeather(moreWeatherList)
             }
         }
-        vm.getWeatherInfo("Minsk")
+
+//        vm.userCityLiveData.observe(viewLifecycleOwner){
+//            vm.getWeatherInfo(it)
+//        }
+//        vm.getUserCity()
 
         binding.weekForecastButton.setOnClickListener {
             val action =
-                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment(args.city)
+                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment()
             findNavController().navigate(action)
         }
 
@@ -101,7 +105,7 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         binding.citiesWeatherButton.setOnClickListener {
-            val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment(args.city)
+            val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
             findNavController().navigate(action)
         }
 

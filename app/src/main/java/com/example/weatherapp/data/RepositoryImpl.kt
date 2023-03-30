@@ -7,6 +7,7 @@ import com.example.weatherapp.data.mappers.ResponseToEntityMapper
 import com.example.weatherapp.data.network.CitiesService
 import com.example.weatherapp.data.network.WeatherService
 import com.example.weatherapp.data.sources.DataBaseSource
+import com.example.weatherapp.data.sources.UserCitySource
 import com.example.weatherapp.domain.Repository
 import com.example.weatherapp.domain.models.AddedCityInfo
 import com.example.weatherapp.domain.models.WeatherInfo
@@ -21,7 +22,8 @@ class RepositoryImpl @Inject constructor(
     private val responseToEntityMapper: ResponseToEntityMapper,
     private val entityToDefaultMapper: EntityToDefaultMapper,
     private val citiesMapper: CitiesMapper,
-    private val dataBaseSource: DataBaseSource
+    private val dataBaseSource: DataBaseSource,
+    private val userCitySource: UserCitySource
 ) : Repository {
     override suspend fun getWeatherInfo(cache: Boolean, city: String): WeatherInfo {
         return withContext(Dispatchers.IO) {
@@ -63,7 +65,11 @@ class RepositoryImpl @Inject constructor(
                 responseToDefaultMapper(response)
             } else {
                 with(dataBaseSource) {
-                    entityToDefaultMapper(getLocationModel(city), getWeatherModel(city), getDaysWeather(city))
+                    entityToDefaultMapper(
+                        getLocationModel(city),
+                        getWeatherModel(city),
+                        getDaysWeather(city)
+                    )
                 }
             }
         }
@@ -85,13 +91,24 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAddedCitiesInfo(): List<AddedCityInfo> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val uniqueCities = dataBaseSource.getUniqueCities()
             val list = mutableListOf<AddedCityInfo>()
             uniqueCities.forEach {
-                list.add(AddedCityInfo(city = it, temperature = dataBaseSource.getTemperatureForCity(it)))
+                list.add(
+                    AddedCityInfo(
+                        city = it,
+                        temperature = dataBaseSource.getTemperatureForCity(it)
+                    )
+                )
             }
             list
         }
     }
+
+    override fun setUserCity(city: String) {
+        userCitySource.setUserCity(city)
+    }
+
+    override fun getUserCity(): String = userCitySource.getUserCity()
 }

@@ -21,13 +21,9 @@ class AddedCitiesFragment : Fragment() {
     private var _binding: FragmentAddedCitiesBinding? = null
     private val binding get() = _binding!!
 
-    private val args: AddedCitiesFragmentArgs by navArgs()
-
     @Inject
     lateinit var factory: ViewModelFactory
     private val viewModel: GeneralViewModel by viewModels { factory }
-
-    private var chosenCity: String = ""
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,17 +39,13 @@ class AddedCitiesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        chosenCity = args.city
-//        binding.backButton.setOnClickListener {
-//            val action = AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(chosenCity)
-//            findNavController().navigate(action)
-//        }
+        var prevCity = ""
 
         val itemClick: (String) -> Unit = {
+            viewModel.setUserCity(it)
+            val flag = prevCity == it
             val action =
-                AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(
-                    it
-                )
+                AddedCitiesFragmentDirections.actionAddedCitiesFragmentToLoadingFragment(prevCity, flag)
             findNavController().navigate(action)
         }
 
@@ -63,10 +55,15 @@ class AddedCitiesFragment : Fragment() {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        viewModel.addedCitiesLiveData.observe(viewLifecycleOwner){
+        viewModel.addedCitiesLiveData.observe(viewLifecycleOwner) {
             adapter.setCities(it)
         }
         viewModel.getAddedCities()
+
+        viewModel.userCityLiveData.observe(viewLifecycleOwner){
+            prevCity = it
+        }
+        viewModel.getUserCity()
     }
 
     override fun onDestroyView() {

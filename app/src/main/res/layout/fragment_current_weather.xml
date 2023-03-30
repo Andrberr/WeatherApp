@@ -17,7 +17,8 @@
             android:layout_height="40dp"
             android:background="@drawable/points"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/cityView"
@@ -35,7 +36,8 @@
             android:layout_height="40dp"
             android:background="@drawable/add"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+           />
 
         <TextView
             android:id="@+id/tempCView"
@@ -47,12 +49,14 @@
             app:layout_constraintTop_toBottomOf="@+id/cityView" />
 
         <TextView
+            android:id="@+id/gradC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/degree_c"
             android:textSize="50sp"
             app:layout_constraintStart_toEndOf="@id/tempCView"
-            app:layout_constraintTop_toBottomOf="@+id/cityView" />
+            app:layout_constraintTop_toBottomOf="@+id/cityView"
+            />
 
         <TextView
             android:id="@+id/tempFView"
@@ -65,13 +69,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tempCView" />
 
         <TextView
+            android:id="@+id/gradF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/degree_f"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/tempFView"
-            app:layout_constraintTop_toBottomOf="@+id/tempCView" />
+            app:layout_constraintTop_toBottomOf="@+id/tempCView"
+           />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/threeDayLayout"
@@ -80,7 +86,8 @@
             android:background="@drawable/background_constraint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tempFView">
+            app:layout_constraintTop_toBottomOf="@id/tempFView"
+            >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/threeDayForecastRecycler"
@@ -115,7 +122,8 @@
             app:layout_constraintEnd_toStartOf="@id/moreWeatherInfoLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/delimeter_view"
-            app:layout_constraintWidth_percent="0.45">
+            app:layout_constraintWidth_percent="0.45"
+            >
 
             <TextView
                 android:id="@+id/windDirView"

@@ -18,10 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var generalComponent: GeneralComponent
 
-    @Inject
-    lateinit var factory: ViewModelFactory
-    private val viewModel: GeneralViewModel by viewModels { factory }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         generalComponent = (application as WeatherApp).appComponent.weatherComponent().create()
         generalComponent.inject(this)

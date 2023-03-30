@@ -22,8 +22,6 @@ class FutureWeatherFragment : Fragment() {
     private var _binding: FragmentFutureWeatherBinding? = null
     private val binding get() = _binding!!
 
-    private val args: FutureWeatherFragmentArgs by navArgs()
-
     @Inject
     lateinit var factory: ViewModelFactory
     private val vm: GeneralViewModel by viewModels { factory }
@@ -53,7 +51,7 @@ class FutureWeatherFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment(args.city)
+            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment()
             findNavController().navigate(action)
         }
     }

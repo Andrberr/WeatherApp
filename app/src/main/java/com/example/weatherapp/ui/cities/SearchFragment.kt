@@ -40,8 +40,11 @@ class SearchFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var prevCity = ""
         val itemClick: (String) -> Unit = {
-            val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(it)
+            generalViewModel.setUserCity(it)
+            val flag = prevCity == it
+            val action = SearchFragmentDirections.actionSearchFragmentToLoadingFragment(prevCity, flag)
             findNavController().navigate(action)
         }
 
@@ -68,6 +71,11 @@ class SearchFragment : Fragment() {
             citiesAdapter.setCities(it)
         }
         generalViewModel.getCities()
+
+        generalViewModel.userCityLiveData.observe(viewLifecycleOwner){
+            prevCity = it
+        }
+        generalViewModel.getUserCity()
     }
 
     override fun onDestroyView() {

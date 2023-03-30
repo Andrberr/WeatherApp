@@ -25,6 +25,9 @@ class GeneralViewModel @Inject constructor(
     private val _addedCitiesLiveData = MutableLiveData<List<AddedCityInfo>>()
     val addedCitiesLiveData: LiveData<List<AddedCityInfo>> get() = _addedCitiesLiveData
 
+    private val _userCityLiveData = MutableLiveData<String>()
+    val userCityLiveData: LiveData<String> get() = _userCityLiveData
+
     private lateinit var city: String
 
     private val handler = CoroutineExceptionHandler { _, _ ->
@@ -60,5 +63,13 @@ class GeneralViewModel @Inject constructor(
         viewModelScope.launch {
             _addedCitiesLiveData.value = repository.getAddedCitiesInfo()
         }
+    }
+
+    fun getUserCity(){
+        _userCityLiveData.value = repository.getUserCity()
+    }
+
+    fun setUserCity(city: String){
+        repository.setUserCity(city)
     }
 }
