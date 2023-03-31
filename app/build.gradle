@@ -9,7 +9,6 @@ plugins {
 android {
     namespace 'com.example.weatherapp'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.example.weatherapp"
         minSdk 24
@@ -39,6 +38,10 @@ android {
 }
 
 dependencies {
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':core')
+
     //Lottie
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"

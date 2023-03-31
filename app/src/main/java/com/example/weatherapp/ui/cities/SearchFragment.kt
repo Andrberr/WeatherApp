@@ -10,7 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
+import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.GeneralViewModel

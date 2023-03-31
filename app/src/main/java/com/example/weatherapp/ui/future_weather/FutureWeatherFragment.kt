@@ -6,13 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedDispatcher
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
-import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
+import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import javax.inject.Inject

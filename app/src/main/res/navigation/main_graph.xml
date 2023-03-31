@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.example.weatherapp.LoadingFragment"
+        android:name="com.example.weatherapp.ui.loading.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading" >
         <action

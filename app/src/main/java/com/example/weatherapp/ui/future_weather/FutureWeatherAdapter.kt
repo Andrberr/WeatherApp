@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.FutureWeatherLayoutBinding
-import com.example.weatherapp.domain.models.DayWeather
+import com.example.domain.models.DayWeather
 
 class FutureWeatherAdapter : RecyclerView.Adapter<FutureWeatherViewHolder>() {
 

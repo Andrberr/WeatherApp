@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.AddedCityLayoutBinding
-import com.example.weatherapp.domain.models.AddedCityInfo
+import com.example.domain.models.AddedCityInfo
 
 class AddedCitiesAdapter(private val itemClick: (String) -> Unit): RecyclerView.Adapter<AddedCitiesViewHolder>() {
 

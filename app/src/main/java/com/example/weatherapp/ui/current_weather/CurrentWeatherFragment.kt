@@ -2,17 +2,15 @@ package com.example.weatherapp.ui.current_weather
 
 import android.content.Context
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
-import com.example.weatherapp.data.di.vm_factory.ViewModelFactory
+import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter

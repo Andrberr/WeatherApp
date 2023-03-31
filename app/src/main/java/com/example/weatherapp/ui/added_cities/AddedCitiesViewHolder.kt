@@ -2,7 +2,7 @@ package com.example.weatherapp.ui.added_cities
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.AddedCityLayoutBinding
-import com.example.weatherapp.domain.models.AddedCityInfo
+import com.example.domain.models.AddedCityInfo
 
 class AddedCitiesViewHolder(
     private val binding: AddedCityLayoutBinding,

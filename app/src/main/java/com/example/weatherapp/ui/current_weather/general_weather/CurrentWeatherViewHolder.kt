@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target;
 import com.example.weatherapp.databinding.CurrentWeatherLayoutBinding
-import com.example.weatherapp.domain.models.DayWeather
+import com.example.domain.models.DayWeather
 
 class CurrentWeatherViewHolder(
     private val binding: CurrentWeatherLayoutBinding
