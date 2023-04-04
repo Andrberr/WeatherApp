@@ -1,30 +1,23 @@
 package com.example.data
 
-import com.example.data.mappers.CitiesMapper
 import com.example.data.mappers.EntityToDefaultMapper
 import com.example.data.mappers.ResponseToDefaultMapper
 import com.example.data.mappers.ResponseToEntityMapper
-import com.example.data.network.CitiesService
 import com.example.data.network.WeatherService
 import com.example.data.sources.DataBaseSource
-import com.example.data.sources.UserCitySource
-import com.example.domain.Repository
-import com.example.domain.models.AddedCityInfo
+import com.example.domain.WeatherRepository
 import com.example.domain.models.WeatherInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(
+class WeatherRepositoryImpl @Inject constructor(
     private val weatherService: WeatherService,
-    private val citiesService: CitiesService,
     private val responseToDefaultMapper: ResponseToDefaultMapper,
     private val responseToEntityMapper: ResponseToEntityMapper,
     private val entityToDefaultMapper: EntityToDefaultMapper,
-    private val citiesMapper: CitiesMapper,
     private val dataBaseSource: DataBaseSource,
-    private val userCitySource: UserCitySource
-) : Repository {
+) : WeatherRepository {
     override suspend fun getWeatherInfo(cache: Boolean, city: String): WeatherInfo {
         return withContext(Dispatchers.IO) {
             if (cache) {
@@ -74,41 +67,4 @@ class RepositoryImpl @Inject constructor(
             }
         }
     }
-
-    override suspend fun getCities(cache: Boolean): List<String> {
-        return withContext(Dispatchers.IO) {
-            if (dataBaseSource.getCities().isEmpty()) {
-                val response =
-                    (citiesService.getCitiesResponse()
-                        .execute().body()
-                        ?: throw Exception())
-                val cities =
-                    citiesMapper.sort(response.citiesList.map { citiesMapper.responseToEntity(it) })
-                dataBaseSource.insertCities(cities.subList(1, cities.size))
-            }
-            dataBaseSource.getCities().map { citiesMapper.entityToDefault(it) }
-        }
-    }
-
-    override suspend fun getAddedCitiesInfo(): List<AddedCityInfo> {
-        return withContext(Dispatchers.IO) {
-            val uniqueCities = dataBaseSource.getUniqueCities()
-            val list = mutableListOf<AddedCityInfo>()
-            uniqueCities.forEach {
-                list.add(
-                    AddedCityInfo(
-                        city = it,
-                        temperature = dataBaseSource.getTemperatureForCity(it)
-                    )
-                )
-            }
-            list
-        }
-    }
-
-    override fun setUserCity(city: String) {
-        userCitySource.setUserCity(city)
-    }
-
-    override fun getUserCity(): String = userCitySource.getUserCity()
 }

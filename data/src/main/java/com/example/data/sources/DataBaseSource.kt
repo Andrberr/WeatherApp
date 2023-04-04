@@ -8,6 +8,7 @@ import com.example.data.database.entities.CitiesEntity
 import com.example.data.database.entities.DayWeatherEntity
 import com.example.data.database.entities.LocationModelEntity
 import com.example.data.database.entities.WeatherModelEntity
+import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -64,4 +65,6 @@ class DataBaseSource @Inject constructor(
         withContext(Dispatchers.IO) { citiesDao.insert(cities) }
 
     suspend fun deleteAllCities() = withContext(Dispatchers.IO) { citiesDao.deleteAll() }
+
+//    fun addToFirebase(dataBase: DatabaseReference, city: String) = dataBase.push().setValue(city)
 }

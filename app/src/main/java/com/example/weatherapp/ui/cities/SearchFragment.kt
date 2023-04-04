@@ -44,7 +44,11 @@ class SearchFragment : Fragment() {
         val itemClick: (String) -> Unit = {
             generalViewModel.setUserCity(it)
             val flag = prevCity == it
-            val action = SearchFragmentDirections.actionSearchFragmentToLoadingFragment(prevCity, flag)
+            val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(
+                prevCity,
+                flag,
+                true
+            )
             findNavController().navigate(action)
         }
 
@@ -72,7 +76,7 @@ class SearchFragment : Fragment() {
         }
         generalViewModel.getCities()
 
-        generalViewModel.userCityLiveData.observe(viewLifecycleOwner){
+        generalViewModel.userCityLiveData.observe(viewLifecycleOwner) {
             prevCity = it
         }
         generalViewModel.getUserCity()

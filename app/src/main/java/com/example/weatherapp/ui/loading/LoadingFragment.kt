@@ -24,8 +24,6 @@ class LoadingFragment : Fragment() {
     private var _binding: FragmentLoadingBinding? = null
     private val binding get() = _binding!!
 
-    private val args: LoadingFragmentArgs by navArgs()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as MainActivity).generalComponent.inject(this)
@@ -40,24 +38,13 @@ class LoadingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         viewModel.userCityLiveData.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                val action = LoadingFragmentDirections.actionLoadingFragmentToSearchFragment()
-                findNavController().navigate(action)
-            } else {
-                viewModel.getWeatherInfo(it)
-            }
+            val action =
+                if (it != "") LoadingFragmentDirections.actionLoadingFragmentToCurrentWeatherFragment()
+                else LoadingFragmentDirections.actionLoadingFragmentToSearchFragment()
+            findNavController().navigate(action)
         }
         viewModel.getUserCity()
-
-        viewModel.weatherLiveData.observe(viewLifecycleOwner) {
-            if (it.location.city != args.city || args.flag) {
-                val action =
-                    LoadingFragmentDirections.actionLoadingFragmentToCurrentWeatherFragment()
-                findNavController().navigate(action)
-            }
-        }
     }
 
     override fun onDestroyView() {

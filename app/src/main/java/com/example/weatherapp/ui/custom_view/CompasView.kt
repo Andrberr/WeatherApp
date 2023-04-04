@@ -25,10 +25,15 @@ class CompasView @JvmOverloads constructor(
         textSize = 60F
     }
 
+    private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        color = Color.rgb(102, 48, 199)
+        strokeWidth = 5F
+    }
+
     fun setParams(degree: Float) {
         var degr = degree
-        if (degree > 180f) degr = 360f - degree
-
+        if (degree > 180f) degr = -360f + degree
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -66,5 +71,7 @@ class CompasView @JvmOverloads constructor(
             (height / 2).toFloat() + 10f,
             textPaint
         )
+
+        //canvas.drawLine((width/2).toFloat(), (height/2).toFloat(), , , linePaint)
     }
 }

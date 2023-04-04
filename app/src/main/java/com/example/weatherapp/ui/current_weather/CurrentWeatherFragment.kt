@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
@@ -27,6 +28,8 @@ class CurrentWeatherFragment : Fragment() {
     lateinit var factory: ViewModelFactory
     private val vm: GeneralViewModel by viewModels { factory }
 
+    private val args: CurrentWeatherFragmentArgs by navArgs()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as MainActivity).generalComponent.inject(this)
@@ -38,6 +41,7 @@ class CurrentWeatherFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCurrentWeatherBinding.inflate(inflater, container, false)
+        setInvisibleParams()
         return binding.root
     }
 
@@ -58,37 +62,42 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
+          if ((it.location.city != args.prevCity) || args.isSame) {
+              binding.cityView.text = it.location.city
+              generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
 
-            binding.cityView.text = it.location.city
-            generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
+              with(it.currentWeather) {
+                  setVisibleParams()
 
-            with(it.currentWeather) {
-                binding.tempCView.text = tempC.toString()
-                binding.tempFView.text = tempF.toString()
-                binding.windDirView.text = windDirection
-                binding.windSpeedView.text = windSpeed.toString()
-                val moreWeatherList =
-                    listOf(
-                        MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
-                        MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
-                        MoreWeatherElem("Humidity", "${getModifiableFloat(humidityPercent)}%"),
-                        MoreWeatherElem("Cloud cover", "${getModifiableFloat(cloudPercent)}%"),
-                        MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
-                        MoreWeatherElem(
-                            "Precipitation",
-                            getModifiableFloat(precipitationAmountHour) + "mm/h"
-                        ),
-                        MoreWeatherElem("Visibility", getModifiableFloat(visibilityKm) + "km/h"),
-                        MoreWeatherElem("Wind gust", getModifiableFloat(gustWindSpeed) + "km/h")
-                    )
-                moreWeatherAdapter.setMoreWeather(moreWeatherList)
-            }
+                  binding.tempCView.text = tempC.toString()
+                  binding.tempFView.text = tempF.toString()
+                  binding.windDirView.text = windDirection
+                  binding.windSpeedView.text = windSpeed.toString()
+                  val moreWeatherList =
+                      listOf(
+                          MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
+                          MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
+                          MoreWeatherElem("Humidity", "${getModifiableFloat(humidityPercent)}%"),
+                          MoreWeatherElem("Cloud cover", "${getModifiableFloat(cloudPercent)}%"),
+                          MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
+                          MoreWeatherElem(
+                              "Precipitation",
+                              getModifiableFloat(precipitationAmountHour) + "mm/h"
+                          ),
+                          MoreWeatherElem("Visibility", getModifiableFloat(visibilityKm) + "km/h"),
+                          MoreWeatherElem("Wind gust", getModifiableFloat(gustWindSpeed) + "km/h")
+                      )
+                  moreWeatherAdapter.setMoreWeather(moreWeatherList)
+              }
+          }
         }
 
-//        vm.userCityLiveData.observe(viewLifecycleOwner){
-//            vm.getWeatherInfo(it)
-//        }
-//        vm.getUserCity()
+        if (args.needUpdate) {
+            vm.userCityLiveData.observe(viewLifecycleOwner) {
+                vm.getWeatherInfo(it)
+            }
+            vm.getUserCity()
+        }
 
         binding.weekForecastButton.setOnClickListener {
             val action =
@@ -107,14 +116,26 @@ class CurrentWeatherFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-//        binding.constraint.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
-//            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-//                val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToSearchFragment()
-//                findNavController().navigate(action)
-//                return@OnKeyListener true
-//            }
-//            false
-//        })
+    }
+
+    private fun setInvisibleParams(){
+        binding.gradC.visibility = View.INVISIBLE
+        binding.gradF.visibility = View.INVISIBLE
+        binding.threeDayLayout.visibility = View.INVISIBLE
+        binding.windLayout.visibility = View.INVISIBLE
+        binding.delimeterView.visibility = View.INVISIBLE
+        binding.citiesWeatherButton.visibility =View.INVISIBLE
+        binding.addButton.visibility = View.INVISIBLE
+    }
+
+    private fun setVisibleParams(){
+        binding.gradC.visibility = View.VISIBLE
+        binding.gradF.visibility = View.VISIBLE
+        binding.citiesWeatherButton.visibility =View.VISIBLE
+        binding.addButton.visibility = View.VISIBLE
+        binding.threeDayLayout.visibility = View.VISIBLE
+        binding.windLayout.visibility = View.VISIBLE
+        binding.delimeterView.visibility = View.VISIBLE
     }
 
     private fun getModifiableFloat(value: Float): String {

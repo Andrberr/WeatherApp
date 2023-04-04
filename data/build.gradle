@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.10'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -38,6 +39,7 @@ dependencies {
 
     //Dagger
     implementation 'com.google.dagger:dagger:2.44'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
     kapt 'com.google.dagger:dagger-compiler:2.44'
 
     //Retrofit

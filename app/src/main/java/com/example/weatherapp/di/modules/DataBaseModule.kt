@@ -7,6 +7,8 @@ import com.example.data.database.dao.cities_dao.CitiesDao
 import com.example.data.database.dao.weather_dao.DayWeatherDao
 import com.example.data.database.dao.weather_dao.LocationModelDao
 import com.example.data.database.dao.weather_dao.WeatherModelDao
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -33,4 +35,8 @@ class DataBaseModule {
     @Provides
     @Singleton
     fun provideCitiesDao(db: WeatherDataBase): CitiesDao = db.getCitiesDao()
+
+//    @Provides
+//    @Singleton
+//    fun provideFirebaseDatabase(reference: DatabaseReference) = FirebaseDatabase.getInstance().getReference("City")
 }

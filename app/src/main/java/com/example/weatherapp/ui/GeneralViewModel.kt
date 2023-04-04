@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.CitiesRepository
 import com.example.weatherapp.di.FragmentScope
-import com.example.domain.Repository
+import com.example.domain.WeatherRepository
 import com.example.domain.models.AddedCityInfo
 import com.example.domain.models.WeatherInfo
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @FragmentScope
 class GeneralViewModel @Inject constructor(
-    private val repository: Repository,
+    private val weatherRepository: WeatherRepository,
+    private val citiesRepository: CitiesRepository
 ) : ViewModel() {
     private val _weatherLiveData = MutableLiveData<WeatherInfo>()
     val weatherLiveData: LiveData<WeatherInfo> get() = _weatherLiveData
@@ -32,20 +34,20 @@ class GeneralViewModel @Inject constructor(
 
     private val handler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
-            _weatherLiveData.value = repository.getWeatherInfo(false, city)
+            _weatherLiveData.value = weatherRepository.getWeatherInfo(false, city)
         }
     }
 
     fun getWeatherInfo(city: String) {
         this.city = city
         viewModelScope.launch(handler) {
-            _weatherLiveData.value = repository.getWeatherInfo(true, city)
+            _weatherLiveData.value = weatherRepository.getWeatherInfo(true, city)
         }
     }
 
     fun getCities() {
         viewModelScope.launch {
-            _citiesLiveData.value = repository.getCities(true)
+            _citiesLiveData.value = citiesRepository.getCities(true)
         }
     }
 
@@ -61,15 +63,15 @@ class GeneralViewModel @Inject constructor(
 
     fun getAddedCities(){
         viewModelScope.launch {
-            _addedCitiesLiveData.value = repository.getAddedCitiesInfo()
+            _addedCitiesLiveData.value = citiesRepository.getAddedCitiesInfo()
         }
     }
 
     fun getUserCity(){
-        _userCityLiveData.value = repository.getUserCity()
+        _userCityLiveData.value = citiesRepository.getUserCity()
     }
 
     fun setUserCity(city: String){
-        repository.setUserCity(city)
+        citiesRepository.setUserCity(city)
     }
 }

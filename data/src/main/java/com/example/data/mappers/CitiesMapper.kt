@@ -21,5 +21,4 @@ class CitiesMapper @Inject constructor() {
     }
 
     fun entityToDefault(entity: CitiesEntity): String = entity.city
-
 }

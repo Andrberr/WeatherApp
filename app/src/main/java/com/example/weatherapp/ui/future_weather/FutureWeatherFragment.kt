@@ -49,7 +49,7 @@ class FutureWeatherFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment()
+            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment("", true, false)
             findNavController().navigate(action)
         }
     }
