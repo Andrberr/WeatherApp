@@ -25,13 +25,8 @@ class WeatherRepositoryImpl @Inject constructor(
                     (weatherService.getWeatherResponse(city, 14)
                         .execute().body()
                         ?: throw Exception())
-                with(dataBaseSource) {
-                    if (getDaysWeather(city).isNotEmpty()) {
-                        deleteCityLocation(city)
-                        deleteCurrentCityWeather(city)
-                        deleteDayCityWeather(city)
-                    }
-                }
+                deleteCityFromDatabase(city)
+
                 if (response.location != null) {
                     dataBaseSource.insertLocationModel(
                         responseToEntityMapper.mapToLocationModelEntity(
@@ -64,6 +59,16 @@ class WeatherRepositoryImpl @Inject constructor(
                         getDaysWeather(city)
                     )
                 }
+            }
+        }
+    }
+
+    override suspend fun deleteCityFromDatabase(city: String){
+        with(dataBaseSource) {
+            if (getDaysWeather(city).isNotEmpty()) {
+                deleteCityLocation(city)
+                deleteCurrentCityWeather(city)
+                deleteDayCityWeather(city)
             }
         }
     }

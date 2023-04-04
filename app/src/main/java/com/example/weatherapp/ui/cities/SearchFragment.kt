@@ -40,6 +40,7 @@ class SearchFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         var prevCity = ""
         val itemClick: (String) -> Unit = {
             generalViewModel.setUserCity(it)
@@ -60,6 +61,12 @@ class SearchFragment : Fragment() {
         }
 
         val citiesList = mutableListOf<String>()
+        generalViewModel.citiesLiveData.observe(viewLifecycleOwner) {
+            citiesList.clear()
+            citiesList.addAll(it)
+            citiesAdapter.setCities(it)
+        }
+        generalViewModel.getCities()
 
         val editText = binding.findCityText
         editText.addTextChangedListener { text ->
@@ -68,13 +75,6 @@ class SearchFragment : Fragment() {
             else citiesList
             citiesAdapter.setCities(cities)
         }
-
-        generalViewModel.citiesLiveData.observe(viewLifecycleOwner) {
-            citiesList.clear()
-            citiesList.addAll(it)
-            citiesAdapter.setCities(it)
-        }
-        generalViewModel.getCities()
 
         generalViewModel.userCityLiveData.observe(viewLifecycleOwner) {
             prevCity = it

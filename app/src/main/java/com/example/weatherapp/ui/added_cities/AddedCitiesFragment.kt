@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
@@ -49,7 +50,12 @@ class AddedCitiesFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        val adapter = AddedCitiesAdapter(itemClick)
+        val deleteButtonClick: (String) -> Unit = {
+            viewModel.deleteCityFromDataBase(it)
+            viewModel.getAddedCities()
+        }
+
+        val adapter = AddedCitiesAdapter(itemClick, deleteButtonClick)
         binding.recycler.apply {
             this.adapter = adapter
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

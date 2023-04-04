@@ -6,14 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.AddedCityLayoutBinding
 import com.example.domain.models.AddedCityInfo
 
-class AddedCitiesAdapter(private val itemClick: (String) -> Unit): RecyclerView.Adapter<AddedCitiesViewHolder>() {
+class AddedCitiesAdapter(
+    private val itemClick: (String) -> Unit,
+    private val deleteButtonClick: (String) -> Unit
+) : RecyclerView.Adapter<AddedCitiesViewHolder>() {
 
     private val cities = mutableListOf<AddedCityInfo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddedCitiesViewHolder {
         val binding =
             AddedCityLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AddedCitiesViewHolder(binding, itemClick)
+        return AddedCitiesViewHolder(binding, itemClick, deleteButtonClick)
     }
 
     override fun getItemCount(): Int = cities.size
@@ -22,7 +25,7 @@ class AddedCitiesAdapter(private val itemClick: (String) -> Unit): RecyclerView.
         holder.bind(cities[position])
     }
 
-    fun setCities(list: List<AddedCityInfo>){
+    fun setCities(list: List<AddedCityInfo>) {
         cities.clear()
         cities.addAll(list)
         notifyDataSetChanged()

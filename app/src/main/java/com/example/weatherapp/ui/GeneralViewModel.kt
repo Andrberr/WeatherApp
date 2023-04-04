@@ -61,17 +61,23 @@ class GeneralViewModel @Inject constructor(
         return resultList
     }
 
-    fun getAddedCities(){
+    fun getAddedCities() {
         viewModelScope.launch {
             _addedCitiesLiveData.value = citiesRepository.getAddedCitiesInfo()
         }
     }
 
-    fun getUserCity(){
+    fun getUserCity() {
         _userCityLiveData.value = citiesRepository.getUserCity()
     }
 
-    fun setUserCity(city: String){
+    fun setUserCity(city: String) {
         citiesRepository.setUserCity(city)
+    }
+
+    fun deleteCityFromDataBase(city: String) {
+        viewModelScope.launch {
+            weatherRepository.deleteCityFromDatabase(city)
+        }
     }
 }
