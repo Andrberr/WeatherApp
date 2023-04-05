@@ -7,4 +7,15 @@
     <string name="fourteen_day_forecast">14-day forecast</string>
     <string name="text_forecast">14-day forecast\n</string>
     <string name="search">Search</string>
+
+    <string name="dialog_weather_information">Weather Information</string>
+    <string name="dialog_wind_speed">Wind speed:</string>
+    <string name="dialog_pressure">Pressure(mbar):</string>
+    <string name="dialog_precipitation_per_hour">Precipitation per hour(mm/h):</string>
+    <string name="dialog_humidity">Humidity(%):</string>
+    <string name="dialog_cloud_cover">Cloud Cover(%):</string>
+    <string name="dialog_real_feel_c">Real feel(°C):</string>
+    <string name="dialog_real_feel_f">Real feel(°F):</string>
+    <string name="dialog_visibility">Visibility(km/h):</string>
+    <string name="dialog_wind_gust">Wind gust(km/h):</string>
 </resources>

@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.models.HourModel
+import com.example.domain.models.WeatherModel
 import com.example.weatherapp.databinding.BarChartLayoutBinding
 
-class HourWeatherAdapter(private val nextClick: () -> Unit) : RecyclerView.Adapter<HourWeatherViewHolder>() {
+class HourWeatherAdapter(private val nextClick: (WeatherModel) -> Unit) : RecyclerView.Adapter<HourWeatherViewHolder>() {
 
     private val forecasts = mutableListOf<HourModel>()
 

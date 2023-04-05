@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
 import com.example.domain.models.HourModel
+import com.example.domain.models.WeatherModel
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.current_weather.bar_chart.HourWeatherAdapter
@@ -64,7 +65,8 @@ class CurrentWeatherFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        val nextClick: () -> Unit = {
+        val nextClick: (WeatherModel) -> Unit = {
+            vm.getHourWeatherInfo(it)
             val dialogFragment = HourDialogFragment()
             dialogFragment.show(childFragmentManager, "my_dialog")
         }
@@ -78,6 +80,7 @@ class CurrentWeatherFragment : Fragment() {
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
             if ((it.location.city != args.prevCity) || args.isSame) {
+
                 binding.cityView.text = it.location.city
                 generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
 
