@@ -8,7 +8,8 @@ import com.example.domain.models.HourModel
 import com.example.weatherapp.databinding.BarChartLayoutBinding
 
 class HourWeatherViewHolder(
-    private val binding: BarChartLayoutBinding
+    private val binding: BarChartLayoutBinding,
+    private val nextClick: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(weather: HourModel) {
         binding.dayView.text = "\t${weather.time}"
@@ -17,5 +18,12 @@ class HourWeatherViewHolder(
             .override(Target.SIZE_ORIGINAL)
             .into(binding.weatherImage)
         binding.customLine.setParams(weather.weather.tempC, Color.rgb(32, 41, 90))
+
+        itemView.setOnClickListener {
+            nextClick.invoke()
+        }
+//        binding.nextButton.setOnClickListener {
+//
+//        }
     }
 }

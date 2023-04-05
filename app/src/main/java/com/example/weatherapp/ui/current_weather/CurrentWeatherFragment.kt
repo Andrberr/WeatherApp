@@ -17,6 +17,7 @@ import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.current_weather.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter
+import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherAdapter
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
 import javax.inject.Inject
@@ -63,7 +64,12 @@ class CurrentWeatherFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        val barChartAdapter = HourWeatherAdapter()
+        val nextClick: () -> Unit = {
+            val dialogFragment = HourDialogFragment()
+            dialogFragment.show(childFragmentManager, "my_dialog")
+        }
+
+        val barChartAdapter = HourWeatherAdapter(nextClick)
         binding.forecastRecycler.apply {
             adapter = barChartAdapter
             layoutManager =
@@ -134,28 +140,12 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     private fun setInvisibleParams() {
-        with(binding) {
-            gradC.visibility = View.INVISIBLE
-            gradF.visibility = View.INVISIBLE
-            threeDayLayout.visibility = View.INVISIBLE
-            windLayout.visibility = View.INVISIBLE
-            delimeterView.visibility = View.INVISIBLE
-            delimeterView2.visibility = View.INVISIBLE
-            citiesWeatherButton.visibility = View.INVISIBLE
-            addButton.visibility = View.INVISIBLE
-        }
+        binding.groupView.visibility = View.INVISIBLE
     }
 
     private fun setVisibleParams() {
         with(binding) {
-            gradC.visibility = View.VISIBLE
-            gradF.visibility = View.VISIBLE
-            citiesWeatherButton.visibility = View.VISIBLE
-            addButton.visibility = View.VISIBLE
-            threeDayLayout.visibility = View.VISIBLE
-            windLayout.visibility = View.VISIBLE
-            delimeterView.visibility = View.VISIBLE
-            delimeterView2.visibility = View.VISIBLE
+            groupView.visibility = View.VISIBLE
             lottieView.visibility = View.GONE
         }
     }

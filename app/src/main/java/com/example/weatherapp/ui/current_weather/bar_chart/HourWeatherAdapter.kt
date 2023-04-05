@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.models.HourModel
 import com.example.weatherapp.databinding.BarChartLayoutBinding
 
-class HourWeatherAdapter : RecyclerView.Adapter<HourWeatherViewHolder>() {
+class HourWeatherAdapter(private val nextClick: () -> Unit) : RecyclerView.Adapter<HourWeatherViewHolder>() {
 
     private val forecasts = mutableListOf<HourModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourWeatherViewHolder {
         val binding =
             BarChartLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HourWeatherViewHolder(binding)
+        return HourWeatherViewHolder(binding, nextClick)
     }
 
     override fun getItemCount(): Int = forecasts.size
