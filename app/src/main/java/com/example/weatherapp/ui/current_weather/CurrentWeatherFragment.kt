@@ -12,8 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
+import com.example.domain.models.HourModel
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.current_weather.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherAdapter
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
@@ -49,47 +51,59 @@ class CurrentWeatherFragment : Fragment() {
 
         val generalWeatherAdapter = CurrentWeatherAdapter()
         binding.threeDayForecastRecycler.apply {
-            this.adapter = generalWeatherAdapter
+            adapter = generalWeatherAdapter
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
         val moreWeatherAdapter = MoreWeatherAdapter()
         binding.moreInfoRecycler.apply {
-            this.adapter = moreWeatherAdapter
+            adapter = moreWeatherAdapter
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
+        val barChartAdapter = HourWeatherAdapter()
+        binding.forecastRecycler.apply {
+            adapter = barChartAdapter
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+
         vm.weatherLiveData.observe(viewLifecycleOwner) {
-          if ((it.location.city != args.prevCity) || args.isSame) {
-              binding.cityView.text = it.location.city
-              generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
+            if ((it.location.city != args.prevCity) || args.isSame) {
+                binding.cityView.text = it.location.city
+                generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
 
-              with(it.currentWeather) {
-                  setVisibleParams()
+                with(it.currentWeather) {
+                    setVisibleParams()
 
-                  binding.tempCView.text = tempC.toString()
-                  binding.tempFView.text = tempF.toString()
-                  binding.windDirView.text = windDirection
-                  binding.windSpeedView.text = windSpeed.toString()
-                  val moreWeatherList =
-                      listOf(
-                          MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
-                          MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
-                          MoreWeatherElem("Humidity", "${getModifiableFloat(humidityPercent)}%"),
-                          MoreWeatherElem("Cloud cover", "${getModifiableFloat(cloudPercent)}%"),
-                          MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
-                          MoreWeatherElem(
-                              "Precipitation",
-                              getModifiableFloat(precipitationAmountHour) + "mm/h"
-                          ),
-                          MoreWeatherElem("Visibility", getModifiableFloat(visibilityKm) + "km/h"),
-                          MoreWeatherElem("Wind gust", getModifiableFloat(gustWindSpeed) + "km/h")
-                      )
-                  moreWeatherAdapter.setMoreWeather(moreWeatherList)
-              }
-          }
+                    binding.tempCView.text = tempC.toString()
+                    binding.tempFView.text = tempF.toString()
+                    binding.windDirView.text = windDirection
+                    binding.windSpeedView.text = windSpeed.toString()
+                    val moreWeatherList =
+                        listOf(
+                            MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
+                            MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
+                            MoreWeatherElem("Humidity", "${getModifiableFloat(humidityPercent)}%"),
+                            MoreWeatherElem("Cloud cover", "${getModifiableFloat(cloudPercent)}%"),
+                            MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
+                            MoreWeatherElem(
+                                "Precipitation",
+                                getModifiableFloat(precipitationAmountHour) + "mm/h"
+                            ),
+                            MoreWeatherElem(
+                                "Visibility",
+                                getModifiableFloat(visibilityKm) + "km/h"
+                            ),
+                            MoreWeatherElem("Wind gust", getModifiableFloat(gustWindSpeed) + "km/h")
+                        )
+                    moreWeatherAdapter.setMoreWeather(moreWeatherList)
+                }
+
+                barChartAdapter.setWeather(it.daysForecasts[0].hourWeathers)
+            }
         }
 
         if (args.needUpdate) {
@@ -112,30 +126,38 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         binding.citiesWeatherButton.setOnClickListener {
-            val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
+            val action =
+                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
             findNavController().navigate(action)
         }
 
     }
 
-    private fun setInvisibleParams(){
-        binding.gradC.visibility = View.INVISIBLE
-        binding.gradF.visibility = View.INVISIBLE
-        binding.threeDayLayout.visibility = View.INVISIBLE
-        binding.windLayout.visibility = View.INVISIBLE
-        binding.delimeterView.visibility = View.INVISIBLE
-        binding.citiesWeatherButton.visibility =View.INVISIBLE
-        binding.addButton.visibility = View.INVISIBLE
+    private fun setInvisibleParams() {
+        with(binding) {
+            gradC.visibility = View.INVISIBLE
+            gradF.visibility = View.INVISIBLE
+            threeDayLayout.visibility = View.INVISIBLE
+            windLayout.visibility = View.INVISIBLE
+            delimeterView.visibility = View.INVISIBLE
+            delimeterView2.visibility = View.INVISIBLE
+            citiesWeatherButton.visibility = View.INVISIBLE
+            addButton.visibility = View.INVISIBLE
+        }
     }
 
-    private fun setVisibleParams(){
-        binding.gradC.visibility = View.VISIBLE
-        binding.gradF.visibility = View.VISIBLE
-        binding.citiesWeatherButton.visibility =View.VISIBLE
-        binding.addButton.visibility = View.VISIBLE
-        binding.threeDayLayout.visibility = View.VISIBLE
-        binding.windLayout.visibility = View.VISIBLE
-        binding.delimeterView.visibility = View.VISIBLE
+    private fun setVisibleParams() {
+        with(binding) {
+            gradC.visibility = View.VISIBLE
+            gradF.visibility = View.VISIBLE
+            citiesWeatherButton.visibility = View.VISIBLE
+            addButton.visibility = View.VISIBLE
+            threeDayLayout.visibility = View.VISIBLE
+            windLayout.visibility = View.VISIBLE
+            delimeterView.visibility = View.VISIBLE
+            delimeterView2.visibility = View.VISIBLE
+            lottieView.visibility = View.GONE
+        }
     }
 
     private fun getModifiableFloat(value: Float): String {

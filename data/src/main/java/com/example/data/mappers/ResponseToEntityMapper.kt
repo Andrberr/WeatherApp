@@ -51,8 +51,9 @@ class ResponseToEntityMapper @Inject constructor() {
 
     private fun mapToHourModel(hourResponse: HourResponse): HourModelSer {
         return with(hourResponse) {
+            val correctTime = if (time != null) getModifiableTime(time) else ""
             HourModelSer(
-                time = time ?: "",
+                time = correctTime ?: "",
                 tempC = tempC ?: 0f,
                 tempF = tempF ?: 0f,
                 isDay = isDay ?: 0,
@@ -112,5 +113,11 @@ class ResponseToEntityMapper @Inject constructor() {
                 hourModels = code
             )
         }
+    }
+
+    private fun getModifiableTime(timeStr: String): String {
+        var i = 0
+        while (timeStr[i] != ' ') i++
+        return "  " + timeStr.substring(++i, timeStr.length) + "   "
     }
 }

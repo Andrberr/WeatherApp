@@ -24,7 +24,6 @@ class CustomLine @JvmOverloads constructor(
 
     private val rectPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.BLUE
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -39,8 +38,9 @@ class CustomLine @JvmOverloads constructor(
         strokeWidth = 5F
     }
 
-    fun setParams(curTemp: Float) {
+    fun setParams(curTemp: Float, chartColor: Int) {
         this.curTemp = curTemp
+        rectPaint.color = chartColor
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -72,14 +72,14 @@ class CustomLine @JvmOverloads constructor(
             )
             canvas.drawText(
                 "$curTemp°C",
-                (width / 3).toFloat(),
-                textY,
+                (width / 7).toFloat(),
+                textY-10,
                 textPaint
             )
-        } else{
+        } else {
             canvas.drawText(
                 "$curTemp°C",
-                (width/3).toFloat(),
+                (width / 7).toFloat(),
                 height / 2f - 30f,
                 textPaint
             )

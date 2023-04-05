@@ -1,28 +1,28 @@
-package com.example.weatherapp.ui.future_weather
+package com.example.weatherapp.ui.current_weather.bar_chart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.models.DayWeather
+import com.example.domain.models.HourModel
 import com.example.weatherapp.databinding.BarChartLayoutBinding
 
-class FutureWeatherAdapter : RecyclerView.Adapter<FutureWeatherViewHolder>() {
+class HourWeatherAdapter : RecyclerView.Adapter<HourWeatherViewHolder>() {
 
-    private val forecasts = mutableListOf<DayWeather>()
+    private val forecasts = mutableListOf<HourModel>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FutureWeatherViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourWeatherViewHolder {
         val binding =
             BarChartLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FutureWeatherViewHolder(binding)
+        return HourWeatherViewHolder(binding)
     }
 
     override fun getItemCount(): Int = forecasts.size
 
-    override fun onBindViewHolder(holder: FutureWeatherViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HourWeatherViewHolder, position: Int) {
         holder.bind(forecasts[position])
     }
 
-    fun setWeather(list: List<DayWeather>) {
+    fun setWeather(list: List<HourModel>) {
         forecasts.clear()
         forecasts.addAll(list)
         notifyDataSetChanged()

@@ -93,7 +93,8 @@ class ResponseToDefaultMapper @Inject constructor() {
                     visibilityKm = visibilityKm ?: 0f,
                     gustWindSpeed = gustWindSpeed ?: 0f,
                 )
-            return HourModel(time = time ?: "", weather = weather)
+            val correctTime = if (time != null) getModifiableTime(time) else ""
+            return HourModel(time = correctTime, weather = weather)
         }
     }
 
@@ -130,5 +131,11 @@ class ResponseToDefaultMapper @Inject constructor() {
                 hourWeathers = hours?.map { mapToHourModel(it) } ?: listOf()
             )
         }
+    }
+
+    private fun getModifiableTime(timeStr: String): String {
+        var i = 0
+        while (timeStr[i] != ' ') i++
+        return "  " + timeStr.substring(++i, timeStr.length) + "   "
     }
 }

@@ -15,15 +15,30 @@
             android:id="@+id/lottieView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="1"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:lottie_rawRes="@raw/loading" />
+
+        <!--        <com.airbnb.lottie.LottieAnimationView-->
+        <!--            android:id="@+id/lottieBackView"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            app:layout_constraintHeight_percent="1"-->
+        <!--            app:layout_constraintWidth_percent="1.2"-->
+        <!--            app:lottie_autoPlay="true"-->
+        <!--            app:lottie_loop="true"-->
+        <!--            app:lottie_rawRes="@raw/back"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"/>-->
+
 
         <ImageButton
             android:id="@+id/citiesWeatherButton"
@@ -87,16 +102,13 @@
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/tempFView"
-            app:layout_constraintTop_toBottomOf="@+id/tempCView"
-           />
+            app:layout_constraintTop_toBottomOf="@+id/tempCView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/threeDayLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_constraint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tempFView">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -125,13 +137,36 @@
             app:layout_constraintTop_toBottomOf="@id/threeDayLayout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/barChartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_constraint"
+            app:layout_constraintTop_toBottomOf="@id/delimeter_view">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/forecastRecycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/delimeter_view2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintHeight_percent="0.02"
+            app:layout_constraintTop_toBottomOf="@id/barChartLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/windLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/background_constraint"
             app:layout_constraintEnd_toStartOf="@id/moreWeatherInfoLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/delimeter_view"
+            app:layout_constraintTop_toBottomOf="@id/delimeter_view2"
             app:layout_constraintWidth_percent="0.45">
 
             <TextView
@@ -171,7 +206,7 @@
             android:background="@drawable/background_constraint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/windLayout"
-            app:layout_constraintTop_toBottomOf="@id/delimeter_view"
+            app:layout_constraintTop_toBottomOf="@id/delimeter_view2"
             app:layout_constraintWidth_percent="0.5">
 
             <androidx.recyclerview.widget.RecyclerView

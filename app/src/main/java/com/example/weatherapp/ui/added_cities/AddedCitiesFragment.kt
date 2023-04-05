@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
+import com.example.domain.models.AddedCityInfo
 import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
@@ -24,6 +24,9 @@ class AddedCitiesFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val viewModel: GeneralViewModel by viewModels { factory }
+
+    private val addedCitiesList = mutableListOf<AddedCityInfo>()
+    private lateinit var addedCitiesAdapter: AddedCitiesAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,17 +55,20 @@ class AddedCitiesFragment : Fragment() {
 
         val deleteButtonClick: (String) -> Unit = {
             viewModel.deleteCityFromDataBase(it)
-            viewModel.getAddedCities()
+            deleteElementFromList(it)
+            setCitiesForAdapter()
         }
 
-        val adapter = AddedCitiesAdapter(itemClick, deleteButtonClick)
+        addedCitiesAdapter = AddedCitiesAdapter(itemClick, deleteButtonClick)
         binding.recycler.apply {
-            this.adapter = adapter
+            this.adapter = addedCitiesAdapter
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
         viewModel.addedCitiesLiveData.observe(viewLifecycleOwner) {
-            adapter.setCities(it)
+            addedCitiesAdapter.setCities(it)
+            addedCitiesList.clear()
+            addedCitiesList.addAll(it)
         }
         viewModel.getAddedCities()
 
@@ -71,6 +77,20 @@ class AddedCitiesFragment : Fragment() {
         }
         viewModel.getUserCity()
     }
+
+    private fun setCitiesForAdapter() {
+        addedCitiesAdapter.setCities(addedCitiesList)
+    }
+
+    private fun deleteElementFromList(city: String){
+        for ((k, elem) in addedCitiesList.withIndex()){
+            if (elem.city == city) {
+                addedCitiesList.removeAt(k)
+                return
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
