@@ -18,4 +18,5 @@
     <string name="dialog_real_feel_f">Real feel(°F):</string>
     <string name="dialog_visibility">Visibility(km/h):</string>
     <string name="dialog_wind_gust">Wind gust(km/h):</string>
+    <string name="dialog_wind_direction">Wind direction:</string>
 </resources>

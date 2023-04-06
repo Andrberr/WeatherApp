@@ -10,12 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
-import com.example.domain.models.HourModel
 import com.example.domain.models.WeatherModel
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.current_weather.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter
 import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
@@ -68,7 +67,7 @@ class CurrentWeatherFragment : Fragment() {
         val nextClick: (WeatherModel) -> Unit = {
             vm.getHourWeatherInfo(it)
             val dialogFragment = HourDialogFragment()
-            dialogFragment.show(childFragmentManager, "my_dialog")
+            dialogFragment.show(childFragmentManager, "hour_dialog")
         }
 
         val barChartAdapter = HourWeatherAdapter(nextClick)
