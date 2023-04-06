@@ -1,5 +1,6 @@
 package com.example.weatherapp.di
 
+import com.example.weatherapp.MapsFragment
 import com.example.weatherapp.ui.loading.LoadingFragment
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.added_cities.AddedCitiesFragment
@@ -24,4 +25,5 @@ interface GeneralComponent {
     fun inject(fragment: AddedCitiesFragment)
     fun inject(fragment: LoadingFragment)
     fun inject(fragment: HourDialogFragment)
+    fun inject(fragment: MapsFragment)
 }

@@ -10,8 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.example.core.ViewModelFactory
+import com.example.domain.models.DayWeather
 import com.example.domain.models.WeatherModel
+import com.example.weatherapp.R
+import com.example.weatherapp.databinding.CurrentWeatherLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
@@ -50,12 +55,12 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val generalWeatherAdapter = CurrentWeatherAdapter()
-        binding.threeDayForecastRecycler.apply {
-            adapter = generalWeatherAdapter
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
+//        val generalWeatherAdapter = CurrentWeatherAdapter()
+//        binding.threeDayForecastRecycler.apply {
+//            adapter = generalWeatherAdapter
+//            layoutManager =
+//                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
 
         val moreWeatherAdapter = MoreWeatherAdapter()
         binding.moreInfoRecycler.apply {
@@ -81,7 +86,8 @@ class CurrentWeatherFragment : Fragment() {
             if ((it.location.city != args.prevCity) || args.isSame) {
 
                 binding.cityView.text = it.location.city
-                generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
+              //  generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
+                addElementsToLinearLayout(it.daysForecasts.subList(0, 3))
 
                 with(it.currentWeather) {
                     setVisibleParams()
@@ -139,6 +145,15 @@ class CurrentWeatherFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+//        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+//            if (item.itemId == R.id.mapsFragment){
+//                val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
+//                findNavController().navigate(action)
+//            }
+//
+//            true
+//        }
+
     }
 
     private fun setInvisibleParams() {
@@ -149,6 +164,21 @@ class CurrentWeatherFragment : Fragment() {
         with(binding) {
             groupView.visibility = View.VISIBLE
             lottieView.visibility = View.GONE
+        }
+    }
+
+    private fun addElementsToLinearLayout(list: List<DayWeather>) {
+        for (i in 0..2) {
+            val elemBinding =
+                CurrentWeatherLayoutBinding.inflate(layoutInflater, null, false)
+            Glide.with(requireContext())
+                .load("https:${list[i].icon}")
+                .override(Target.SIZE_ORIGINAL)
+                .into(elemBinding.weatherImage)
+            elemBinding.dayView.text = "\t${list[i].date}"
+            elemBinding.weatherView.text = "\t${list[i].textDescription}\n"
+            elemBinding.tempView.text = "\t${list[i].avgTempC}°C/${list[i].avgTempF}°F"
+            binding.threeDayLinearLayout.addView(elemBinding.root)
         }
     }
 
