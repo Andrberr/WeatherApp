@@ -5,6 +5,7 @@ import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.added_cities.AddedCitiesFragment
 import com.example.weatherapp.ui.cities.SearchFragment
 import com.example.weatherapp.ui.current_weather.CurrentWeatherFragment
+import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.future_weather.FutureWeatherFragment
 import dagger.Subcomponent
 
@@ -22,4 +23,5 @@ interface GeneralComponent {
     fun inject(fragment: SearchFragment)
     fun inject(fragment: AddedCitiesFragment)
     fun inject(fragment: LoadingFragment)
+    fun inject(fragment: HourDialogFragment)
 }
