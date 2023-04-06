@@ -19,4 +19,8 @@
     <string name="dialog_visibility">Visibility(km/h):</string>
     <string name="dialog_wind_gust">Wind gust(km/h):</string>
     <string name="dialog_wind_direction">Wind direction:</string>
+
+    <string name="alert_added_cities">Added Cities\t</string>
+    <string name="alert_location_weather">Location weather\t</string>
+    <string name="alert_choose_option">Choose option:</string>
 </resources>

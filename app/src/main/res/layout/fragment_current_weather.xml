@@ -41,7 +41,7 @@
 
 
         <ImageButton
-            android:id="@+id/citiesWeatherButton"
+            android:id="@+id/optionsButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/points"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/citiesWeatherButton"
+            app:layout_constraintEnd_toStartOf="@+id/optionsButton"
             app:layout_constraintStart_toEndOf="@+id/addButton"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,7 +145,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/delimeter_view"
             app:layout_constraintBottom_toTopOf="@id/delimeter_view2"
-            app:layout_constraintWidth_percent="0.45">
+            app:layout_constraintWidth_percent="0.4">
 
             <TextView
                 android:id="@+id/windDirView"
@@ -169,8 +169,8 @@
 
             <com.example.weatherapp.ui.custom_view.CompasView
                 android:id="@+id/compasView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/windSpeedView"
@@ -185,7 +185,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/windLayout"
             app:layout_constraintTop_toBottomOf="@id/delimeter_view"
-            app:layout_constraintWidth_percent="0.5">
+            app:layout_constraintWidth_percent="0.55">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/moreInfoRecycler"
