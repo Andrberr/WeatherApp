@@ -12,7 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="36sp"
+        android:textSize="30sp"
         />
 
     <TextView
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toEndOf="@id/cityView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="46sp"/>
+        android:textSize="36sp"/>
     <TextView
         android:id="@+id/gradView"
         android:layout_width="wrap_content"
@@ -31,13 +31,13 @@
         app:layout_constraintTop_toTopOf="@id/tempView"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/grad"
-        android:textSize="34sp"
+        android:textSize="30sp"
         />
 
     <ImageButton
         android:id="@+id/nextButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="@drawable/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -45,8 +45,8 @@
 
     <ImageButton
         android:id="@+id/deleteButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/basket"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"

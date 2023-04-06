@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.current_weather
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.domain.models.WeatherModel
+import com.example.weatherapp.databinding.AlertDialogLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
@@ -121,6 +123,22 @@ class CurrentWeatherFragment : Fragment() {
             vm.getUserCity()
         }
 
+        setButtonsClickListeners()
+
+    }
+
+    private fun setInvisibleParams() {
+        binding.groupView.visibility = View.INVISIBLE
+    }
+
+    private fun setVisibleParams() {
+        with(binding) {
+            groupView.visibility = View.VISIBLE
+            lottieView.visibility = View.GONE
+        }
+    }
+
+    private fun setButtonsClickListeners() {
         binding.weekForecastButton.setOnClickListener {
             val action =
                 CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToFutureWeatherFragment()
@@ -133,22 +151,20 @@ class CurrentWeatherFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.citiesWeatherButton.setOnClickListener {
-            val action =
-                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
-            findNavController().navigate(action)
-        }
+        binding.optionsButton.setOnClickListener {
 
-    }
+            val builder = AlertDialog.Builder(requireContext())
 
-    private fun setInvisibleParams() {
-        binding.groupView.visibility = View.INVISIBLE
-    }
+            builder.setTitle("Выберите опцию")
 
-    private fun setVisibleParams() {
-        with(binding) {
-            groupView.visibility = View.VISIBLE
-            lottieView.visibility = View.GONE
+            val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
+            builder.setView(dialogLayout.root)
+
+                builder.show()
+
+//            val action =
+//                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
+//            findNavController().navigate(action)
         }
     }
 
