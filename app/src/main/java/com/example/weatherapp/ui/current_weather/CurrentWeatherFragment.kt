@@ -155,16 +155,20 @@ class CurrentWeatherFragment : Fragment() {
 
             val builder = AlertDialog.Builder(requireContext())
 
-            builder.setTitle("Выберите опцию")
-
             val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
             builder.setView(dialogLayout.root)
+            val alertDialog = builder.create()
 
-                builder.show()
+            dialogLayout.citiesButton.setOnClickListener {
+                val action =
+                    CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
+                findNavController().navigate(action)
+               alertDialog.dismiss()
+            }
+            dialogLayout.mapsButton.setOnClickListener {
 
-//            val action =
-//                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
-//            findNavController().navigate(action)
+            }
+            alertDialog.show()
         }
     }
 
