@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.domain.models.WeatherModel
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.AlertDialogLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
@@ -112,6 +113,9 @@ class CurrentWeatherFragment : Fragment() {
                     moreWeatherAdapter.setMoreWeather(moreWeatherList)
                 }
 
+                binding.sunriseView.text = "Sunrise:\n${it.daysForecasts[0].sunrise}"
+                binding.sunsetView.text = "Sunset:\n${it.daysForecasts[0].sunset}"
+
                 barChartAdapter.setWeather(it.daysForecasts[0].hourWeathers)
             }
         }
@@ -133,6 +137,7 @@ class CurrentWeatherFragment : Fragment() {
 
     private fun setVisibleParams() {
         with(binding) {
+            parentLayout.setBackgroundResource(R.drawable.background)
             groupView.visibility = View.VISIBLE
             lottieView.visibility = View.GONE
         }
@@ -166,7 +171,9 @@ class CurrentWeatherFragment : Fragment() {
                alertDialog.dismiss()
             }
             dialogLayout.mapsButton.setOnClickListener {
-
+               val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
+                findNavController().navigate(action)
+                alertDialog.dismiss()
             }
             alertDialog.show()
         }

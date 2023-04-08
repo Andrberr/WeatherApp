@@ -81,6 +81,12 @@ dependencies {
     implementation "androidx.room:room-ktx:2.5.1"
     kapt "androidx.room:room-compiler:2.5.1"
 
+    //Yandex Maps
+    implementation 'com.yandex.android:maps.mobile:4.3.1-lite'
+    
+    //Location
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
     //Tests
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

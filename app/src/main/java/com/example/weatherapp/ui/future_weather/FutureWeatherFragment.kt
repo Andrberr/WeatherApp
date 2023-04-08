@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
+import com.example.domain.models.DayWeather
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import javax.inject.Inject
@@ -38,7 +39,14 @@ class FutureWeatherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = FutureWeatherAdapter()
+
+        val itemClick: (DayWeather) -> Unit = {
+            vm.getDayWeather(it)
+            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToDayWeatherFragment()
+            findNavController().navigate(action)
+        }
+
+        val adapter = FutureWeatherAdapter(itemClick)
         binding.forecastRecycler.apply {
             this.adapter = adapter
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

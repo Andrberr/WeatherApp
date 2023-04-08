@@ -7,6 +7,7 @@
     <string name="fourteen_day_forecast">14-day forecast</string>
     <string name="text_forecast">14-day forecast\n</string>
     <string name="search">Search</string>
+    <string name="gradAdded">°</string>
 
     <string name="dialog_weather_information">Weather Information</string>
     <string name="dialog_wind_speed">Wind speed:</string>
@@ -23,4 +24,5 @@
     <string name="alert_added_cities">Added Cities\t</string>
     <string name="alert_location_weather">Location weather\t</string>
     <string name="alert_choose_option">Choose option:</string>
+    <string name="maps_add_weather">Add weather</string>
 </resources>

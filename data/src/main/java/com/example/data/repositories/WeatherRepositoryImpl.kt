@@ -1,11 +1,11 @@
-package com.example.data
+package com.example.data.repositories
 
 import com.example.data.mappers.EntityToDefaultMapper
 import com.example.data.mappers.ResponseToDefaultMapper
 import com.example.data.mappers.ResponseToEntityMapper
 import com.example.data.network.WeatherService
 import com.example.data.sources.DataBaseSource
-import com.example.domain.WeatherRepository
+import com.example.domain.repositories.WeatherRepository
 import com.example.domain.models.WeatherInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

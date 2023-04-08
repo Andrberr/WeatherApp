@@ -12,7 +12,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="30sp"
+        android:textSize="28sp"
+        android:textColor="@color/purple_500"
         />
 
     <TextView
@@ -22,7 +23,8 @@
         app:layout_constraintStart_toEndOf="@id/cityView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="36sp"/>
+        android:textSize="30sp"
+        android:textColor="@color/purple_500"/>
     <TextView
         android:id="@+id/gradView"
         android:layout_width="wrap_content"
@@ -30,7 +32,8 @@
         app:layout_constraintStart_toEndOf="@id/tempView"
         app:layout_constraintTop_toTopOf="@id/tempView"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/grad"
+        android:text="@string/gradAdded"
+        android:textColor="@color/purple_500"
         android:textSize="30sp"
         />
 
@@ -52,4 +55,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <View
+        android:id="@+id/delimeter_view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/purple_500"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,15 +43,15 @@ class HourDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.hourWeatherLiveData.observe(viewLifecycleOwner) {
             with(binding) {
-                cloudPercent.text = it.cloudPercent.toString()
-                feelingC.text = it.feelingC.toString()
-                feelingF.text = it.feelingF.toString()
-                gustWindSpeed.text = it.gustWindSpeed.toString()
-                humidityPercent.text = it.humidityPercent.toString()
-                precipitationAmountHour.text = it.precipitationAmountHour.toString()
-                pressure.text = it.pressure.toString()
-                visibilityKm.text = it.visibilityKm.toString()
-                windSpeed.text = it.windSpeed.toString()
+                cloudPercent.text = getModifiableFloat(it.cloudPercent)
+                feelingC.text = getModifiableFloat(it.feelingC)
+                feelingF.text = getModifiableFloat(it.feelingF)
+                gustWindSpeed.text = getModifiableFloat(it.gustWindSpeed)
+                humidityPercent.text = getModifiableFloat(it.humidityPercent)
+                precipitationAmountHour.text = getModifiableFloat(it.precipitationAmountHour)
+                pressure.text = getModifiableFloat(it.pressure)
+                visibilityKm.text = getModifiableFloat(it.visibilityKm)
+                windSpeed.text = getModifiableFloat(it.windSpeed)
                 Glide.with(this@HourDialogFragment)
                     .load("https:" + it.icon)
                     .into(iconView)
@@ -65,6 +65,12 @@ class HourDialogFragment : DialogFragment() {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.window?.setBackgroundDrawableResource(R.drawable.background_constraint)
         return dialog
+    }
+
+    private fun getModifiableFloat(value: Float): String {
+        val str = value.toString().split(".")
+        if (str[1].toFloat() != 0f) return value.toString()
+        return str[0]
     }
 
     override fun onDestroyView() {
