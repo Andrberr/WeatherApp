@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.example.core.ViewModelFactory
+import com.example.domain.models.WeatherModel
 import com.example.weatherapp.databinding.FragmentDayWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
+import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
+import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
 import javax.inject.Inject
 
@@ -54,6 +57,19 @@ class DayWeatherFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
+        val nextClick: (WeatherModel) -> Unit = {
+            viewModel.getHourWeatherInfo(it)
+            val dialogFragment = HourDialogFragment()
+            dialogFragment.show(childFragmentManager, "hour_dialog")
+        }
+
+        val barChartAdapter = HourWeatherAdapter(nextClick)
+        binding.forecastRecycler.apply {
+            adapter = barChartAdapter
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+
         viewModel.dayWeatherLiveData.observe(viewLifecycleOwner) {
             Glide.with(requireContext())
                 .load("https:${it.icon}")
@@ -64,35 +80,36 @@ class DayWeatherFragment : Fragment() {
 
             val dayWeatherList = with(it) {
                 listOf(
-                    DayWeatherElem("Max temperature(°C)", getModifiableFloat(maxTempC)),
-                    DayWeatherElem("Max temperature(°F)", getModifiableFloat(maxTempF)),
-                    DayWeatherElem("Min temperature(°C)", getModifiableFloat(minTempC)),
-                    DayWeatherElem("Min temperature(°F)", getModifiableFloat(minTempF)),
-                    DayWeatherElem("Average temperature(°C)", getModifiableFloat(avgTempC)),
-                    DayWeatherElem("Average temperature(°F)", getModifiableFloat(avgTempF)),
-                    DayWeatherElem("Rain chance", getModifiableFloat(rainChance) + "%"),
-                    DayWeatherElem("Snow chance", getModifiableFloat(snowChance) + "%"),
-                    DayWeatherElem("Humidity", "${getModifiableFloat(avgHumidity)}%"),
+                    DayWeatherElem("Average temperature(°C)", getModifiableFloat(avgTempC)+ " "),
+                    DayWeatherElem("Average temperature(°F)", getModifiableFloat(avgTempF)+ " "),
+                    DayWeatherElem("Max temperature(°C)", getModifiableFloat(maxTempC) + " "),
+                    DayWeatherElem("Max temperature(°F)", getModifiableFloat(maxTempF)+ " "),
+                    DayWeatherElem("Min temperature(°C)", getModifiableFloat(minTempC)+ " "),
+                    DayWeatherElem("Min temperature(°F)", getModifiableFloat(minTempF)+ " "),
+                    DayWeatherElem("Rain chance", getModifiableFloat(rainChance) + "% "),
+                    DayWeatherElem("Snow chance", getModifiableFloat(snowChance) + "% "),
+                    DayWeatherElem("Humidity", "${getModifiableFloat(avgHumidity)}% "),
                     DayWeatherElem(
                         "Total precipitation",
-                        getModifiableFloat(totalPrecipitation) + "mm/h"
+                        getModifiableFloat(totalPrecipitation) + "mm/h "
                     ),
                     DayWeatherElem(
                         "Visibility",
-                        getModifiableFloat(avgVisibility) + "km/h"
+                        getModifiableFloat(avgVisibility) + "km/h "
                     ),
-                    DayWeatherElem("Max wind speed", getModifiableFloat(maxWindSpeed) + "km/h"),
-                    DayWeatherElem("UV Index", getModifiableFloat(ultravioletInd)),
-                    DayWeatherElem("Moon phase", moonPhase),
-                    DayWeatherElem("Moon illumination", getModifiableFloat(moonIllumination) + "%")
+                    DayWeatherElem("Max wind speed", getModifiableFloat(maxWindSpeed) + "km/h "),
+                    DayWeatherElem("UV Index", getModifiableFloat(ultravioletInd) + " "),
+                    DayWeatherElem("Moon phase", "$moonPhase "),
+                    DayWeatherElem("Moon illumination", getModifiableFloat(moonIllumination) + "% ")
                 )
             }
             dayWeatherAdapter.setDayWeather(dayWeatherList)
 
-//        <!--    val sunrise: String,-->
-//        <!--    val sunset: String,-->
-//        <!--    val moonrise: String,-->
-//        <!--    val moonset: String,-->
+            binding.sunriseView.text =  "Sunrise:\n${it.sunrise} "
+            binding.sunsetView.text = "Sunset:\n${it.sunset} "
+            binding.moonriseView.text =  "Moonrise:\n${it.moonrise} "
+            binding.moonsetView.text = "Moonset:\n${it.moonset} "
+            barChartAdapter.setWeather(it.hourWeathers)
         }
 
     }

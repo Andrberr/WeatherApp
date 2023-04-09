@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentSearchBinding
+import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.GeneralViewModel
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class SearchFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val generalViewModel: GeneralViewModel by viewModels { factory }
+    private val citiesViewModel: CitiesViewModel by viewModels { factory }
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -43,7 +44,7 @@ class SearchFragment : Fragment() {
 
         var prevCity = ""
         val itemClick: (String) -> Unit = {
-            generalViewModel.setUserCity(it)
+            citiesViewModel.setUserCity(it)
             val flag = prevCity == it
             val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(
                 prevCity,
@@ -61,25 +62,25 @@ class SearchFragment : Fragment() {
         }
 
         val citiesList = mutableListOf<String>()
-        generalViewModel.citiesLiveData.observe(viewLifecycleOwner) {
+        citiesViewModel.citiesLiveData.observe(viewLifecycleOwner) {
             citiesList.clear()
             citiesList.addAll(it)
             citiesAdapter.setCities(it)
         }
-        generalViewModel.getCities()
+        citiesViewModel.getCities()
 
         val editText = binding.findCityText
         editText.addTextChangedListener { text ->
             val cities = if (text.toString() != "")
-                generalViewModel.searchForCities(citiesList, text.toString())
+                citiesViewModel.searchForCities(citiesList, text.toString())
             else citiesList
             citiesAdapter.setCities(cities)
         }
 
-        generalViewModel.userCityLiveData.observe(viewLifecycleOwner) {
+        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
             prevCity = it
         }
-        generalViewModel.getUserCity()
+        citiesViewModel.getUserCity()
     }
 
     override fun onDestroyView() {

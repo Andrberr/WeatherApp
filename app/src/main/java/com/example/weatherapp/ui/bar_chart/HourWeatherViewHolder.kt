@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui.current_weather.bar_chart
+package com.example.weatherapp.ui.bar_chart
 
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView

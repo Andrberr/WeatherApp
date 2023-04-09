@@ -22,10 +22,10 @@ interface GeneralComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: CurrentWeatherFragment)
     fun inject(fragment: FutureWeatherFragment)
+    fun inject(fragment: HourDialogFragment)
+    fun inject(fragment: DayWeatherFragment)
     fun inject(fragment: SearchFragment)
     fun inject(fragment: AddedCitiesFragment)
     fun inject(fragment: LoadingFragment)
-    fun inject(fragment: HourDialogFragment)
     fun inject(fragment: MapsFragment)
-    fun inject(fragment: DayWeatherFragment)
 }

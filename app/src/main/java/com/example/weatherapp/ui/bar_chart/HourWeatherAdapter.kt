@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui.current_weather.bar_chart
+package com.example.weatherapp.ui.bar_chart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
