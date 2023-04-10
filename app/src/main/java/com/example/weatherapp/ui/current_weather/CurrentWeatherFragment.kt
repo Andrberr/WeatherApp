@@ -130,7 +130,6 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         setButtonsClickListeners()
-
     }
 
     private fun setInvisibleParams() {

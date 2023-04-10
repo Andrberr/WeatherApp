@@ -21,10 +21,7 @@ class WeatherRepositoryImpl @Inject constructor(
     override suspend fun getWeatherInfo(cache: Boolean, city: String): WeatherInfo {
         return withContext(Dispatchers.IO) {
             if (cache) {
-                val response =
-                    (weatherService.getWeatherResponse(city, 14)
-                        .execute().body()
-                        ?: throw Exception())
+                val response = weatherService.getWeatherResponse(city, 14)
                 deleteCityFromDatabase(city)
 
                 if (response.location != null) {
