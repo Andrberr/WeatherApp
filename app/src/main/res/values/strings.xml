@@ -25,4 +25,6 @@
     <string name="alert_location_weather">Location weather\t</string>
     <string name="alert_choose_option">Choose option:</string>
     <string name="maps_add_weather">Add weather</string>
+
+    <string name="location_permission">No Location Permission!</string>
 </resources>

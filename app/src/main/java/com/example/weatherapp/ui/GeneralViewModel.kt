@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.repositories.CitiesRepository
 import com.example.weatherapp.di.FragmentScope
 import com.example.domain.repositories.WeatherRepository
-import com.example.domain.models.AddedCityInfo
 import com.example.domain.models.DayWeather
 import com.example.domain.models.WeatherInfo
 import com.example.domain.models.WeatherModel
@@ -18,7 +16,6 @@ import javax.inject.Inject
 @FragmentScope
 class GeneralViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val citiesRepository: CitiesRepository,
 ) : ViewModel() {
     private val _weatherLiveData = MutableLiveData<WeatherInfo>()
     val weatherLiveData: LiveData<WeatherInfo> get() = _weatherLiveData
@@ -29,21 +26,20 @@ class GeneralViewModel @Inject constructor(
     private val _dayWeatherLiveData = MutableLiveData<DayWeather>()
     val dayWeatherLiveData: LiveData<DayWeather> get() = _dayWeatherLiveData
 
-    private val _locationLiveData = MutableLiveData<String>()
-    val locationLiveData: LiveData<String> get() = _locationLiveData
-
     private lateinit var city: String
+    private lateinit var coordinates: String
 
     private val handler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
-            _weatherLiveData.value = weatherRepository.getWeatherInfo(false, city)
+            _weatherLiveData.value = weatherRepository.getWeatherInfo(false, city, coordinates)
         }
     }
 
-    fun getWeatherInfo(city: String) {
+    fun getWeatherInfo(city: String, coordinates: String) {
         this.city = city
+        this.coordinates = coordinates
         viewModelScope.launch(handler) {
-            _weatherLiveData.value = weatherRepository.getWeatherInfo(true, city)
+            _weatherLiveData.value = weatherRepository.getWeatherInfo(true, city, coordinates)
         }
     }
 
@@ -55,4 +51,9 @@ class GeneralViewModel @Inject constructor(
         _dayWeatherLiveData.value = dayWeather
     }
 
+    fun deleteCityFromDataBase(city: String) {
+        viewModelScope.launch {
+            weatherRepository.deleteCityFromDatabase(city)
+        }
+    }
 }

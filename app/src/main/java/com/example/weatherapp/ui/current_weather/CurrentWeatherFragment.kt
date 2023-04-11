@@ -124,7 +124,7 @@ class CurrentWeatherFragment : Fragment() {
 
         if (args.needUpdate) {
             citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
-                weatherViewModel.getWeatherInfo(it)
+                weatherViewModel.getWeatherInfo(it, "")
             }
             citiesViewModel.getUserCity()
         }

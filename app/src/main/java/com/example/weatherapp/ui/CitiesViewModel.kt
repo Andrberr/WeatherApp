@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class CitiesViewModel @Inject constructor(
     private val citiesRepository: CitiesRepository,
-    private val weatherRepository: WeatherRepository
 ): ViewModel()  {
 
     private val _addedCitiesLiveData = MutableLiveData<List<AddedCityInfo>>()
@@ -52,11 +51,5 @@ class CitiesViewModel @Inject constructor(
             }
         }
         return resultList
-    }
-
-    fun deleteCityFromDataBase(city: String) {
-        viewModelScope.launch {
-            weatherRepository.deleteCityFromDatabase(city)
-        }
     }
 }

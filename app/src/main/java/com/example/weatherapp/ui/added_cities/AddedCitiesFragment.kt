@@ -25,6 +25,7 @@ class AddedCitiesFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
+    private val weatherViewModel: GeneralViewModel by viewModels { factory }
 
     private val addedCitiesList = mutableListOf<AddedCityInfo>()
     private lateinit var addedCitiesAdapter: AddedCitiesAdapter
@@ -55,7 +56,7 @@ class AddedCitiesFragment : Fragment() {
         }
 
         val deleteButtonClick: (String) -> Unit = {
-            citiesViewModel.deleteCityFromDataBase(it)
+            weatherViewModel.deleteCityFromDataBase(it)
             deleteElementFromList(it)
             setCitiesForAdapter()
         }
@@ -83,8 +84,8 @@ class AddedCitiesFragment : Fragment() {
         addedCitiesAdapter.setCities(addedCitiesList)
     }
 
-    private fun deleteElementFromList(city: String){
-        for ((k, elem) in addedCitiesList.withIndex()){
+    private fun deleteElementFromList(city: String) {
+        for ((k, elem) in addedCitiesList.withIndex()) {
             if (elem.city == city) {
                 addedCitiesList.removeAt(k)
                 return
