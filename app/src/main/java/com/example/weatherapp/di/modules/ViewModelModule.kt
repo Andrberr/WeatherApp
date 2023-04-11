@@ -2,6 +2,7 @@ package com.example.weatherapp.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.example.core.ViewModelKey
+import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import dagger.Binds
 import dagger.Module
@@ -13,4 +14,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(GeneralViewModel::class)
     fun bindWeatherViewModel(generalViewModel: GeneralViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CitiesViewModel::class)
+    fun bindCitiesViewModel(citiesViewModel: CitiesViewModel): ViewModel
 }

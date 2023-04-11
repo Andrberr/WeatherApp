@@ -1,11 +1,10 @@
-package com.example.data
+package com.example.data.repositories
 
 import com.example.data.database.entities.CitiesEntity
 import com.example.data.mappers.CitiesMapper
-import com.example.data.network.CitiesService
 import com.example.data.sources.DataBaseSource
 import com.example.data.sources.UserCitySource
-import com.example.domain.CitiesRepository
+import com.example.domain.repositories.CitiesRepository
 import com.example.domain.models.AddedCityInfo
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,7 +18,6 @@ import javax.inject.Inject
 import kotlin.coroutines.*
 
 class CitiesRepositoryImpl @Inject constructor(
-    private val citiesService: CitiesService,
     private val citiesMapper: CitiesMapper,
     private val dataBaseSource: DataBaseSource,
     private val userCitySource: UserCitySource,
@@ -28,7 +26,7 @@ class CitiesRepositoryImpl @Inject constructor(
     override suspend fun getCities(cache: Boolean): List<String> {
         val dbCities = dataBaseSource.getCities()
         if (dbCities.isNotEmpty()) {
-            return dbCities.map { citiesMapper.entityToDefault(it) }
+            return dbCities.map { citiesMapper(it) }
         }
 
         val cities = mutableListOf<String>()

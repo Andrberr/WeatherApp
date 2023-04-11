@@ -4,10 +4,10 @@ import com.example.data.database.entities.DayWeatherEntity
 import com.example.data.database.entities.HourModelSer
 import com.example.data.database.entities.LocationModelEntity
 import com.example.data.database.entities.WeatherModelEntity
-import com.example.data.models.weather_models.ForecastDayResponse
-import com.example.data.models.weather_models.HourResponse
-import com.example.data.models.weather_models.LocationResponse
-import com.example.data.models.weather_models.WeatherInfoResponse
+import com.example.data.models.ForecastDayResponse
+import com.example.data.models.HourResponse
+import com.example.data.models.LocationResponse
+import com.example.data.models.WeatherInfoResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject

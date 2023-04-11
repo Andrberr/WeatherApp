@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -21,20 +19,8 @@
 
         <ImageView
             android:id="@+id/iconView"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
-
-        <!--        <TextView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Направление ветра: "-->
-        <!--            android:textSize="20sp" />-->
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/wind_direction"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:inputType="text" />-->
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -162,20 +148,3 @@
             android:layout_height="120dp" />
     </LinearLayout>
 </ScrollView>
-
-    <!--    val tempC: Float,-->
-    <!--    val tempF: Float,-->
-    <!--    val isDay: Int,-->
-    <!--    val textDescription: String,-->
-    <!--    val icon: String,-->
-    <!--    val windSpeed: Float,-->
-    <!--    val windDegree: Float,-->
-    <!--    val windDirection: String,-->
-    <!--    val pressure: Float,-->
-    <!--    val precipitationAmountHour: Float,-->
-    <!--    val humidityPercent: Float,-->
-    <!--    val cloudPercent: Float,-->
-    <!--    val feelingC: Float,-->
-    <!--    val feelingF: Float,-->
-    <!--    val visibilityKm: Float,-->
-    <!--    val gustWindSpeed: Float-->

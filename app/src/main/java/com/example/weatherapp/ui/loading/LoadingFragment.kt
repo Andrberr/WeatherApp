@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentLoadingBinding
+import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class LoadingFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val viewModel: GeneralViewModel by viewModels { factory }
+    private val viewModel: CitiesViewModel by viewModels { factory }
 
     private var _binding: FragmentLoadingBinding? = null
     private val binding get() = _binding!!

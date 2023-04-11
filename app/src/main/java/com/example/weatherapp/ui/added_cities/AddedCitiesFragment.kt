@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.domain.models.AddedCityInfo
 import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
+import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
 import javax.inject.Inject
@@ -23,7 +24,8 @@ class AddedCitiesFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val viewModel: GeneralViewModel by viewModels { factory }
+    private val citiesViewModel: CitiesViewModel by viewModels { factory }
+    private val weatherViewModel: GeneralViewModel by viewModels { factory }
 
     private val addedCitiesList = mutableListOf<AddedCityInfo>()
     private lateinit var addedCitiesAdapter: AddedCitiesAdapter
@@ -44,7 +46,7 @@ class AddedCitiesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var prevCity = ""
         val itemClick: (String) -> Unit = {
-            viewModel.setUserCity(it)
+            citiesViewModel.setUserCity(it)
             val isSame = prevCity == it
             val action =
                 AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(
@@ -54,7 +56,7 @@ class AddedCitiesFragment : Fragment() {
         }
 
         val deleteButtonClick: (String) -> Unit = {
-            viewModel.deleteCityFromDataBase(it)
+            weatherViewModel.deleteCityFromDataBase(it)
             deleteElementFromList(it)
             setCitiesForAdapter()
         }
@@ -65,25 +67,25 @@ class AddedCitiesFragment : Fragment() {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        viewModel.addedCitiesLiveData.observe(viewLifecycleOwner) {
+        citiesViewModel.addedCitiesLiveData.observe(viewLifecycleOwner) {
             addedCitiesAdapter.setCities(it)
             addedCitiesList.clear()
             addedCitiesList.addAll(it)
         }
-        viewModel.getAddedCities()
+        citiesViewModel.getAddedCities()
 
-        viewModel.userCityLiveData.observe(viewLifecycleOwner) {
+        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
             prevCity = it
         }
-        viewModel.getUserCity()
+        citiesViewModel.getUserCity()
     }
 
     private fun setCitiesForAdapter() {
         addedCitiesAdapter.setCities(addedCitiesList)
     }
 
-    private fun deleteElementFromList(city: String){
-        for ((k, elem) in addedCitiesList.withIndex()){
+    private fun deleteElementFromList(city: String) {
+        for ((k, elem) in addedCitiesList.withIndex()) {
             if (elem.city == city) {
                 addedCitiesList.removeAt(k)
                 return

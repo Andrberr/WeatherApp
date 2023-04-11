@@ -13,11 +13,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.domain.models.WeatherModel
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.AlertDialogLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
+import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
-import com.example.weatherapp.ui.current_weather.bar_chart.HourWeatherAdapter
+import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter
 import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherAdapter
@@ -31,7 +33,8 @@ class CurrentWeatherFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val vm: GeneralViewModel by viewModels { factory }
+    private val weatherViewModel: GeneralViewModel by viewModels { factory }
+    private val citiesViewModel: CitiesViewModel by viewModels { factory }
 
     private val args: CurrentWeatherFragmentArgs by navArgs()
 
@@ -67,7 +70,7 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         val nextClick: (WeatherModel) -> Unit = {
-            vm.getHourWeatherInfo(it)
+            weatherViewModel.getHourWeatherInfo(it)
             val dialogFragment = HourDialogFragment()
             dialogFragment.show(childFragmentManager, "hour_dialog")
         }
@@ -79,7 +82,7 @@ class CurrentWeatherFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
-        vm.weatherLiveData.observe(viewLifecycleOwner) {
+        weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
             if ((it.location.city != args.prevCity) || args.isSame) {
 
                 binding.cityView.text = it.location.city
@@ -112,19 +115,21 @@ class CurrentWeatherFragment : Fragment() {
                     moreWeatherAdapter.setMoreWeather(moreWeatherList)
                 }
 
+                binding.sunriseView.text = "Sunrise:\n${it.daysForecasts[0].sunrise}"
+                binding.sunsetView.text = "Sunset:\n${it.daysForecasts[0].sunset}"
+
                 barChartAdapter.setWeather(it.daysForecasts[0].hourWeathers)
             }
         }
 
         if (args.needUpdate) {
-            vm.userCityLiveData.observe(viewLifecycleOwner) {
-                vm.getWeatherInfo(it)
+            citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
+                weatherViewModel.getWeatherInfo(it, "")
             }
-            vm.getUserCity()
+            citiesViewModel.getUserCity()
         }
 
         setButtonsClickListeners()
-
     }
 
     private fun setInvisibleParams() {
@@ -133,6 +138,7 @@ class CurrentWeatherFragment : Fragment() {
 
     private fun setVisibleParams() {
         with(binding) {
+            parentLayout.setBackgroundResource(R.drawable.background)
             groupView.visibility = View.VISIBLE
             lottieView.visibility = View.GONE
         }
@@ -166,7 +172,9 @@ class CurrentWeatherFragment : Fragment() {
                alertDialog.dismiss()
             }
             dialogLayout.mapsButton.setOnClickListener {
-
+               val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
+                findNavController().navigate(action)
+                alertDialog.dismiss()
             }
             alertDialog.show()
         }
