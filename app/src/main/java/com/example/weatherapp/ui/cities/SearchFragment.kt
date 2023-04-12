@@ -22,6 +22,7 @@ class SearchFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
+    private val weatherViewModel: GeneralViewModel by viewModels { factory }
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -43,6 +44,12 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         var prevCity = ""
+
+        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
+            prevCity = it
+        }
+        citiesViewModel.getUserCity()
+
         val itemClick: (String) -> Unit = {
             citiesViewModel.setUserCity(it)
             val flag = prevCity == it
@@ -76,11 +83,6 @@ class SearchFragment : Fragment() {
             else citiesList
             citiesAdapter.setCities(cities)
         }
-
-        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
-            prevCity = it
-        }
-        citiesViewModel.getUserCity()
     }
 
     override fun onDestroyView() {

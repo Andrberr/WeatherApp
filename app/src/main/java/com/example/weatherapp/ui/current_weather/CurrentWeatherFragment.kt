@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
+import com.example.domain.models.WeatherInfo
 import com.example.domain.models.WeatherModel
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.AlertDialogLayoutBinding
@@ -24,6 +26,9 @@ import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherA
 import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherAdapter
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class CurrentWeatherFragment : Fragment() {
@@ -37,6 +42,9 @@ class CurrentWeatherFragment : Fragment() {
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
 
     private val args: CurrentWeatherFragmentArgs by navArgs()
+
+    private var newCity: String? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -83,7 +91,14 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
-            if ((it.location.city != args.prevCity) || args.isSame) {
+            var wasUpdated = false
+            if (newCity != null) {
+                if ((it.location.city == newCity) || args.isSame) wasUpdated = true
+            }
+
+
+            if (wasUpdated) {
+                newCity = it.location.city
 
                 binding.cityView.text = it.location.city
                 generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
@@ -122,12 +137,12 @@ class CurrentWeatherFragment : Fragment() {
             }
         }
 
-        if (args.needUpdate) {
-            citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
-                weatherViewModel.getWeatherInfo(it, "")
-            }
-            citiesViewModel.getUserCity()
+        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
+            newCity = it
+            if (args.needUpdate) weatherViewModel.getWeatherInfo(it, "")
+            else weatherViewModel.getWeatherFromDataBase(it)
         }
+        citiesViewModel.getUserCity()
 
         setButtonsClickListeners()
     }
@@ -169,10 +184,11 @@ class CurrentWeatherFragment : Fragment() {
                 val action =
                     CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
                 findNavController().navigate(action)
-               alertDialog.dismiss()
+                alertDialog.dismiss()
             }
             dialogLayout.mapsButton.setOnClickListener {
-               val action = CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
+                val action =
+                    CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
                 findNavController().navigate(action)
                 alertDialog.dismiss()
             }

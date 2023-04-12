@@ -103,5 +103,13 @@
         <action
             android:id="@+id/action_dayWeatherFragment_to_futureWeatherFragment"
             app:destination="@id/futureWeatherFragment" />
+        <action
+            android:id="@+id/action_dayWeatherFragment_to_hourDialogFragment"
+            app:destination="@id/hourDialogFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/hourDialogFragment"
+        android:name="com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment"
+        android:label="DialogFragment"/>
 </navigation>

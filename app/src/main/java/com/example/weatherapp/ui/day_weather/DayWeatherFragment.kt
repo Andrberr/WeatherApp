@@ -46,7 +46,8 @@ class DayWeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.backButton.setOnClickListener {
-            val action = DayWeatherFragmentDirections.actionDayWeatherFragmentToFutureWeatherFragment()
+            val action =
+                DayWeatherFragmentDirections.actionDayWeatherFragmentToFutureWeatherFragment()
             findNavController().navigate(action)
         }
 
@@ -59,8 +60,10 @@ class DayWeatherFragment : Fragment() {
 
         val nextClick: (WeatherModel) -> Unit = {
             viewModel.getHourWeatherInfo(it)
-            val dialogFragment = HourDialogFragment()
-            dialogFragment.show(childFragmentManager, "hour_dialog")
+//            val dialogFragment = HourDialogFragment()
+//            dialogFragment.show(childFragmentManager, "hour_dialog")
+            val action = DayWeatherFragmentDirections.actionDayWeatherFragmentToHourDialogFragment()
+            findNavController().navigate(action)
         }
 
         val barChartAdapter = HourWeatherAdapter(nextClick)
@@ -80,12 +83,12 @@ class DayWeatherFragment : Fragment() {
 
             val dayWeatherList = with(it) {
                 listOf(
-                    DayWeatherElem("Average temperature(°C)", getModifiableFloat(avgTempC)+ " "),
-                    DayWeatherElem("Average temperature(°F)", getModifiableFloat(avgTempF)+ " "),
+                    DayWeatherElem("Average temperature(°C)", getModifiableFloat(avgTempC) + " "),
+                    DayWeatherElem("Average temperature(°F)", getModifiableFloat(avgTempF) + " "),
                     DayWeatherElem("Max temperature(°C)", getModifiableFloat(maxTempC) + " "),
-                    DayWeatherElem("Max temperature(°F)", getModifiableFloat(maxTempF)+ " "),
-                    DayWeatherElem("Min temperature(°C)", getModifiableFloat(minTempC)+ " "),
-                    DayWeatherElem("Min temperature(°F)", getModifiableFloat(minTempF)+ " "),
+                    DayWeatherElem("Max temperature(°F)", getModifiableFloat(maxTempF) + " "),
+                    DayWeatherElem("Min temperature(°C)", getModifiableFloat(minTempC) + " "),
+                    DayWeatherElem("Min temperature(°F)", getModifiableFloat(minTempF) + " "),
                     DayWeatherElem("Rain chance", getModifiableFloat(rainChance) + "% "),
                     DayWeatherElem("Snow chance", getModifiableFloat(snowChance) + "% "),
                     DayWeatherElem("Humidity", "${getModifiableFloat(avgHumidity)}% "),
@@ -105,9 +108,9 @@ class DayWeatherFragment : Fragment() {
             }
             dayWeatherAdapter.setDayWeather(dayWeatherList)
 
-            binding.sunriseView.text =  "Sunrise:\n${it.sunrise} "
+            binding.sunriseView.text = "Sunrise:\n${it.sunrise} "
             binding.sunsetView.text = "Sunset:\n${it.sunset} "
-            binding.moonriseView.text =  "Moonrise:\n${it.moonrise} "
+            binding.moonriseView.text = "Moonrise:\n${it.moonrise} "
             binding.moonsetView.text = "Moonset:\n${it.moonset} "
             barChartAdapter.setWeather(it.hourWeathers)
         }
