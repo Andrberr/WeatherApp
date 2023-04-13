@@ -30,6 +30,7 @@ import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.*
 import javax.inject.Inject
 
 class CurrentWeatherFragment : Fragment() {
@@ -210,7 +211,7 @@ class CurrentWeatherFragment : Fragment() {
         alertDialog.window?.apply {
             val layoutParams = attributes
             layoutParams.gravity = Gravity.TOP or Gravity.END
-            layoutParams.y = 200
+            layoutParams.y = 220
             attributes = layoutParams
         }
 
@@ -220,7 +221,7 @@ class CurrentWeatherFragment : Fragment() {
             latitudeView.text = getString(R.string.city_latitude) + locationModel.latitude
             longitudeView.text = getString(R.string.city_longitude) + locationModel.longitude
             timeZoneView.text = getString(R.string.city_timezone) + locationModel.timeZone
-            timeView.text = getString(R.string.city_time) + locationModel.time
+            textClock.timeZone =  locationModel.timeZone
         }
 
         alertDialog.show()

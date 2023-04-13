@@ -46,14 +46,15 @@
         android:textColor="#CED1EC"
         />
 
-    <TextView
-        android:id="@+id/timeView"
+    <TextClock
+        android:id="@+id/textClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#CED1EC"
+        android:textSize="24sp"
+        android:format24Hour="HH:mm:ss"
         />
-<!--    val city: String,-->
+
+    <!--    val city: String,-->
 <!--    val region: String,-->
 <!--    val country: String,-->
 <!--    val latitude: Float,-->
