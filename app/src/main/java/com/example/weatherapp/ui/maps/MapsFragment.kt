@@ -119,27 +119,27 @@ class MapsFragment : Fragment() {
         )
 
         var prevCity = ""
-        var isSame = false
 
         citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
             prevCity = it
         }
         citiesViewModel.getUserCity()
 
-        weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
-            if (it.location.city == prevCity) isSame = true
-            citiesViewModel.setUserCity(it.location.city)
-        }
-
         binding.searchWeatherButton.setOnClickListener {
             if (coordinates.isNotEmpty()) {
-                weatherViewModel.getWeatherInfo(prevCity, coordinates)
                 val action = MapsFragmentDirections.actionMapsFragmentToCurrentWeatherFragment(
-                    prevCity,
-                    isSame,
+                    false,
                     false
                 )
-                findNavController().navigate(action)
+
+                var isAction = true
+                weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
+                    citiesViewModel.setUserCity(it.location.city)
+                    isAction = !isAction
+                    if (isAction) findNavController().navigate(action)
+                }
+
+                weatherViewModel.getWeatherInfo(prevCity, coordinates)
             }
         }
     }

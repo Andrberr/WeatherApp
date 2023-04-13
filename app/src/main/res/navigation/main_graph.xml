@@ -19,21 +19,15 @@
             app:destination="@id/addedCitiesFragment" />
 
         <argument
-            android:name="prevCity"
-            app:argType="string"
-            android:defaultValue=""
-            />
-
-        <argument
-            android:name="isSame"
+            android:name="update"
             app:argType="boolean"
-            android:defaultValue="true"
+            android:defaultValue="false"
             />
 
         <argument
             android:name="needUpdate"
             app:argType="boolean"
-            android:defaultValue="true"
+            android:defaultValue="false"
             />
         <action
             android:id="@+id/action_currentWeatherFragment_to_searchFragment"
@@ -60,6 +54,13 @@
         android:name="com.example.weatherapp.ui.cities.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
+
+        <argument
+            android:name="update"
+            app:argType="boolean"
+            android:defaultValue="false"
+            />
+
         <action
             android:id="@+id/action_searchFragment_to_currentWeatherFragment"
             app:destination="@id/currentWeatherFragment" />
@@ -103,13 +104,6 @@
         <action
             android:id="@+id/action_dayWeatherFragment_to_futureWeatherFragment"
             app:destination="@id/futureWeatherFragment" />
-        <action
-            android:id="@+id/action_dayWeatherFragment_to_hourDialogFragment"
-            app:destination="@id/hourDialogFragment" />
     </fragment>
 
-    <dialog
-        android:id="@+id/hourDialogFragment"
-        android:name="com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment"
-        android:label="DialogFragment"/>
 </navigation>

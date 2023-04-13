@@ -44,13 +44,12 @@ class AddedCitiesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var prevCity = ""
+
         val itemClick: (String) -> Unit = {
             citiesViewModel.setUserCity(it)
-            val isSame = prevCity == it
             val action =
                 AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(
-                    prevCity, isSame, true
+                    false, true
                 )
             findNavController().navigate(action)
         }
@@ -74,10 +73,6 @@ class AddedCitiesFragment : Fragment() {
         }
         citiesViewModel.getAddedCities()
 
-        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
-            prevCity = it
-        }
-        citiesViewModel.getUserCity()
     }
 
     private fun setCitiesForAdapter() {

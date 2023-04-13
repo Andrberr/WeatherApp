@@ -7,14 +7,17 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.core.ViewModelFactory
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.HourDialogLayoutBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
+import com.example.weatherapp.ui.day_weather.DayWeatherFragmentDirections
 import javax.inject.Inject
 
 class HourDialogFragment : DialogFragment() {
@@ -36,6 +39,16 @@ class HourDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        requireActivity().onBackPressedDispatcher.addCallback(
+//            viewLifecycleOwner,
+//            object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    val action =
+//                        HourDialogFragmentDirections.actionHourDialogFragmentToDayWeatherFragment()
+//                    findNavController().navigate(action)
+//                }
+//            })
+
         _binding = HourDialogLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }

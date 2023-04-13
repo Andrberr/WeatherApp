@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
+import com.example.weatherapp.ui.future_weather.FutureWeatherFragmentDirections
 import javax.inject.Inject
 
 class DayWeatherFragment : Fragment() {
@@ -39,17 +41,21 @@ class DayWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val action =
+                        DayWeatherFragmentDirections.actionDayWeatherFragmentToFutureWeatherFragment()
+                    findNavController().navigate(action)
+                }
+            })
+
         _binding = FragmentDayWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        binding.backButton.setOnClickListener {
-            val action =
-                DayWeatherFragmentDirections.actionDayWeatherFragmentToFutureWeatherFragment()
-            findNavController().navigate(action)
-        }
 
         val dayWeatherAdapter = DayWeatherAdapter()
         binding.recycler.apply {
@@ -60,10 +66,8 @@ class DayWeatherFragment : Fragment() {
 
         val nextClick: (WeatherModel) -> Unit = {
             viewModel.getHourWeatherInfo(it)
-//            val dialogFragment = HourDialogFragment()
-//            dialogFragment.show(childFragmentManager, "hour_dialog")
-            val action = DayWeatherFragmentDirections.actionDayWeatherFragmentToHourDialogFragment()
-            findNavController().navigate(action)
+//            val action = DayWeatherFragmentDirections.actionDayWeatherFragmentToHourDialogFragment()
+//            findNavController().navigate(action)
         }
 
         val barChartAdapter = HourWeatherAdapter(nextClick)

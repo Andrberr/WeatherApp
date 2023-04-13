@@ -41,8 +41,8 @@ class LoadingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.userCityLiveData.observe(viewLifecycleOwner) {
             val action =
-                if (it != "") LoadingFragmentDirections.actionLoadingFragmentToCurrentWeatherFragment()
-                else LoadingFragmentDirections.actionLoadingFragmentToSearchFragment()
+                if (it != "") LoadingFragmentDirections.actionLoadingFragmentToCurrentWeatherFragment(true, true)
+                else LoadingFragmentDirections.actionLoadingFragmentToSearchFragment(true)
             findNavController().navigate(action)
         }
         viewModel.getUserCity()

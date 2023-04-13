@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
 import com.example.domain.models.DayWeather
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import javax.inject.Inject
@@ -34,15 +38,31 @@ class FutureWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val action =
+                        FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment(
+                            true,
+                            false
+                        )
+                    findNavController().navigate(action)
+                }
+            })
+
         _binding = FragmentFutureWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val itemClick: (DayWeather) -> Unit = {
             vm.getDayWeather(it)
-            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToDayWeatherFragment()
+            val action =
+                FutureWeatherFragmentDirections.actionFutureWeatherFragmentToDayWeatherFragment()
             findNavController().navigate(action)
         }
 
@@ -54,11 +74,6 @@ class FutureWeatherFragment : Fragment() {
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
             adapter.setWeather(it.daysForecasts)
-        }
-
-        binding.backButton.setOnClickListener {
-            val action = FutureWeatherFragmentDirections.actionFutureWeatherFragmentToCurrentWeatherFragment("", true, false)
-            findNavController().navigate(action)
         }
     }
 

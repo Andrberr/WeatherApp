@@ -1,11 +1,10 @@
 package com.example.weatherapp.ui.current_weather
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,10 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
+import com.example.domain.models.LocationModel
 import com.example.domain.models.WeatherInfo
 import com.example.domain.models.WeatherModel
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.AlertDialogLayoutBinding
+import com.example.weatherapp.databinding.CityDialogLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
@@ -43,8 +44,7 @@ class CurrentWeatherFragment : Fragment() {
 
     private val args: CurrentWeatherFragmentArgs by navArgs()
 
-    private var newCity: String? = null
-
+    private lateinit var locationModel: LocationModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -90,15 +90,12 @@ class CurrentWeatherFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
+        var wasUpdated = true
         weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
-            var wasUpdated = false
-            if (newCity != null) {
-                if ((it.location.city == newCity) || args.isSame) wasUpdated = true
-            }
+            wasUpdated = !wasUpdated
 
-
-            if (wasUpdated) {
-                newCity = it.location.city
+            if (wasUpdated || args.update) {
+                locationModel = it.location
 
                 binding.cityView.text = it.location.city
                 generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
@@ -138,7 +135,6 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
-            newCity = it
             if (args.needUpdate) weatherViewModel.getWeatherInfo(it, "")
             else weatherViewModel.getWeatherFromDataBase(it)
         }
@@ -173,27 +169,61 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         binding.optionsButton.setOnClickListener {
-
-            val builder = AlertDialog.Builder(requireContext())
-
-            val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
-            builder.setView(dialogLayout.root)
-            val alertDialog = builder.create()
-
-            dialogLayout.citiesButton.setOnClickListener {
-                val action =
-                    CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
-                findNavController().navigate(action)
-                alertDialog.dismiss()
-            }
-            dialogLayout.mapsButton.setOnClickListener {
-                val action =
-                    CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
-                findNavController().navigate(action)
-                alertDialog.dismiss()
-            }
-            alertDialog.show()
+            showOptionsDialog()
         }
+
+        binding.cityInfoButton.setOnClickListener {
+            showCityInfoDialog()
+        }
+    }
+
+    private fun showOptionsDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
+        builder.setView(dialogLayout.root)
+        val alertDialog = builder.create()
+
+        dialogLayout.citiesButton.setOnClickListener {
+            val action =
+                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToAddedCitiesFragment()
+            findNavController().navigate(action)
+            alertDialog.dismiss()
+        }
+        dialogLayout.mapsButton.setOnClickListener {
+            val action =
+                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToMapsFragment()
+            findNavController().navigate(action)
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showCityInfoDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        val dialogLayout = CityDialogLayoutBinding.inflate(layoutInflater, null, false)
+        builder.setView(dialogLayout.root)
+        val alertDialog = builder.create()
+
+        alertDialog.window?.apply {
+            val layoutParams = attributes
+            layoutParams.gravity = Gravity.TOP or Gravity.END
+            layoutParams.y = 200
+            attributes = layoutParams
+        }
+
+        with(dialogLayout) {
+            regionView.text = getString(R.string.city_region) + locationModel.region
+            countryView.text = getString(R.string.city_country) + locationModel.country
+            latitudeView.text = getString(R.string.city_latitude) + locationModel.latitude
+            longitudeView.text = getString(R.string.city_longitude) + locationModel.longitude
+            timeZoneView.text = getString(R.string.city_timezone) + locationModel.timeZone
+            timeView.text = getString(R.string.city_time) + locationModel.time
+        }
+
+        alertDialog.show()
     }
 
     private fun getModifiableFloat(value: Float): String {

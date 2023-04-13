@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.current_weather.CurrentWeatherFragmentArgs
 import javax.inject.Inject
 
 class SearchFragment : Fragment() {
@@ -22,10 +24,11 @@ class SearchFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
-    private val weatherViewModel: GeneralViewModel by viewModels { factory }
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+
+    private val args: SearchFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,19 +46,11 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        var prevCity = ""
-
-        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
-            prevCity = it
-        }
-        citiesViewModel.getUserCity()
-
         val itemClick: (String) -> Unit = {
             citiesViewModel.setUserCity(it)
-            val flag = prevCity == it
+
             val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(
-                prevCity,
-                flag,
+                args.update,
                 true
             )
             findNavController().navigate(action)

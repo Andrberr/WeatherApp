@@ -27,21 +27,6 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/loading" />
 
-        <!--        <com.airbnb.lottie.LottieAnimationView-->
-        <!--            android:id="@+id/lottieBackView"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            app:layout_constraintHeight_percent="1"-->
-        <!--            app:layout_constraintWidth_percent="1.2"-->
-        <!--            app:lottie_autoPlay="true"-->
-        <!--            app:lottie_loop="true"-->
-        <!--            app:lottie_rawRes="@raw/back"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"/>-->
-
-
         <ImageButton
             android:id="@+id/optionsButton"
             android:layout_width="40dp"
@@ -60,6 +45,17 @@
             app:layout_constraintEnd_toStartOf="@+id/optionsButton"
             app:layout_constraintStart_toEndOf="@+id/addButton"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/cityInfoButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.03"
+            app:layout_constraintWidth_percent="0.07"
+            android:background="@drawable/arrow"
+            app:layout_constraintStart_toEndOf="@id/cityView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/cityView"/>
 
         <ImageButton
             android:id="@+id/addButton"
@@ -285,7 +281,7 @@
             android:id="@+id/groupView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:constraint_referenced_ids="gradC, gradF, threeDayLayout, windLayout, delimeter_view, delimeter_view2, citiesWeatherButton, addButton, optionsButton, delimeter, sunLayout" />
+            app:constraint_referenced_ids="gradC, gradF, threeDayLayout, windLayout, delimeter_view, delimeter_view2, citiesWeatherButton, addButton, optionsButton, delimeter, sunLayout, cityInfoButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

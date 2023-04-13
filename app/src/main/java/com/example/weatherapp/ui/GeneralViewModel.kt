@@ -38,7 +38,7 @@ class GeneralViewModel @Inject constructor(
     fun getWeatherInfo(city: String, coordinates: String) {
         this.city = city
         this.coordinates = coordinates
-        viewModelScope.launch() {
+        viewModelScope.launch(handler) {
             _weatherLiveData.value = weatherRepository.getWeatherInfo(true, city, coordinates)
         }
     }
