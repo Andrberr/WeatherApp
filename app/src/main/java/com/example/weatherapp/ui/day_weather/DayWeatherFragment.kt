@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.day_weather
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +15,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.example.core.ViewModelFactory
 import com.example.domain.models.WeatherModel
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentDayWeatherBinding
+import com.example.weatherapp.databinding.HourDialogLayoutBinding
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
@@ -66,8 +69,7 @@ class DayWeatherFragment : Fragment() {
 
         val nextClick: (WeatherModel) -> Unit = {
             viewModel.getHourWeatherInfo(it)
-//            val action = DayWeatherFragmentDirections.actionDayWeatherFragmentToHourDialogFragment()
-//            findNavController().navigate(action)
+            showHourDialog()
         }
 
         val barChartAdapter = HourWeatherAdapter(nextClick)
@@ -125,6 +127,36 @@ class DayWeatherFragment : Fragment() {
         val str = value.toString().split(".")
         if (str[1].toFloat() != 0f) return value.toString()
         return str[0]
+    }
+
+    private fun showHourDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        val dialogLayout = HourDialogLayoutBinding.inflate(layoutInflater, null, false)
+        builder.setView(dialogLayout.root)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawableResource(R.drawable.background_constraint)
+
+        viewModel.hourWeatherLiveData.observe(viewLifecycleOwner) {
+            with(dialogLayout) {
+                cloudPercent.text = getModifiableFloat(it.cloudPercent)
+                feelingC.text = getModifiableFloat(it.feelingC)
+                feelingF.text = getModifiableFloat(it.feelingF)
+                gustWindSpeed.text = getModifiableFloat(it.gustWindSpeed)
+                humidityPercent.text = getModifiableFloat(it.humidityPercent)
+                precipitationAmountHour.text = getModifiableFloat(it.precipitationAmountHour)
+                pressure.text = getModifiableFloat(it.pressure)
+                visibilityKm.text = getModifiableFloat(it.visibilityKm)
+                windSpeed.text = getModifiableFloat(it.windSpeed)
+                Glide.with(this@DayWeatherFragment)
+                    .load("https:" + it.icon)
+                    .into(iconView)
+
+                windDirView.text = it.windDirection
+            }
+        }
+
+        alertDialog.show()
     }
 
     override fun onDestroyView() {

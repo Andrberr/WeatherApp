@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.core.ViewModelFactory
 import com.example.domain.models.LocationModel
 import com.example.domain.models.WeatherInfo
@@ -19,6 +20,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.databinding.AlertDialogLayoutBinding
 import com.example.weatherapp.databinding.CityDialogLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
+import com.example.weatherapp.databinding.HourDialogLayoutBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
@@ -80,8 +82,7 @@ class CurrentWeatherFragment : Fragment() {
 
         val nextClick: (WeatherModel) -> Unit = {
             weatherViewModel.getHourWeatherInfo(it)
-            val dialogFragment = HourDialogFragment()
-            dialogFragment.show(childFragmentManager, "hour_dialog")
+            showHourDialog()
         }
 
         val barChartAdapter = HourWeatherAdapter(nextClick)
@@ -96,42 +97,55 @@ class CurrentWeatherFragment : Fragment() {
             wasUpdated = !wasUpdated
 
             if (wasUpdated || args.update) {
-                locationModel = it.location
+                if (it == null) {
+                    navigateToSearchFragment()
+                } else {
+                    locationModel = it.location
 
-                binding.cityView.text = it.location.city
-                generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
+                    binding.cityView.text = it.location.city
+                    generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
 
-                with(it.currentWeather) {
-                    setVisibleParams()
+                    with(it.currentWeather) {
+                        setVisibleParams()
 
-                    binding.tempCView.text = tempC.toString()
-                    binding.tempFView.text = tempF.toString()
-                    binding.windDirView.text = windDirection
-                    binding.windSpeedView.text = windSpeed.toString()
-                    val moreWeatherList =
-                        listOf(
-                            MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
-                            MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
-                            MoreWeatherElem("Humidity", "${getModifiableFloat(humidityPercent)}%"),
-                            MoreWeatherElem("Cloud cover", "${getModifiableFloat(cloudPercent)}%"),
-                            MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
-                            MoreWeatherElem(
-                                "Precipitation",
-                                getModifiableFloat(precipitationAmountHour) + "mm/h"
-                            ),
-                            MoreWeatherElem(
-                                "Visibility",
-                                getModifiableFloat(visibilityKm) + "km/h"
-                            ),
-                            MoreWeatherElem("Wind gust", getModifiableFloat(gustWindSpeed) + "km/h")
-                        )
-                    moreWeatherAdapter.setMoreWeather(moreWeatherList)
+                        binding.tempCView.text = tempC.toString()
+                        binding.tempFView.text = tempF.toString()
+                        binding.windDirView.text = windDirection
+                        binding.windSpeedView.text = windSpeed.toString()
+                        val moreWeatherList =
+                            listOf(
+                                MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
+                                MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
+                                MoreWeatherElem(
+                                    "Humidity",
+                                    "${getModifiableFloat(humidityPercent)}%"
+                                ),
+                                MoreWeatherElem(
+                                    "Cloud cover",
+                                    "${getModifiableFloat(cloudPercent)}%"
+                                ),
+                                MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
+                                MoreWeatherElem(
+                                    "Precipitation",
+                                    getModifiableFloat(precipitationAmountHour) + "mm/h"
+                                ),
+                                MoreWeatherElem(
+                                    "Visibility",
+                                    getModifiableFloat(visibilityKm) + "km/h"
+                                ),
+                                MoreWeatherElem(
+                                    "Wind gust",
+                                    getModifiableFloat(gustWindSpeed) + "km/h"
+                                )
+                            )
+                        moreWeatherAdapter.setMoreWeather(moreWeatherList)
+                    }
+
+                    binding.sunriseView.text = "Sunrise:\n${it.daysForecasts[0].sunrise}"
+                    binding.sunsetView.text = "Sunset:\n${it.daysForecasts[0].sunset}"
+
+                    barChartAdapter.setWeather(it.daysForecasts[0].hourWeathers)
                 }
-
-                binding.sunriseView.text = "Sunrise:\n${it.daysForecasts[0].sunrise}"
-                binding.sunsetView.text = "Sunset:\n${it.daysForecasts[0].sunset}"
-
-                barChartAdapter.setWeather(it.daysForecasts[0].hourWeathers)
             }
         }
 
@@ -164,9 +178,7 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         binding.addButton.setOnClickListener {
-            val action =
-                CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToSearchFragment()
-            findNavController().navigate(action)
+            navigateToSearchFragment()
         }
 
         binding.optionsButton.setOnClickListener {
@@ -184,6 +196,7 @@ class CurrentWeatherFragment : Fragment() {
         val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
         builder.setView(dialogLayout.root)
         val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawableResource(R.drawable.background_constraint)
 
         dialogLayout.citiesButton.setOnClickListener {
             val action =
@@ -211,7 +224,7 @@ class CurrentWeatherFragment : Fragment() {
         alertDialog.window?.apply {
             val layoutParams = attributes
             layoutParams.gravity = Gravity.TOP or Gravity.END
-            layoutParams.y = 220
+            layoutParams.y = 325
             attributes = layoutParams
         }
 
@@ -221,10 +234,45 @@ class CurrentWeatherFragment : Fragment() {
             latitudeView.text = getString(R.string.city_latitude) + locationModel.latitude
             longitudeView.text = getString(R.string.city_longitude) + locationModel.longitude
             timeZoneView.text = getString(R.string.city_timezone) + locationModel.timeZone
-            textClock.timeZone =  locationModel.timeZone
+            textClock.timeZone = locationModel.timeZone
         }
 
         alertDialog.show()
+    }
+
+    private fun showHourDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        val dialogLayout = HourDialogLayoutBinding.inflate(layoutInflater, null, false)
+        builder.setView(dialogLayout.root)
+        val alertDialog = builder.create()
+
+        weatherViewModel.hourWeatherLiveData.observe(viewLifecycleOwner) {
+            with(dialogLayout) {
+                cloudPercent.text = getModifiableFloat(it.cloudPercent)
+                feelingC.text = getModifiableFloat(it.feelingC)
+                feelingF.text = getModifiableFloat(it.feelingF)
+                gustWindSpeed.text = getModifiableFloat(it.gustWindSpeed)
+                humidityPercent.text = getModifiableFloat(it.humidityPercent)
+                precipitationAmountHour.text = getModifiableFloat(it.precipitationAmountHour)
+                pressure.text = getModifiableFloat(it.pressure)
+                visibilityKm.text = getModifiableFloat(it.visibilityKm)
+                windSpeed.text = getModifiableFloat(it.windSpeed)
+                Glide.with(this@CurrentWeatherFragment)
+                    .load("https:" + it.icon)
+                    .into(iconView)
+
+                windDirView.text = it.windDirection
+            }
+        }
+
+        alertDialog.show()
+    }
+
+    private fun navigateToSearchFragment() {
+        val action =
+            CurrentWeatherFragmentDirections.actionCurrentWeatherFragmentToSearchFragment()
+        findNavController().navigate(action)
     }
 
     private fun getModifiableFloat(value: Float): String {

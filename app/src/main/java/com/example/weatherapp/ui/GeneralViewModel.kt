@@ -17,8 +17,8 @@ import javax.inject.Inject
 class GeneralViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
 ) : ViewModel() {
-    private val _weatherLiveData = MutableLiveData<WeatherInfo>()
-    val weatherLiveData: LiveData<WeatherInfo> get() = _weatherLiveData
+    private val _weatherLiveData = MutableLiveData<WeatherInfo?>()
+    val weatherLiveData: LiveData<WeatherInfo?> get() = _weatherLiveData
 
     private val _hourWeatherLiveData = MutableLiveData<WeatherModel>()
     val hourWeatherLiveData: LiveData<WeatherModel> get() = _hourWeatherLiveData

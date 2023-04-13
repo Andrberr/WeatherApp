@@ -10,7 +10,7 @@
     <string name="gradAdded">°</string>
 
     <string name="dialog_weather_information">Weather Information</string>
-    <string name="dialog_wind_speed">Wind speed:</string>
+    <string name="dialog_wind_speed">Wind speed(km/h):</string>
     <string name="dialog_pressure">Pressure(mbar):</string>
     <string name="dialog_precipitation_per_hour">Precipitation per hour(mm/h):</string>
     <string name="dialog_humidity">Humidity(%):</string>
@@ -34,4 +34,5 @@
     <string name="city_longitude">Longitude:\t</string>
     <string name="city_timezone">Time Zone:\t</string>
     <string name="city_time">Time:\t</string>
+    <string name="input_city">Input city</string>
 </resources>

@@ -39,16 +39,6 @@ class HourDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        requireActivity().onBackPressedDispatcher.addCallback(
-//            viewLifecycleOwner,
-//            object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    val action =
-//                        HourDialogFragmentDirections.actionHourDialogFragmentToDayWeatherFragment()
-//                    findNavController().navigate(action)
-//                }
-//            })
-
         _binding = HourDialogLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }

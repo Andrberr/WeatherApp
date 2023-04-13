@@ -44,7 +44,7 @@
             android:textColor="#CED1EC"
             app:layout_constraintEnd_toStartOf="@+id/optionsButton"
             app:layout_constraintStart_toEndOf="@+id/addButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/addButton"/>
 
         <ImageButton
             android:id="@+id/cityInfoButton"
@@ -54,7 +54,6 @@
             app:layout_constraintWidth_percent="0.07"
             android:background="@drawable/arrow"
             app:layout_constraintStart_toEndOf="@id/cityView"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/cityView"/>
 
         <ImageButton
@@ -70,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="80sp"
-            android:textColor="#CED1EC"
+            android:textColor="@color/text_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cityView" />
@@ -80,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/degree_c"
-            android:textColor="#CED1EC"
+            android:textColor="@color/text_light"
             android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@id/tempCView"
             app:layout_constraintTop_toBottomOf="@+id/cityView" />
@@ -90,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:textColor="#CED1EC"
+            android:textColor="@color/text_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tempCView" />
@@ -101,7 +100,7 @@
             android:layout_height="wrap_content"
             android:text="@string/degree_f"
             android:textSize="20sp"
-            android:textColor="#CED1EC"
+            android:textColor="@color/text_light"
             app:layout_constraintStart_toEndOf="@id/tempFView"
             app:layout_constraintTop_toBottomOf="@+id/tempCView" />
 
@@ -132,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_btn"
                 android:text="@string/fourteen_day_forecast"
-                android:textColor="@color/purple_500"
+                android:textColor="@color/text_light"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"

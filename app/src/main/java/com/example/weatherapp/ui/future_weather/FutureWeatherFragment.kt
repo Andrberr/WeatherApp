@@ -73,7 +73,7 @@ class FutureWeatherFragment : Fragment() {
         }
 
         vm.weatherLiveData.observe(viewLifecycleOwner) {
-            adapter.setWeather(it.daysForecasts)
+           if (it != null) adapter.setWeather(it.daysForecasts)
         }
     }
 

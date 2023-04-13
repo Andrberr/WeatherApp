@@ -40,6 +40,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        binding.findCityText.visibility = View.INVISIBLE
         return binding.root
     }
 
@@ -65,6 +66,8 @@ class SearchFragment : Fragment() {
 
         val citiesList = mutableListOf<String>()
         citiesViewModel.citiesLiveData.observe(viewLifecycleOwner) {
+            binding.findCityText.visibility = View.VISIBLE
+            binding.lottieView.visibility = View.GONE
             citiesList.clear()
             citiesList.addAll(it)
             citiesAdapter.setCities(it)

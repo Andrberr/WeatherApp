@@ -134,7 +134,7 @@ class MapsFragment : Fragment() {
 
                 var isAction = true
                 weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
-                    citiesViewModel.setUserCity(it.location.city)
+                    if (it != null) citiesViewModel.setUserCity(it.location.city)
                     isAction = !isAction
                     if (isAction) findNavController().navigate(action)
                 }
