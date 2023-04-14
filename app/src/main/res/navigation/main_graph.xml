@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_addedCitiesFragment_to_currentWeatherFragment"
             app:destination="@id/currentWeatherFragment" />
+        <action
+            android:id="@+id/action_addedCitiesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadingFragment"

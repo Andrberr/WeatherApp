@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.example.weatherapp.R
 import kotlin.math.abs
 
 class CustomLine @JvmOverloads constructor(
@@ -28,7 +29,7 @@ class CustomLine @JvmOverloads constructor(
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.rgb(102, 48, 199)
+        color = context.getColor(R.color.purple_500)
         textSize = 60F
     }
 
@@ -72,14 +73,14 @@ class CustomLine @JvmOverloads constructor(
             )
             canvas.drawText(
                 "$curTemp°C",
-                (width / 7).toFloat(),
+                (width / 3).toFloat(),
                 textY-10,
                 textPaint
             )
         } else {
             canvas.drawText(
                 "$curTemp°C",
-                (width / 7).toFloat(),
+                (width / 3).toFloat(),
                 height / 2f - 30f,
                 textPaint
             )

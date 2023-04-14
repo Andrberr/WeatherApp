@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
+import com.example.weatherapp.ui.future_weather.FutureWeatherFragmentDirections
 import javax.inject.Inject
 
 class AddedCitiesFragment : Fragment() {
@@ -39,7 +41,18 @@ class AddedCitiesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                   if (addedCitiesList.isNotEmpty()) navigateToCurrentWeatherFragment(false)
+                }
+            })
+
         _binding = FragmentAddedCitiesBinding.inflate(inflater, container, false)
+        binding.lottieView.visibility = View.INVISIBLE
+        binding.addButton.visibility = View.INVISIBLE
         return binding.root
     }
 
@@ -47,11 +60,7 @@ class AddedCitiesFragment : Fragment() {
 
         val itemClick: (String) -> Unit = {
             citiesViewModel.setUserCity(it)
-            val action =
-                AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(
-                    false, true
-                )
-            findNavController().navigate(action)
+            navigateToCurrentWeatherFragment(true)
         }
 
         val deleteButtonClick: (String) -> Unit = {
@@ -72,11 +81,29 @@ class AddedCitiesFragment : Fragment() {
             addedCitiesList.addAll(it)
         }
         citiesViewModel.getAddedCities()
-
     }
 
     private fun setCitiesForAdapter() {
         addedCitiesAdapter.setCities(addedCitiesList)
+        if (addedCitiesList.isEmpty()) {
+            binding.lottieView.visibility = View.VISIBLE
+            binding.addButton.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    val action =
+                        AddedCitiesFragmentDirections.actionAddedCitiesFragmentToSearchFragment()
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun navigateToCurrentWeatherFragment(needUpdate: Boolean) {
+        val action =
+            AddedCitiesFragmentDirections.actionAddedCitiesFragmentToCurrentWeatherFragment(
+                false, needUpdate
+            )
+        findNavController().navigate(action)
     }
 
     private fun deleteElementFromList(city: String) {

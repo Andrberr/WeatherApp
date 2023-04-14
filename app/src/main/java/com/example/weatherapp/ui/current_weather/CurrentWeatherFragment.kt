@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -29,6 +30,7 @@ import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherA
 import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherAdapter
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
+import com.example.weatherapp.ui.future_weather.FutureWeatherFragmentDirections
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -59,6 +61,14 @@ class CurrentWeatherFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                }
+            })
+
         _binding = FragmentCurrentWeatherBinding.inflate(inflater, container, false)
         setInvisibleParams()
         return binding.root
@@ -98,6 +108,7 @@ class CurrentWeatherFragment : Fragment() {
 
             if (wasUpdated || args.update) {
                 if (it == null) {
+                    Toast.makeText(requireContext(), getString(R.string.no_found), Toast.LENGTH_SHORT).show()
                     navigateToSearchFragment()
                 } else {
                     locationModel = it.location
@@ -196,7 +207,13 @@ class CurrentWeatherFragment : Fragment() {
         val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
         builder.setView(dialogLayout.root)
         val alertDialog = builder.create()
-        alertDialog.window?.setBackgroundDrawableResource(R.drawable.background_constraint)
+        alertDialog.window?.apply {
+            val layoutParams = attributes
+            layoutParams.gravity = Gravity.TOP or Gravity.END
+            layoutParams.y = 290
+            attributes = layoutParams
+            setBackgroundDrawableResource(R.drawable.background_constraint)
+        }
 
         dialogLayout.citiesButton.setOnClickListener {
             val action =
@@ -224,7 +241,7 @@ class CurrentWeatherFragment : Fragment() {
         alertDialog.window?.apply {
             val layoutParams = attributes
             layoutParams.gravity = Gravity.TOP or Gravity.END
-            layoutParams.y = 325
+            layoutParams.y = 345
             attributes = layoutParams
         }
 

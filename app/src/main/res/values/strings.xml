@@ -35,4 +35,6 @@
     <string name="city_timezone">Time Zone:\t</string>
     <string name="city_time">Time:\t</string>
     <string name="input_city">Input city</string>
+
+    <string name="no_found">Weather was not found</string>
 </resources>

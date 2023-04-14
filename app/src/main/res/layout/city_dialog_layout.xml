@@ -53,12 +53,4 @@
         android:textSize="24sp"
         android:format24Hour="HH:mm:ss"
         />
-
-    <!--    val city: String,-->
-<!--    val region: String,-->
-<!--    val country: String,-->
-<!--    val latitude: Float,-->
-<!--    val longitude: Float,-->
-<!--    val timeZone: String,-->
-<!--    val time: String-->
 </LinearLayout>

@@ -3,9 +3,5 @@
     android:thickness="0dp"
     android:shape="rectangle">
     <corners android:radius="10dp" />
-    <gradient
-        android:startColor="#CED1EC"
-        android:endColor="#CED1EC"
-        android:type="linear"
-        android:angle="270"/>
+    <solid android:color="@color/text_light"/>
 </shape>

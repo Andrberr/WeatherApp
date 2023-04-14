@@ -3,10 +3,8 @@ package com.example.data.repositories
 import com.example.data.mappers.EntityToDefaultMapper
 import com.example.data.mappers.ResponseToDefaultMapper
 import com.example.data.mappers.ResponseToEntityMapper
-import com.example.data.models.WeatherResponse
 import com.example.data.network.WeatherService
 import com.example.data.sources.DataBaseSource
-import com.example.domain.models.LocationModel
 import com.example.domain.repositories.WeatherRepository
 import com.example.domain.models.WeatherInfo
 import kotlinx.coroutines.Dispatchers
@@ -29,52 +27,52 @@ class WeatherRepositoryImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
             if (cache) {
 
-                try {
-                    val response = if (coordinates.isEmpty()) weatherService.getWeatherResponse(
-                        city,
-                        DAYS_COUNT
-                    ) else weatherService.getWeatherResponse(coordinates, DAYS_COUNT)
+                val response = if (coordinates.isEmpty()) weatherService.getWeatherResponse(
+                    city,
+                    DAYS_COUNT
+                ) else weatherService.getWeatherResponse(coordinates, DAYS_COUNT)
 
-                    if (response.location != null) {
+                if (response.location != null) {
 
-                        val locationModel = responseToEntityMapper.mapToLocationModelEntity(
-                            response.location
-                        )
-                        deleteCityFromDatabase(locationModel.city)
-                        dataBaseSource.insertLocationModel(
-                            locationModel
-                        )
+                    val locationModel = responseToEntityMapper.mapToLocationModelEntity(
+                        response.location
+                    )
+                    deleteCityFromDatabase(locationModel.city)
+                    dataBaseSource.insertLocationModel(
+                        locationModel
+                    )
 
-                        if (response.location.city != null) {
-                            val list = response.daysForecasts?.forecasts?.map {
-                                responseToEntityMapper.mapToDayWeatherEntity(
-                                    it,
-                                    response.location.city
+                    if (response.location.city != null) {
+                        val list = response.daysForecasts?.forecasts?.map {
+                            responseToEntityMapper.mapToDayWeatherEntity(
+                                it,
+                                response.location.city
+                            )
+                        }
+                        if (list != null) dataBaseSource.insertDaysWeather(list)
+
+                        if (response.currentWeather != null) {
+                            dataBaseSource.insertWeatherModel(
+                                responseToEntityMapper.mapToWeatherModelEntity(
+                                    response.currentWeather, response.location.city
                                 )
-                            }
-                            if (list != null) dataBaseSource.insertDaysWeather(list)
-
-                            if (response.currentWeather != null) {
-                                dataBaseSource.insertWeatherModel(
-                                    responseToEntityMapper.mapToWeatherModelEntity(
-                                        response.currentWeather, response.location.city
-                                    )
-                                )
-                            }
+                            )
                         }
                     }
+                }
 
-                    responseToDefaultMapper(response)
+                responseToDefaultMapper(response)
+            } else {
+                try {
+                    with(dataBaseSource) {
+                        entityToDefaultMapper(
+                            getLocationModel(city),
+                            getWeatherModel(city),
+                            getDaysWeather(city)
+                        )
+                    }
                 } catch (e: Exception) {
                     null
-                }
-            } else {
-                with(dataBaseSource) {
-                    entityToDefaultMapper(
-                        getLocationModel(city),
-                        getWeatherModel(city),
-                        getDaysWeather(city)
-                    )
                 }
             }
         }

@@ -44,7 +44,7 @@ class GeneralViewModel @Inject constructor(
     }
 
     fun getWeatherFromDataBase(city: String) {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             _weatherLiveData.value = weatherRepository.getWeatherInfo(false, city, "")
         }
     }

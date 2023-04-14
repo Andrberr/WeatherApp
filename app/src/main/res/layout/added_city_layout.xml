@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_constraint">
+    android:background="@drawable/background_constraint"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
 
     <TextView
         android:id="@+id/cityView"
@@ -12,8 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="28sp"
+        android:textSize="26sp"
         android:textColor="@color/purple_500"
+        android:layout_marginStart="10dp"
         />
 
     <TextView
@@ -23,7 +27,7 @@
         app:layout_constraintStart_toEndOf="@id/cityView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="30sp"
+        android:textSize="26sp"
         android:textColor="@color/purple_500"/>
     <TextView
         android:id="@+id/gradView"
@@ -44,7 +48,8 @@
         android:background="@drawable/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"/>
 
     <ImageButton
         android:id="@+id/deleteButton"
@@ -54,13 +59,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"/>
 
-
-    <View
-        android:id="@+id/delimeter_view"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/purple_500"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

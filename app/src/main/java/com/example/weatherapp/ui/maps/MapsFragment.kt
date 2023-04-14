@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -105,6 +106,17 @@ class MapsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         MapKitInitializer.initialize(API_KEY, requireContext())
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val action = MapsFragmentDirections.actionMapsFragmentToCurrentWeatherFragment(
+                        true,
+                        false
+                    )
+                    findNavController().navigate(action)
+                }
+            })
         _binding = FragmentMapsBinding.inflate(inflater, container, false)
         return binding.root
     }

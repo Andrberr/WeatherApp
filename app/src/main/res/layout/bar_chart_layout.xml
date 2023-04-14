@@ -12,6 +12,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/purple_500"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,15 +37,5 @@
         app:layout_constraintHeight_percent="0.73"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toBottomOf="@id/weatherImage" />
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/nextButton"-->
-<!--            android:layout_width="35dp"-->
-<!--            android:layout_height="35dp"-->
-<!--            android:background="@drawable/next"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/customLine"-->
-<!--            />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
