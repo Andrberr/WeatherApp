@@ -51,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
+        android:textColor="@color/purple_500"
         android:format24Hour="HH:mm:ss"
         />
 </LinearLayout>

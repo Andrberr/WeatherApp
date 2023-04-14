@@ -13,10 +13,21 @@
 
         <action
             android:id="@+id/action_currentWeatherFragment_to_futureWeatherFragment"
-            app:destination="@id/futureWeatherFragment" />
+            app:destination="@id/futureWeatherFragment"
+            app:enterAnim="@anim/slide_in_right"/>
         <action
             android:id="@+id/action_currentWeatherFragment_to_addedCitiesFragment"
-            app:destination="@id/addedCitiesFragment" />
+            app:destination="@id/addedCitiesFragment"
+            app:enterAnim="@anim/cool_anim"/>
+
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/map_anim"/>
 
         <argument
             android:name="update"
@@ -29,12 +40,12 @@
             app:argType="boolean"
             android:defaultValue="false"
             />
-        <action
-            android:id="@+id/action_currentWeatherFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_currentWeatherFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+
+        <argument
+            android:name="backFromSearch"
+            app:argType="boolean"
+            android:defaultValue="false"
+            />
     </fragment>
     <fragment
         android:id="@+id/futureWeatherFragment"
@@ -44,10 +55,12 @@
 
         <action
             android:id="@+id/action_futureWeatherFragment_to_currentWeatherFragment"
-            app:destination="@id/currentWeatherFragment" />
+            app:destination="@id/currentWeatherFragment"
+            app:enterAnim="@anim/slide_in_left"/>
         <action
             android:id="@+id/action_futureWeatherFragment_to_dayWeatherFragment"
-            app:destination="@id/dayWeatherFragment" />
+            app:destination="@id/dayWeatherFragment"
+            app:enterAnim="@anim/slide_up"/>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -106,7 +119,8 @@
         tools:layout="@layout/fragment_day_weather" >
         <action
             android:id="@+id/action_dayWeatherFragment_to_futureWeatherFragment"
-            app:destination="@id/futureWeatherFragment" />
+            app:destination="@id/futureWeatherFragment"
+            app:enterAnim="@anim/slide_down"/>
     </fragment>
 
 </navigation>

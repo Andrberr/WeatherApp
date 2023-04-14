@@ -76,9 +76,9 @@ class CitiesRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun setUserCity(city: String) {
-        userCitySource.setUserCity(city)
+    override fun setUserCity(city: String, token: String) {
+        userCitySource.setUserCity(city, token)
     }
 
-    override fun getUserCity(): String = userCitySource.getUserCity()
+    override fun getUserCity(token: String): String = userCitySource.getUserCity(token)
 }

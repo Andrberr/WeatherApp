@@ -16,8 +16,6 @@ import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.MainActivity
-import com.example.weatherapp.ui.GeneralViewModel
-import com.example.weatherapp.ui.current_weather.CurrentWeatherFragmentArgs
 import javax.inject.Inject
 
 class SearchFragment : Fragment() {
@@ -45,6 +43,7 @@ class SearchFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
+                    navigateToCurrentWeatherFragment(false, false, true)
                 }
             })
 
@@ -53,17 +52,22 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        var rememberCity = ""
+        citiesViewModel.rememberCityLiveData.observe(viewLifecycleOwner){
+            rememberCity = it
+        }
+        citiesViewModel.getRememberCity()
+
+        citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
+            if (rememberCity.isEmpty()) citiesViewModel.setRememberCity(it)
+        }
+        citiesViewModel.getUserCity()
 
         val itemClick: (String) -> Unit = {
             citiesViewModel.setUserCity(it)
-
-            val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(
-                args.update,
-                true
-            )
-            findNavController().navigate(action)
+            navigateToCurrentWeatherFragment(args.update, true, false)
         }
 
         val citiesAdapter = CitiesAdapter(itemClick)
@@ -90,6 +94,15 @@ class SearchFragment : Fragment() {
             else citiesList
             citiesAdapter.setCities(cities)
         }
+    }
+
+    private fun navigateToCurrentWeatherFragment(update: Boolean, needUpdate: Boolean, backFromSearch: Boolean) {
+        val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(
+            update,
+            needUpdate,
+            backFromSearch
+        )
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

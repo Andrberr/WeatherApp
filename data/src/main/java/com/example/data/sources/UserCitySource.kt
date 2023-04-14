@@ -7,14 +7,13 @@ import javax.inject.Inject
 class UserCitySource @Inject constructor(
     private val prefs: SharedPreferences
 ) {
-    fun getUserCity(): String = prefs.getString(TOKEN_KEY, EMPTY_STRING).orEmpty()
+    fun getUserCity(token: String): String = prefs.getString(token, EMPTY_STRING).orEmpty()
 
-    fun setUserCity(city: String) = prefs.edit {
-        putString(TOKEN_KEY, city)
+    fun setUserCity(city: String, token: String) = prefs.edit {
+        putString(token, city)
     }
 
     companion object {
         private const val EMPTY_STRING = ""
-        private const val TOKEN_KEY = "TOKEN_KEY"
     }
 }

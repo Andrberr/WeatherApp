@@ -13,13 +13,16 @@ import javax.inject.Inject
 
 class CitiesViewModel @Inject constructor(
     private val citiesRepository: CitiesRepository,
-): ViewModel()  {
+) : ViewModel() {
 
     private val _addedCitiesLiveData = MutableLiveData<List<AddedCityInfo>>()
     val addedCitiesLiveData: LiveData<List<AddedCityInfo>> get() = _addedCitiesLiveData
 
     private val _userCityLiveData = MutableLiveData<String>()
     val userCityLiveData: LiveData<String> get() = _userCityLiveData
+
+    private val _rememberCityLiveData = MutableLiveData<String>()
+    val rememberCityLiveData: LiveData<String> get() = _rememberCityLiveData
 
     private val _citiesLiveData = MutableLiveData<List<String>>()
     val citiesLiveData: LiveData<List<String>> get() = _citiesLiveData
@@ -31,11 +34,19 @@ class CitiesViewModel @Inject constructor(
     }
 
     fun getUserCity() {
-        _userCityLiveData.value = citiesRepository.getUserCity()
+        _userCityLiveData.value = citiesRepository.getUserCity(CITY_KEY)
     }
 
     fun setUserCity(city: String) {
-        citiesRepository.setUserCity(city)
+        citiesRepository.setUserCity(city, CITY_KEY)
+    }
+
+    fun getRememberCity() {
+        _rememberCityLiveData.value = citiesRepository.getUserCity(REMEMBER_CITY_KEY)
+    }
+
+    fun setRememberCity(city: String) {
+        citiesRepository.setUserCity(city, REMEMBER_CITY_KEY)
     }
 
     fun getCities() {
@@ -52,5 +63,10 @@ class CitiesViewModel @Inject constructor(
             }
         }
         return resultList
+    }
+
+    companion object {
+        private const val CITY_KEY = "CITY"
+        private const val REMEMBER_CITY_KEY = "REM_CITY"
     }
 }

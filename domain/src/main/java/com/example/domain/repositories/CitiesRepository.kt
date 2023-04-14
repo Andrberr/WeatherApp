@@ -5,6 +5,6 @@ import com.example.domain.models.AddedCityInfo
 interface CitiesRepository {
     suspend fun getCities(cache: Boolean): List<String>
     suspend fun getAddedCitiesInfo(): List<AddedCityInfo>
-    fun setUserCity(city: String)
-    fun getUserCity(): String
+    fun setUserCity(city: String, token: String)
+    fun getUserCity(token: String): String
 }

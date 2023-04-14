@@ -15,9 +15,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_weather_information"
+            android:textColor="@color/text_light"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_light"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/iconView"
@@ -29,141 +29,141 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_pressure"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/pressure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_precipitation_per_hour"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/precipitation_amount_hour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_humidity"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/humidity_percent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_cloud_cover"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/cloud_percent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_real_feel_c"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/feeling_c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_real_feel_f"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/feeling_f"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_visibility"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/visibility_km"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_wind_speed"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/wind_speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_wind_gust"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/gust_wind_speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialog_wind_direction"
-            android:textSize="16sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/windDirView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/text_light"/>
+            android:textColor="@color/text_light"
+            android:textSize="18sp" />
 
         <com.example.weatherapp.ui.custom_view.CompasView
             android:id="@+id/compasView"

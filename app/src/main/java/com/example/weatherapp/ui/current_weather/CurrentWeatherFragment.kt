@@ -111,6 +111,7 @@ class CurrentWeatherFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(R.string.no_found), Toast.LENGTH_SHORT).show()
                     navigateToSearchFragment()
                 } else {
+                    citiesViewModel.setRememberCity("")
                     locationModel = it.location
 
                     binding.cityView.text = it.location.city
@@ -160,11 +161,22 @@ class CurrentWeatherFragment : Fragment() {
             }
         }
 
+        var getRemembered = false
+        citiesViewModel.rememberCityLiveData.observe(viewLifecycleOwner){
+            if (args.backFromSearch && it.isNotEmpty()) {
+                getRemembered = true
+                weatherViewModel.getWeatherFromDataBase(it)
+            }
+        }
+        citiesViewModel.getRememberCity()
+
         citiesViewModel.userCityLiveData.observe(viewLifecycleOwner) {
             if (args.needUpdate) weatherViewModel.getWeatherInfo(it, "")
-            else weatherViewModel.getWeatherFromDataBase(it)
+            else if (!getRemembered) weatherViewModel.getWeatherFromDataBase(it)
         }
         citiesViewModel.getUserCity()
+
+
 
         setButtonsClickListeners()
     }
