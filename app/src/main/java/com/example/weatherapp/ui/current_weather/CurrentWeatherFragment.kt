@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.core.ViewModelFactory
+import com.example.domain.models.HourModel
 import com.example.domain.models.LocationModel
 import com.example.domain.models.WeatherInfo
 import com.example.domain.models.WeatherModel
@@ -27,13 +28,8 @@ import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter
-import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherAdapter
 import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
-import com.example.weatherapp.ui.future_weather.FutureWeatherFragmentDirections
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.util.*
 import javax.inject.Inject
 
@@ -50,6 +46,11 @@ class CurrentWeatherFragment : Fragment() {
     private val args: CurrentWeatherFragmentArgs by navArgs()
 
     private lateinit var locationModel: LocationModel
+    private val generalWeatherAdapter = CurrentWeatherAdapter()
+    private val moreWeatherAdapter = MoreWeatherAdapter()
+    private lateinit var barChartAdapter: HourWeatherAdapter
+
+    private var isPaused = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -76,14 +77,12 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val generalWeatherAdapter = CurrentWeatherAdapter()
         binding.threeDayForecastRecycler.apply {
             adapter = generalWeatherAdapter
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        val moreWeatherAdapter = MoreWeatherAdapter()
         binding.moreInfoRecycler.apply {
             adapter = moreWeatherAdapter
             layoutManager =
@@ -95,7 +94,7 @@ class CurrentWeatherFragment : Fragment() {
             showHourDialog()
         }
 
-        val barChartAdapter = HourWeatherAdapter(nextClick)
+        barChartAdapter = HourWeatherAdapter(nextClick)
         binding.forecastRecycler.apply {
             adapter = barChartAdapter
             layoutManager =
@@ -108,61 +107,21 @@ class CurrentWeatherFragment : Fragment() {
 
             if (wasUpdated || args.update) {
                 if (it == null) {
-                    Toast.makeText(requireContext(), getString(R.string.no_found), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.no_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     navigateToSearchFragment()
                 } else {
                     citiesViewModel.setRememberCity("")
-                    locationModel = it.location
-
-                    binding.cityView.text = it.location.city
-                    generalWeatherAdapter.setWeather(it.daysForecasts.subList(0, 3))
-
-                    with(it.currentWeather) {
-                        setVisibleParams()
-
-                        binding.tempCView.text = tempC.toString()
-                        binding.tempFView.text = tempF.toString()
-                        binding.windDirView.text = windDirection
-                        binding.windSpeedView.text = windSpeed.toString()
-                        val moreWeatherList =
-                            listOf(
-                                MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
-                                MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
-                                MoreWeatherElem(
-                                    "Humidity",
-                                    "${getModifiableFloat(humidityPercent)}%"
-                                ),
-                                MoreWeatherElem(
-                                    "Cloud cover",
-                                    "${getModifiableFloat(cloudPercent)}%"
-                                ),
-                                MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
-                                MoreWeatherElem(
-                                    "Precipitation",
-                                    getModifiableFloat(precipitationAmountHour) + "mm/h"
-                                ),
-                                MoreWeatherElem(
-                                    "Visibility",
-                                    getModifiableFloat(visibilityKm) + "km/h"
-                                ),
-                                MoreWeatherElem(
-                                    "Wind gust",
-                                    getModifiableFloat(gustWindSpeed) + "km/h"
-                                )
-                            )
-                        moreWeatherAdapter.setMoreWeather(moreWeatherList)
-                    }
-
-                    binding.sunriseView.text = "Sunrise:\n${it.daysForecasts[0].sunrise}"
-                    binding.sunsetView.text = "Sunset:\n${it.daysForecasts[0].sunset}"
-
-                    barChartAdapter.setWeather(it.daysForecasts[0].hourWeathers)
+                    updateData(it)
                 }
             }
         }
 
         var getRemembered = false
-        citiesViewModel.rememberCityLiveData.observe(viewLifecycleOwner){
+        citiesViewModel.rememberCityLiveData.observe(viewLifecycleOwner) {
             if (args.backFromSearch && it.isNotEmpty()) {
                 getRemembered = true
                 weatherViewModel.getWeatherFromDataBase(it)
@@ -176,9 +135,61 @@ class CurrentWeatherFragment : Fragment() {
         }
         citiesViewModel.getUserCity()
 
-
-
         setButtonsClickListeners()
+    }
+
+    private fun updateData(weather: WeatherInfo) {
+        locationModel = weather.location
+
+        binding.cityView.text = weather.location.city
+        generalWeatherAdapter.setWeather(weather.daysForecasts.subList(0, 3))
+
+        with(weather.currentWeather) {
+            setVisibleParams()
+
+            binding.tempCView.text = tempC.toString()
+            binding.tempFView.text = tempF.toString()
+            binding.windDirView.text = windDirection
+            binding.windSpeedView.text = "$windSpeed\nkm/h\n"
+            binding.compasView.setParams(windDegree)
+            val moreWeatherList =
+                listOf(
+                    MoreWeatherElem("Real feel(°C)", getModifiableFloat(feelingC)),
+                    MoreWeatherElem("Real feel(°F)", getModifiableFloat(feelingF)),
+                    MoreWeatherElem(
+                        "Humidity",
+                        "${getModifiableFloat(humidityPercent)}%"
+                    ),
+                    MoreWeatherElem(
+                        "Cloud cover",
+                        "${getModifiableFloat(cloudPercent)}%"
+                    ),
+                    MoreWeatherElem("Pressure", getModifiableFloat(pressure) + "mbar"),
+                    MoreWeatherElem(
+                        "Precipitation",
+                        getModifiableFloat(precipitationAmountHour) + "mm/h"
+                    ),
+                    MoreWeatherElem(
+                        "Visibility",
+                        getModifiableFloat(visibilityKm) + "km/h"
+                    ),
+                    MoreWeatherElem(
+                        "Wind gust",
+                        getModifiableFloat(gustWindSpeed) + "km/h"
+                    )
+                )
+            moreWeatherAdapter.setMoreWeather(moreWeatherList)
+        }
+
+        binding.sunriseView.text = "Sunrise:\n${weather.daysForecasts[0].sunrise}"
+        binding.sunsetView.text = "Sunset:\n${weather.daysForecasts[0].sunset}"
+
+        barChartAdapter.setWeather(
+            getBarChartList(
+                weather.daysForecasts[0].hourWeathers,
+                weather.location.time
+            )
+        )
     }
 
     private fun setInvisibleParams() {
@@ -253,7 +264,7 @@ class CurrentWeatherFragment : Fragment() {
         alertDialog.window?.apply {
             val layoutParams = attributes
             layoutParams.gravity = Gravity.TOP or Gravity.END
-            layoutParams.y = 345
+            layoutParams.y = 355
             attributes = layoutParams
         }
 
@@ -292,6 +303,7 @@ class CurrentWeatherFragment : Fragment() {
                     .into(iconView)
 
                 windDirView.text = it.windDirection
+                compasView.setParams(it.windDegree)
             }
         }
 
@@ -308,6 +320,37 @@ class CurrentWeatherFragment : Fragment() {
         val str = value.toString().split(".")
         if (str[1].toFloat() != 0f) return value.toString()
         return str[0]
+    }
+
+    private fun getBarChartList(list: List<HourModel>, time: String): List<HourModel> {
+
+        var index = 0
+        for ((ind, value) in time.withIndex()) {
+            if (value == ':') {
+                index = ind
+                break
+            }
+        }
+        val needTime = if (time[index - 2] != ' ') time.substring(
+            index - 2,
+            index
+        ) else time.substring(index - 1, index)
+        return list.subList(needTime.toInt(), list.size)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isPaused) {
+            weatherViewModel.updateLiveData.observe(viewLifecycleOwner) {
+                isPaused = false
+                if (it != null) updateData(it)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isPaused = true
     }
 
     override fun onDestroyView() {

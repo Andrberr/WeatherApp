@@ -16,7 +16,6 @@ import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
-import com.example.weatherapp.ui.future_weather.FutureWeatherFragmentDirections
 import javax.inject.Inject
 
 class AddedCitiesFragment : Fragment() {
@@ -66,6 +65,7 @@ class AddedCitiesFragment : Fragment() {
         val deleteButtonClick: (String) -> Unit = {
             weatherViewModel.deleteCityFromDataBase(it)
             deleteElementFromList(it)
+            if (addedCitiesList.isEmpty()) citiesViewModel.setUserCity("")
             setCitiesForAdapter()
         }
 

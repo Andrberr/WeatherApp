@@ -26,6 +26,9 @@ class GeneralViewModel @Inject constructor(
     private val _dayWeatherLiveData = MutableLiveData<DayWeather>()
     val dayWeatherLiveData: LiveData<DayWeather> get() = _dayWeatherLiveData
 
+    private val _updateLiveData = MutableLiveData<WeatherInfo?>()
+    val updateLiveData: LiveData<WeatherInfo?> get() = _updateLiveData
+
     private lateinit var city: String
     private lateinit var coordinates: String
 
@@ -60,6 +63,12 @@ class GeneralViewModel @Inject constructor(
     fun deleteCityFromDataBase(city: String) {
         viewModelScope.launch {
             weatherRepository.deleteCityFromDatabase(city)
+        }
+    }
+
+    fun getUpdatedWeatherInfo(city: String) {
+        viewModelScope.launch(handler) {
+            _updateLiveData.value = weatherRepository.getWeatherInfo(false, city, "")
         }
     }
 }

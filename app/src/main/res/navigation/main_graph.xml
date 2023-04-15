@@ -22,7 +22,8 @@
 
         <action
             android:id="@+id/action_currentWeatherFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/ascent_anim"/>
 
         <action
             android:id="@+id/action_currentWeatherFragment_to_mapsFragment"

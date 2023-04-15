@@ -5,6 +5,7 @@ import com.example.data.mappers.ResponseToDefaultMapper
 import com.example.data.mappers.ResponseToEntityMapper
 import com.example.data.network.WeatherService
 import com.example.data.sources.DataBaseSource
+import com.example.data.sources.UserCitySource
 import com.example.domain.repositories.WeatherRepository
 import com.example.domain.models.WeatherInfo
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,7 @@ class WeatherRepositoryImpl @Inject constructor(
     private val responseToEntityMapper: ResponseToEntityMapper,
     private val entityToDefaultMapper: EntityToDefaultMapper,
     private val dataBaseSource: DataBaseSource,
+    private val userCitySource: UserCitySource
 ) : WeatherRepository {
 
     override suspend fun getWeatherInfo(
@@ -90,7 +92,10 @@ class WeatherRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getUserCity(): String = userCitySource.getUserCity(CITY_KEY)
+
     companion object {
         private const val DAYS_COUNT = 14
+        private const val CITY_KEY = "CITY"
     }
 }

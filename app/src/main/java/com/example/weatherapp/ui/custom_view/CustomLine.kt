@@ -61,8 +61,8 @@ class CustomLine @JvmOverloads constructor(
                 textY = y2 + 55f
             }
 
-            if (curTemp >= 35f) textY = height / 2f + 30f
-            else if (curTemp <= -35f) textY = height / 2f - 30f
+            if (curTemp >= 31f) textY = height / 2f + 70f
+            else if (curTemp <= -31f) textY = height / 2f - 70f
 
             canvas.drawRect(
                 x1,

@@ -1,5 +1,6 @@
 package com.example.weatherapp.di
 
+import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.ui.day_weather.DayWeatherFragment
 import com.example.weatherapp.ui.loading.LoadingFragment
 import com.example.weatherapp.ui.MainActivity

@@ -52,7 +52,7 @@ class CitiesRepositoryImpl @Inject constructor(
             entityCities.add(CitiesEntity(city = city))
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        withContext(Dispatchers.IO) {
             dataBaseSource.insertCities(entityCities)
         }
 

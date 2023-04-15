@@ -29,8 +29,10 @@
 
         <ImageButton
             android:id="@+id/optionsButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.115"
+            app:layout_constraintHeight_percent="0.03"
             android:background="@drawable/points"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -60,8 +62,10 @@
 
         <ImageButton
             android:id="@+id/addButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.115"
+            app:layout_constraintHeight_percent="0.03"
             android:background="@drawable/add"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -194,25 +198,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple_500"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/windSpeedView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple_500"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                android:layout_marginStart="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/windDirView" />
 
             <com.example.weatherapp.ui.custom_view.CompasView
                 android:id="@+id/compasView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintWidth_percent="0.6"
+                android:layout_marginEnd="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/windSpeedView"

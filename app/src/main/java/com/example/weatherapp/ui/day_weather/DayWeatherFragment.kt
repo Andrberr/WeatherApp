@@ -153,6 +153,7 @@ class DayWeatherFragment : Fragment() {
                     .into(iconView)
 
                 windDirView.text = it.windDirection
+                compasView.setParams(it.windDegree)
             }
         }
 

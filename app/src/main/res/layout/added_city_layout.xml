@@ -43,8 +43,10 @@
 
     <ImageButton
         android:id="@+id/nextButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintWidth_percent="0.1"
         android:background="@drawable/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -53,8 +55,10 @@
 
     <ImageButton
         android:id="@+id/deleteButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintWidth_percent="0.1"
         android:background="@drawable/basket"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
