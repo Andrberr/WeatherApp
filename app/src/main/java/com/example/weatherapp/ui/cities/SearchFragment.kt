@@ -93,6 +93,8 @@ class SearchFragment : Fragment() {
                 citiesViewModel.searchForCities(citiesList, text.toString())
             else citiesList
             citiesAdapter.setCities(cities)
+            if (cities.isEmpty()) binding.empty.visibility = View.VISIBLE
+            else binding.empty.visibility = View.INVISIBLE
         }
     }
 

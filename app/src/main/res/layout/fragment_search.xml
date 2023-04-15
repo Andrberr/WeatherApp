@@ -21,6 +21,21 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/planet" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/findCityText"
+        app:layout_constraintWidth_percent="1"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/empty_cities"
+        android:visibility="invisible"/>
+
     <EditText
         android:id="@+id/findCityText"
         android:layout_width="0dp"
