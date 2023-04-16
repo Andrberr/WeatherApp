@@ -32,22 +32,34 @@ class WeatherViewModel @Inject constructor(
     private lateinit var city: String
     private lateinit var coordinates: String
 
-    private val handler = CoroutineExceptionHandler { _, _ ->
-        viewModelScope.launch {
+    private val networkHandler = CoroutineExceptionHandler { _, _ ->
+        viewModelScope.launch(dataBaseHandler) {
             _weatherLiveData.value = weatherRepository.getWeatherInfo(false, city, coordinates)
+        }
+    }
+
+    private val dataBaseHandler = CoroutineExceptionHandler { _, _ ->
+        viewModelScope.launch {
+            _weatherLiveData.value = null
+        }
+    }
+
+    private val getUpdateFromDataBaseHandler = CoroutineExceptionHandler { _, _ ->
+        viewModelScope.launch {
+            _updateLiveData.value = null
         }
     }
 
     fun getWeatherInfo(city: String, coordinates: String) {
         this.city = city
         this.coordinates = coordinates
-        viewModelScope.launch(handler) {
+        viewModelScope.launch(networkHandler) {
             _weatherLiveData.value = weatherRepository.getWeatherInfo(true, city, coordinates)
         }
     }
 
     fun getWeatherFromDataBase(city: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(dataBaseHandler) {
             _weatherLiveData.value = weatherRepository.getWeatherInfo(false, city, "")
         }
     }
@@ -61,13 +73,13 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun deleteCityFromDataBase(city: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(dataBaseHandler) {
             weatherRepository.deleteCityFromDatabase(city)
         }
     }
 
     fun getUpdatedWeatherInfo(city: String) {
-        viewModelScope.launch(handler) {
+        viewModelScope.launch(getUpdateFromDataBaseHandler) {
             _updateLiveData.value = weatherRepository.getWeatherInfo(false, city, "")
         }
     }

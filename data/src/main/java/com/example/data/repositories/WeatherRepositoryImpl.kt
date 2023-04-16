@@ -65,16 +65,12 @@ class WeatherRepositoryImpl @Inject constructor(
 
                 responseToDefaultMapper(response)
             } else {
-                try {
-                    with(dataBaseSource) {
-                        entityToDefaultMapper(
-                            getLocationModel(city),
-                            getWeatherModel(city),
-                            getDaysWeather(city)
-                        )
-                    }
-                } catch (e: Exception) {
-                    null
+                with(dataBaseSource) {
+                    entityToDefaultMapper(
+                        getLocationModel(city),
+                        getWeatherModel(city),
+                        getDaysWeather(city)
+                    )
                 }
             }
         }
