@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.CityLayoutBinding
 
-class CitiesAdapter(private val itemClick: (String) -> Unit) : RecyclerView.Adapter<CitiesViewHolder>() {
+class CitiesAdapter(private val itemClick: (String) -> Unit) :
+    RecyclerView.Adapter<CitiesViewHolder>() {
 
     private val cities = mutableListOf<String>()
 

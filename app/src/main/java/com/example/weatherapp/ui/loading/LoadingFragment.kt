@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.core.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentLoadingBinding
 import com.example.weatherapp.ui.CitiesViewModel
-import com.example.weatherapp.ui.GeneralViewModel
 import com.example.weatherapp.ui.MainActivity
 import javax.inject.Inject
 
@@ -41,7 +39,10 @@ class LoadingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.userCityLiveData.observe(viewLifecycleOwner) {
             val action =
-                if (it != "") LoadingFragmentDirections.actionLoadingFragmentToCurrentWeatherFragment(true, true)
+                if (it != "") LoadingFragmentDirections.actionLoadingFragmentToCurrentWeatherFragment(
+                    true,
+                    true
+                )
                 else LoadingFragmentDirections.actionLoadingFragmentToSearchFragment(true)
             findNavController().navigate(action)
         }

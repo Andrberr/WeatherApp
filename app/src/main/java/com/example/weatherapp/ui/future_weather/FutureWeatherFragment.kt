@@ -7,17 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
 import com.example.core.ViewModelFactory
 import com.example.domain.models.DayWeather
-import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
-import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.WeatherViewModel
 import javax.inject.Inject
 
 class FutureWeatherFragment : Fragment() {
@@ -27,7 +24,7 @@ class FutureWeatherFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val vm: GeneralViewModel by viewModels { factory }
+    private val vm: WeatherViewModel by viewModels { factory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

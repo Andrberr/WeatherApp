@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @FragmentScope
-class GeneralViewModel @Inject constructor(
+class WeatherViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
 ) : ViewModel() {
     private val _weatherLiveData = MutableLiveData<WeatherInfo?>()

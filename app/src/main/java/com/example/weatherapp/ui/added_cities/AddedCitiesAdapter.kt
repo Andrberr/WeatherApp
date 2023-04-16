@@ -7,7 +7,7 @@ import com.example.weatherapp.databinding.AddedCityLayoutBinding
 import com.example.domain.models.AddedCityInfo
 
 class AddedCitiesAdapter(
-    private val itemClick: (String) -> Unit,
+    private val nextClick: (String) -> Unit,
     private val deleteButtonClick: (String) -> Unit
 ) : RecyclerView.Adapter<AddedCitiesViewHolder>() {
 
@@ -16,7 +16,7 @@ class AddedCitiesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddedCitiesViewHolder {
         val binding =
             AddedCityLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AddedCitiesViewHolder(binding, itemClick, deleteButtonClick)
+        return AddedCitiesViewHolder(binding, nextClick, deleteButtonClick)
     }
 
     override fun getItemCount(): Int = cities.size

@@ -14,7 +14,7 @@ import com.example.core.ViewModelFactory
 import com.example.domain.models.AddedCityInfo
 import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
 import com.example.weatherapp.ui.CitiesViewModel
-import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.WeatherViewModel
 import com.example.weatherapp.ui.MainActivity
 import javax.inject.Inject
 
@@ -26,7 +26,7 @@ class AddedCitiesFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
-    private val weatherViewModel: GeneralViewModel by viewModels { factory }
+    private val weatherViewModel: WeatherViewModel by viewModels { factory }
 
     private val addedCitiesList = mutableListOf<AddedCityInfo>()
     private lateinit var addedCitiesAdapter: AddedCitiesAdapter
@@ -45,7 +45,7 @@ class AddedCitiesFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                   if (addedCitiesList.isNotEmpty()) navigateToCurrentWeatherFragment(false)
+                    if (addedCitiesList.isNotEmpty()) navigateToCurrentWeatherFragment(false)
                 }
             })
 
@@ -57,7 +57,7 @@ class AddedCitiesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val itemClick: (String) -> Unit = {
+        val nextClick: (String) -> Unit = {
             citiesViewModel.setUserCity(it)
             navigateToCurrentWeatherFragment(true)
         }
@@ -69,7 +69,7 @@ class AddedCitiesFragment : Fragment() {
             setCitiesForAdapter()
         }
 
-        addedCitiesAdapter = AddedCitiesAdapter(itemClick, deleteButtonClick)
+        addedCitiesAdapter = AddedCitiesAdapter(nextClick, deleteButtonClick)
         binding.recycler.apply {
             this.adapter = addedCitiesAdapter
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

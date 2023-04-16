@@ -22,7 +22,8 @@ class DataBaseSource @Inject constructor(
     suspend fun getLocationModel(city: String) =
         withContext(Dispatchers.IO) { locationModelDao.getCityLocation(city) }
 
-    suspend fun getUniqueCities() = withContext(Dispatchers.IO){locationModelDao.getUniqueCities()}
+    suspend fun getUniqueCities() =
+        withContext(Dispatchers.IO) { locationModelDao.getUniqueCities() }
 
     suspend fun insertLocationModel(location: LocationModelEntity) =
         withContext(Dispatchers.IO) { locationModelDao.insert(location) }
@@ -36,7 +37,8 @@ class DataBaseSource @Inject constructor(
     suspend fun getWeatherModel(city: String) =
         withContext(Dispatchers.IO) { weatherModelDao.getCurrentCityWeather(city) }
 
-    suspend fun getTemperatureForCity(city: String) = withContext(Dispatchers.IO){weatherModelDao.getTemperatureForCity(city)}
+    suspend fun getTemperatureForCity(city: String) =
+        withContext(Dispatchers.IO) { weatherModelDao.getTemperatureForCity(city) }
 
     suspend fun insertWeatherModel(weather: WeatherModelEntity) =
         withContext(Dispatchers.IO) { weatherModelDao.insert(weather) }
@@ -65,6 +67,4 @@ class DataBaseSource @Inject constructor(
         withContext(Dispatchers.IO) { citiesDao.insert(cities) }
 
     suspend fun deleteAllCities() = withContext(Dispatchers.IO) { citiesDao.deleteAll() }
-
-//    fun addToFirebase(dataBase: DatabaseReference, city: String) = dataBase.push().setValue(city)
 }

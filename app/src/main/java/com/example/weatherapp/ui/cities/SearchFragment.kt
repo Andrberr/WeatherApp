@@ -55,7 +55,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         var rememberCity = ""
-        citiesViewModel.rememberCityLiveData.observe(viewLifecycleOwner){
+        citiesViewModel.rememberCityLiveData.observe(viewLifecycleOwner) {
             rememberCity = it
         }
         citiesViewModel.getRememberCity()
@@ -98,7 +98,11 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun navigateToCurrentWeatherFragment(update: Boolean, needUpdate: Boolean, backFromSearch: Boolean) {
+    private fun navigateToCurrentWeatherFragment(
+        update: Boolean,
+        needUpdate: Boolean,
+        backFromSearch: Boolean
+    ) {
         val action = SearchFragmentDirections.actionSearchFragmentToCurrentWeatherFragment(
             update,
             needUpdate,

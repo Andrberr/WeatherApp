@@ -19,12 +19,12 @@ import com.example.domain.models.LocationModel
 import com.example.domain.models.WeatherInfo
 import com.example.domain.models.WeatherModel
 import com.example.weatherapp.R
-import com.example.weatherapp.databinding.AlertDialogLayoutBinding
 import com.example.weatherapp.databinding.CityDialogLayoutBinding
 import com.example.weatherapp.databinding.FragmentCurrentWeatherBinding
 import com.example.weatherapp.databinding.HourDialogLayoutBinding
+import com.example.weatherapp.databinding.OptionsDialogLayoutBinding
 import com.example.weatherapp.ui.CitiesViewModel
-import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.WeatherViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
 import com.example.weatherapp.ui.current_weather.general_weather.CurrentWeatherAdapter
@@ -40,7 +40,7 @@ class CurrentWeatherFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val weatherViewModel: GeneralViewModel by viewModels { factory }
+    private val weatherViewModel: WeatherViewModel by viewModels { factory }
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
 
     private val args: CurrentWeatherFragmentArgs by navArgs()
@@ -77,29 +77,7 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.threeDayForecastRecycler.apply {
-            adapter = generalWeatherAdapter
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        binding.moreInfoRecycler.apply {
-            adapter = moreWeatherAdapter
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        val nextClick: (WeatherModel) -> Unit = {
-            weatherViewModel.getHourWeatherInfo(it)
-            showHourDialog()
-        }
-
-        barChartAdapter = HourWeatherAdapter(nextClick)
-        binding.forecastRecycler.apply {
-            adapter = barChartAdapter
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        }
+        initRecyclers()
 
         var wasUpdated = true
         weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
@@ -204,6 +182,32 @@ class CurrentWeatherFragment : Fragment() {
         }
     }
 
+    private fun initRecyclers() {
+        binding.threeDayForecastRecycler.apply {
+            adapter = generalWeatherAdapter
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        binding.moreInfoRecycler.apply {
+            adapter = moreWeatherAdapter
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        val nextClick: (WeatherModel) -> Unit = {
+            weatherViewModel.getHourWeatherInfo(it)
+            showHourDialog()
+        }
+
+        barChartAdapter = HourWeatherAdapter(nextClick)
+        binding.forecastRecycler.apply {
+            adapter = barChartAdapter
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
     private fun setButtonsClickListeners() {
         binding.weekForecastButton.setOnClickListener {
             val action =
@@ -227,7 +231,7 @@ class CurrentWeatherFragment : Fragment() {
     private fun showOptionsDialog() {
         val builder = AlertDialog.Builder(requireContext())
 
-        val dialogLayout = AlertDialogLayoutBinding.inflate(layoutInflater, null, false)
+        val dialogLayout = OptionsDialogLayoutBinding.inflate(layoutInflater, null, false)
         builder.setView(dialogLayout.root)
         val alertDialog = builder.create()
         alertDialog.window?.apply {

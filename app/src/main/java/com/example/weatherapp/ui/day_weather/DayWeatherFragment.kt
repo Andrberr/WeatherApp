@@ -18,12 +18,9 @@ import com.example.domain.models.WeatherModel
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentDayWeatherBinding
 import com.example.weatherapp.databinding.HourDialogLayoutBinding
-import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.WeatherViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.bar_chart.HourWeatherAdapter
-import com.example.weatherapp.ui.current_weather.hour_dialog.HourDialogFragment
-import com.example.weatherapp.ui.current_weather.more_weather.MoreWeatherElem
-import com.example.weatherapp.ui.future_weather.FutureWeatherFragmentDirections
 import javax.inject.Inject
 
 class DayWeatherFragment : Fragment() {
@@ -33,7 +30,7 @@ class DayWeatherFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val viewModel: GeneralViewModel by viewModels { factory }
+    private val viewModel: WeatherViewModel by viewModels { factory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

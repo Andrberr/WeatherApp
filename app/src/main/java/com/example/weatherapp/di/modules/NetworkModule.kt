@@ -27,7 +27,6 @@ class NetworkModule {
             .build()
     }
 
-
     @Provides
     @Singleton
     fun getWeatherService(retrofit: Retrofit): WeatherService = retrofit.create(

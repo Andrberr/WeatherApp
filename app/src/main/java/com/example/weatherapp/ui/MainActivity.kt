@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val weatherViewModel: GeneralViewModel by viewModels { factory }
+    private val weatherViewModel: WeatherViewModel by viewModels { factory }
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {

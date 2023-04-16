@@ -23,7 +23,7 @@ import com.example.core.ViewModelFactory
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentMapsBinding
 import com.example.weatherapp.ui.CitiesViewModel
-import com.example.weatherapp.ui.GeneralViewModel
+import com.example.weatherapp.ui.WeatherViewModel
 import com.example.weatherapp.ui.MainActivity
 import com.google.android.gms.location.*
 import com.yandex.mapkit.Animation
@@ -31,8 +31,6 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.IconStyle
-import com.yandex.mapkit.map.InputListener
-import com.yandex.mapkit.map.Map
 import com.yandex.runtime.image.ImageProvider
 import javax.inject.Inject
 
@@ -43,7 +41,7 @@ class MapsFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-    private val weatherViewModel: GeneralViewModel by viewModels { factory }
+    private val weatherViewModel: WeatherViewModel by viewModels { factory }
     private val citiesViewModel: CitiesViewModel by viewModels { factory }
 
     private val mapView by lazy {

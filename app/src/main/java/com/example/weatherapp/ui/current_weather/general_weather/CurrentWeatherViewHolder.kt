@@ -8,14 +8,14 @@ import com.example.domain.models.DayWeather
 
 class CurrentWeatherViewHolder(
     private val binding: CurrentWeatherLayoutBinding
-): RecyclerView.ViewHolder(binding.root) {
-    fun bind(weather: DayWeather){
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(weather: DayWeather) {
         Glide.with(itemView.context)
             .load("https:${weather.icon}")
             .override(Target.SIZE_ORIGINAL)
             .into(binding.weatherImage)
-        binding.dayView.text = "\t${weather.date}"
-        binding.weatherView.text = "\t${weather.textDescription}\n"
-        binding.tempView.text = "\t${weather.avgTempC}°C/${weather.avgTempF}°F"
+        binding.dayView.text = weather.date
+        binding.weatherView.text = weather.textDescription
+        binding.tempView.text = "${weather.avgTempC}°C/${weather.avgTempF}°F"
     }
 }

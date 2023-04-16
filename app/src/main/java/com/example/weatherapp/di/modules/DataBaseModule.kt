@@ -35,8 +35,4 @@ class DataBaseModule {
     @Provides
     @Singleton
     fun provideCitiesDao(db: WeatherDataBase): CitiesDao = db.getCitiesDao()
-
-//    @Provides
-//    @Singleton
-//    fun provideFirebaseDatabase(reference: DatabaseReference) = FirebaseDatabase.getInstance().getReference("City")
 }

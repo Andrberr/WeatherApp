@@ -7,7 +7,7 @@
     <string name="fourteen_day_forecast">14 days forecast</string>
     <string name="text_forecast">14-day forecast\n</string>
     <string name="search">Search</string>
-    <string name="gradAdded">°</string>
+    <string name="grad_added">°</string>
 
     <string name="dialog_weather_information">Weather Information</string>
     <string name="dialog_wind_speed">Wind speed(km/h):</string>
