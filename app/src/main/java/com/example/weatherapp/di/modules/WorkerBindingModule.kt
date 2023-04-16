@@ -1,7 +1,7 @@
 package com.example.weatherapp.di.modules
 
-import com.example.core.ChildWorkerFactory
-import com.example.core.WorkerKey
+import com.example.core.factories.ChildWorkerFactory
+import com.example.core.annotations.WorkerKey
 import com.example.weatherapp.ui.WeatherWorker
 import dagger.Binds
 import dagger.Module

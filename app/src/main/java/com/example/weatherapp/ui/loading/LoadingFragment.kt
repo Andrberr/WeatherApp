@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentLoadingBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.MainActivity

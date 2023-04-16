@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.HourDialogLayoutBinding
 import com.example.weatherapp.ui.WeatherViewModel

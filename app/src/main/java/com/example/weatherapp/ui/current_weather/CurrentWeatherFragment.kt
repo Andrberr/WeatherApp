@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.domain.models.HourModel
 import com.example.domain.models.LocationModel
 import com.example.domain.models.WeatherInfo

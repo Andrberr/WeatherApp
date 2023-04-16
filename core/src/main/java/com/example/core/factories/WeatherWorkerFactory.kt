@@ -1,4 +1,4 @@
-package com.example.core
+package com.example.core.factories
 
 import android.content.Context
 import javax.inject.Inject

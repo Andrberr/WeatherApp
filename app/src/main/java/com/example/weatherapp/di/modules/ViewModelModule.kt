@@ -1,7 +1,7 @@
 package com.example.weatherapp.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.example.core.ViewModelKey
+import com.example.core.annotations.ViewModelKey
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.WeatherViewModel
 import dagger.Binds

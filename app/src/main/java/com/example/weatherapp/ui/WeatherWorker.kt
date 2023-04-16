@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
-import com.example.core.ChildWorkerFactory
+import com.example.core.factories.ChildWorkerFactory
 import com.example.data.repositories.WeatherRepositoryImpl
 import com.example.domain.repositories.WeatherRepository
 import kotlinx.coroutines.coroutineScope

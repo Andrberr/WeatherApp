@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.ui.CitiesViewModel
 import com.example.weatherapp.ui.MainActivity

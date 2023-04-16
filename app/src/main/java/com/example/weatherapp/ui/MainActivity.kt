@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.work.*
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.di.GeneralComponent
 import com.example.weatherapp.databinding.ActivityMainBinding

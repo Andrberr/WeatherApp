@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentMapsBinding
 import com.example.weatherapp.ui.CitiesViewModel

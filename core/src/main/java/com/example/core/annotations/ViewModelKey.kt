@@ -1,4 +1,4 @@
-package com.example.core
+package com.example.core.annotations
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

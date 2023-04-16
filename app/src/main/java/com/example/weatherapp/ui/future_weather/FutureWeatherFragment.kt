@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.ui.MainActivity
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.domain.models.DayWeather
 import com.example.weatherapp.databinding.FragmentFutureWeatherBinding
 import com.example.weatherapp.ui.WeatherViewModel

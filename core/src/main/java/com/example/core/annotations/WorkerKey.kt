@@ -1,4 +1,4 @@
-package com.example.core
+package com.example.core.annotations
 
 import androidx.work.ListenableWorker
 import dagger.MapKey

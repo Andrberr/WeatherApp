@@ -10,7 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.domain.models.AddedCityInfo
 import com.example.weatherapp.databinding.FragmentAddedCitiesBinding
 import com.example.weatherapp.ui.CitiesViewModel

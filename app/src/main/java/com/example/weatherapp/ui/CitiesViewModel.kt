@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.AddedCityInfo
 import com.example.domain.repositories.CitiesRepository
-import com.example.domain.repositories.WeatherRepository
-import com.example.weatherapp.di.FragmentScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
-import com.example.core.ViewModelFactory
+import com.example.core.factories.ViewModelFactory
 import com.example.domain.models.WeatherModel
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentDayWeatherBinding

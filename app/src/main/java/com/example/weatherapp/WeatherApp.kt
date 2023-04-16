@@ -3,7 +3,7 @@ package com.example.weatherapp
 import android.app.Application
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import com.example.core.WeatherWorkerFactory
+import com.example.core.factories.WeatherWorkerFactory
 import com.example.weatherapp.di.ApplicationComponent
 import com.example.weatherapp.di.DaggerApplicationComponent
 import javax.inject.Inject
