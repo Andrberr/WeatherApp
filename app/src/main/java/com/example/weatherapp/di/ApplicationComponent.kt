@@ -3,10 +3,6 @@ package com.example.weatherapp.di
 import android.content.Context
 import com.example.weatherapp.WeatherApp
 import com.example.weatherapp.di.modules.*
-import com.example.weatherapp.ui.added_cities.AddedCitiesFragment
-import com.example.weatherapp.ui.cities.SearchFragment
-import com.example.weatherapp.ui.loading.LoadingFragment
-import com.example.weatherapp.ui.maps.MapsFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
