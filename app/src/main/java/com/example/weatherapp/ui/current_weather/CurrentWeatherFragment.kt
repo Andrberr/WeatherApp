@@ -116,6 +116,7 @@ class CurrentWeatherFragment : Fragment() {
         setButtonsClickListeners()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateData(weather: WeatherInfo) {
         locationModel = weather.location
 
