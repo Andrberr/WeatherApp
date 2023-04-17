@@ -88,13 +88,13 @@ class EntityToDefaultMapper @Inject constructor() {
         val code = dayWeather.hourModels
         var i = 0
         while (i < code.length) {
-            if (code[i] == '{') {
+            if (code[i] == OPEN_BRACKET) {
                 var obj = ""
-                while (code[i] != '}') {
+                while (code[i] != CLOSE_BRACKET) {
                     obj += code[i]
                     i++
                 }
-                obj += "}"
+                obj += CLOSE_BRACKET
                 hourModelsList.add(mapToHourModel(Json.decodeFromString(obj)))
             }
             i++
@@ -127,5 +127,10 @@ class EntityToDefaultMapper @Inject constructor() {
                 hourWeathers = hourModelsList
             )
         }
+    }
+
+    companion object {
+        private const val OPEN_BRACKET = '{'
+        private const val CLOSE_BRACKET = '}'
     }
 }
