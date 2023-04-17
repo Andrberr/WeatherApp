@@ -28,9 +28,6 @@ class DataBaseSource @Inject constructor(
     suspend fun insertLocationModel(location: LocationModelEntity) =
         withContext(Dispatchers.IO) { locationModelDao.insert(location) }
 
-    suspend fun deleteLocationModel() =
-        withContext(Dispatchers.IO) { locationModelDao.delete() }
-
     suspend fun deleteCityLocation(city: String) =
         withContext(Dispatchers.IO) { locationModelDao.deleteCityLocation(city) }
 
@@ -43,9 +40,6 @@ class DataBaseSource @Inject constructor(
     suspend fun insertWeatherModel(weather: WeatherModelEntity) =
         withContext(Dispatchers.IO) { weatherModelDao.insert(weather) }
 
-    suspend fun deleteWeatherModel() =
-        withContext(Dispatchers.IO) { weatherModelDao.delete() }
-
     suspend fun deleteCurrentCityWeather(city: String) =
         withContext(Dispatchers.IO) { weatherModelDao.deleteCurrentCityWeather(city) }
 
@@ -55,9 +49,6 @@ class DataBaseSource @Inject constructor(
     suspend fun insertDaysWeather(weather: List<DayWeatherEntity>) =
         withContext(Dispatchers.IO) { dayWeatherDao.insertAll(weather) }
 
-    suspend fun deleteDaysWeather() =
-        withContext(Dispatchers.IO) { dayWeatherDao.deleteAll() }
-
     suspend fun deleteDayCityWeather(city: String) =
         withContext(Dispatchers.IO) { dayWeatherDao.deleteDayCityWeather(city) }
 
@@ -65,6 +56,4 @@ class DataBaseSource @Inject constructor(
 
     suspend fun insertCities(cities: List<CitiesEntity>) =
         withContext(Dispatchers.IO) { citiesDao.insert(cities) }
-
-    suspend fun deleteAllCities() = withContext(Dispatchers.IO) { citiesDao.deleteAll() }
 }
