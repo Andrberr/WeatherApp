@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/loadingFragment">
+
+    <fragment
+        android:id="@+id/currentWeatherFragment"
+        android:name="com.example.weatherapp.ui.current_weather.CurrentWeatherFragment"
+        android:label="fragment_current_weather"
+        tools:layout="@layout/fragment_current_weather">
+
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_futureWeatherFragment"
+            app:destination="@id/futureWeatherFragment"
+            app:enterAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_addedCitiesFragment"
+            app:destination="@id/addedCitiesFragment"
+            app:enterAnim="@anim/cool_anim" />
+
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/ascent_anim" />
+
+        <action
+            android:id="@+id/action_currentWeatherFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/map_anim" />
+
+        <argument
+            android:name="update"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <argument
+            android:name="needUpdate"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <argument
+            android:name="backFromSearch"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/futureWeatherFragment"
+        android:name="com.example.weatherapp.ui.future_weather.FutureWeatherFragment"
+        android:label="fragment_future_weather"
+        tools:layout="@layout/fragment_future_weather">
+
+        <action
+            android:id="@+id/action_futureWeatherFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment"
+            app:enterAnim="@anim/slide_in_left" />
+        <action
+            android:id="@+id/action_futureWeatherFragment_to_dayWeatherFragment"
+            app:destination="@id/dayWeatherFragment"
+            app:enterAnim="@anim/slide_up" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.weatherapp.ui.cities.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+
+        <argument
+            android:name="update"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/action_searchFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addedCitiesFragment"
+        android:name="com.example.weatherapp.ui.added_cities.AddedCitiesFragment"
+        android:label="fragment_added_cities"
+        tools:layout="@layout/fragment_added_cities">
+        <action
+            android:id="@+id/action_addedCitiesFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+        <action
+            android:id="@+id/action_addedCitiesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.weatherapp.ui.loading.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading">
+        <action
+            android:id="@+id/action_loadingFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_loadingFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.weatherapp.ui.maps.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps">
+        <action
+            android:id="@+id/action_mapsFragment_to_currentWeatherFragment"
+            app:destination="@id/currentWeatherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dayWeatherFragment"
+        android:name="com.example.weatherapp.ui.day_weather.DayWeatherFragment"
+        android:label="fragment_day_weather"
+        tools:layout="@layout/fragment_day_weather">
+        <action
+            android:id="@+id/action_dayWeatherFragment_to_futureWeatherFragment"
+            app:destination="@id/futureWeatherFragment"
+            app:enterAnim="@anim/slide_down" />
+    </fragment>
+
+</navigation>

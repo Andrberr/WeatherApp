@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="degree_c">°C</string>
+    <string name="degree_f">°F</string>
+    <string name="grad">°\n</string>
+    <string name="fourteen_day_forecast">14 days forecast</string>
+    <string name="text_forecast">14-day forecast\n</string>
+    <string name="search">Search</string>
+    <string name="grad_added">°</string>
+
+    <string name="dialog_weather_information">Weather Information</string>
+    <string name="dialog_wind_speed">Wind speed(km/h):</string>
+    <string name="dialog_pressure">Pressure(mbar):</string>
+    <string name="dialog_precipitation_per_hour">Precipitation per hour(mm/h):</string>
+    <string name="dialog_humidity">Humidity(%):</string>
+    <string name="dialog_cloud_cover">Cloud Cover(%):</string>
+    <string name="dialog_real_feel_c">Real feel(°C):</string>
+    <string name="dialog_real_feel_f">Real feel(°F):</string>
+    <string name="dialog_visibility">Visibility(km/h):</string>
+    <string name="dialog_wind_gust">Wind gust(km/h):</string>
+    <string name="dialog_wind_direction">Wind direction:</string>
+
+    <string name="alert_added_cities">Added Cities</string>
+    <string name="alert_location_weather">Location weather</string>
+    <string name="alert_choose_option">Choose option:</string>
+    <string name="maps_add_weather">Add weather</string>
+
+    <string name="location_permission">No Location Permission!</string>
+
+    <string name="city_region">Region:\t</string>
+    <string name="city_country">Country:\t</string>
+    <string name="city_latitude">Latitude:\t</string>
+    <string name="city_longitude">Longitude:\t</string>
+    <string name="city_timezone">Time Zone:\t</string>
+    <string name="city_time">Time:\t</string>
+    <string name="input_city">Input city</string>
+
+    <string name="no_found">Weather was not found</string>
 </resources>
