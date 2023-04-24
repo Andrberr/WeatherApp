@@ -6,7 +6,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface WeatherService {
-    @Headers("key: 28634b21cab64cd7be7180201230504")
+    @Headers("key: 1548969297a04400a67111456232404")
     @GET("forecast.json")
     suspend fun getWeatherResponse(
         @Query("q") city: String,
